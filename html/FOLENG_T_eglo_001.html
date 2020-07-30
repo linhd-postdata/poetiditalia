@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Teofilo Folengo eglogae</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a980be164" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Teofilo Folengo</b> <i>eglogae</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Teofilo Folengo eglogae</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(263, 553)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(397912,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(397912,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Teofilo Folengo</b> <i>eglogae</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="397912"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Teofilo Folengo</b> <i>eglogae</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/FOLENG_T|eglo|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_t">1. egloga macaronica, interlocutores: Tognazzus, Bigolinus,<br />Simon, Scaramella</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Tu solus, Bigoline, iacens stravacatus in umbra,</p>
+<p class="c_v">Castroni similis teneras cum masticat herbas,</p>
+<p class="c_v">Quas fantasias animo subvolvis adessum?</p>
+<p class="c_v">Nonne soles faciem mihi promere semper alegram?</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_n">5</p><p class="vv">Deh, Tognacce, precor, noli mihi rumpere testam:</p>
+<p class="c_v">Si meus esse cupis charus compagnus ut ante,</p>
+<p class="c_v">Discede atque tuum cura sequitare caminum.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Dextrius, o Bigoline meus: quae verba, diavol,</p>
+<p class="c_v">Nunc baias? Sic vis me ad primum pellere tractum,</p>
+<p class="c_n">10</p><p class="vv">Qui paterer pro te rostiri nostra corada</p>
+<p class="c_v">Sive meus poni pro te magonus alessum?</p>
+<p class="c_v">Ergo malenconicus quare stas dicere voias.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Quod, macarone, mihi poteris donare socorsum,</p>
+<p class="c_v">Qui tibi non scires capiti cercare pedogios?</p>
+<p class="c_n">15</p><p class="vv">Tu non sufficeres mihi descalzare stivallos,</p>
+<p class="c_v">Et, merlotte, putas me consolare parolis.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Si non sufficerem te discalzare stivallos,</p>
+<p class="c_v">Forsan sufficiens essem cavare budellas.</p>
+<p class="c_v">Quid, manegolde, umquam mecum bravare putabis?</p>
+<p class="c_n">20</p><p class="vv">Scis modo quid cercas: malannum seu malapascha,</p>
+<p class="c_v">Quam dabo ni cessas tales parlare parolas.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Si, Tognazze, tuum veles seguitare viazzum,</p>
+<p class="c_v">Inter nos talis non orta baruffa fuisset.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Quis dedit impazzum? Tibi sum duo brachia longe.</p>
+<p class="c_n">25</p><p class="vv">Sed scio quid quaeris: te unum cornale cavaret</p>
+<p class="c_v">Extra frenesiam, quod nunc tua schena provaret;</p>
+<p class="c_v">Tanta tuo certe fugeret de ventre matana.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">O Tognacce, nisi guardas quae dicis, amici</p>
+<p class="c_v">Non erimus: taceas faciesque tacendo belopram.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_n">30</p><p class="vv">Tu prius in coleram saltas, debesque tacere.</p>
+<p class="c_v">Guarda istam frascam quam magna superbia cepit!</p>
+<p class="c_v">Namque suus pater est villa camparus in ista,</p>
+<p class="c_v">Elatam portat frontem cristamque levatam,</p>
+<p class="c_v">Ut gallina solet si grossum fecerit ovum.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_n">35</p><p class="vv">Tu mihi non unum fecisti displicimentum,</p>
+<p class="c_v">Sed tantos, quod iam non suportare valemus.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Scilicet andamus vignas taiare novellas,</p>
+<p class="c_v">Ut de nocte meas taiasti, perfide, plantas</p>
+<p class="c_v">Ac nocte in alia venisti more ladronis</p>
+<p class="c_n">40</p><p class="vv">Gallinisque meum gallisque polare vodasti.</p>
+<p class="c_v">Sed doleo cagnam tunc non habuisse briossam,</p>
+<p class="c_v">Quae tibi fecisset garlettos linquere dretum.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Me robasse tuas gallinas? Doh, codesella,</p>
+<p class="c_v">Non tres pollastros tua coniunx nutrit in anno,</p>
+<p class="c_n">45</p><p class="vv">Et iactans plenum te dicis habere polarum?</p>
+<p class="c_v">Nempe tuis habeo galinis grande bisognum.</p>
+<p class="c_v">Sed quis nesciret te barba trovasse Ianolum</p>
+<p class="c_v">Quod stabas quandam nascostus retro pioppam,</p>
+<p class="c_v">Ut sibi vix natum posses robbare caprettum?</p>
+<p class="c_n">50</p><p class="vv">Ille sub umbrosa fingens dormire nosaro,</p>
+<p class="c_v">Dum pascolabant spinosa per arva capellae,</p>
+<p class="c_v">Te non credentem summissa luce videbat;</p>
+<p class="c_v">Et dum calcagnis conares ire leziris</p>
+<p class="c_v">Atque capretinum veles griffare propinquum,</p>
+<p class="c_n">55</p><p class="vv">In pede saltavit sumpto bastone defattum</p>
+<p class="c_v">Teque bonis stringhis fecit deponere praedam.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">O quales dicit baianas hic bosiardus!</p>
+<p class="c_v">Dicere praesummis me bastonasse Ianolum?</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Hoc scio, sed melius tua scit schennazza provando</p>
+<p class="c_n">60</p><p class="vv">Iudiciumque huius rei monstratur adessum,</p>
+<p class="c_v">Namque piantonem scorzasti tergore virdum.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Deh, facies benum tales non dicere cosas,</p>
+<p class="c_v">Nam cum cervello rupto fors ibis acasam.</p>
+<p class="c_v">Non ego spoiavi media sub nocte picatum,</p>
+<p class="c_n">65</p><p class="vv">Quod tu fecisti, cui mansit sola camisa.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Ergo si piccant ladros, piccaberis ipse,</p>
+<p class="c_v">Teque meum iuxta morem spoiabo ladronem</p>
+<p class="c_v">Nec tibi promitto solettam linquere bragam.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Fac sennum matti: taceas, Bigoline, nec ultra</p>
+<p class="c_n">70</p><p class="vv">Me stigare velis, ne te cagasanguis acoiat.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Hunc possis cagare, simul quoque caga coradam.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Non plus suporto: summe hoc; expecta, ribalde,</p>
+<p class="c_v">Quo fugis? Hoc aliud cum spallis carpe garofol.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Heu heu, non talem tibi parco, ribalde, zucadam,</p>
+<p class="c_n">75</p><p class="vv">Hic etiam tuus est, ahn ahn, sta salde! Quid inquis?</p>
+<p class="c_v">Non facio stimmam de te, poltrone, ceresam.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Non facies stimmam? Talem me ferre pugnadam?</p>
+<p class="c_v">Certe non patior; si possum supra ganassam</p>
+<p class="c_v">Hanc dare tartufolam ... guarda: tuus hic, tuus iste.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_n">80</p><p class="vv">Quid bravare putas? Heu, casco, parce, Tognacce,</p>
+<p class="c_v">Heu heu, ne facias, oyme, oyme, desine, quaeso,</p>
+<p class="c_v">O mea testa, meae spallae, mea schena, masellae!</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Ahn ahn, calarunt zanzae? Anchora superbis?</p>
+<p class="c_v">Ast etiam tu vis repetare: quid esse putabis?</p>
+<p class="c_n">85</p><p class="vv">Es nondum sacius? Volo te tractare dasennum.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Me, Tognacce, sinas, horsu, dolor heu nimis asper!</p>
+<p class="c_t">Simon</p>
+<p class="c_v">O Scaramella, audis? Clamorem sentio magnum.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Heu, quia testiculos striccat, quis praebet aiuttum?</p>
+<p class="c_t">Simon</p>
+<p class="c_v">Curre cito, Scaramella! Quis est? Hunc esse Tognazzum</p>
+<p class="c_n">90</p><p class="vv">Suspicor et dudum sensi combattere verbis.</p>
+<p class="c_t">Scaramella</p>
+<p class="c_v">Curro, tuque tuum mihi trade, tonelle, tracagnum.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Me, Tognacce, sinas, non, non, si perdere vitam</p>
+<p class="c_v">Deberem, volo me deffendere, non potes ultra?</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Non, Bigoline, viam cepisti ... me, oyme, superstas!</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_n">95</p><p class="vv">Sta, manegolde: superveni, volo rendere pugnos.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">Te bene guardabis; quid vis? Meus oyme galonus!</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Expecta donec pedibus tibi panza foletur.</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_v">"Giap giap", heu, quales facis amolare corezzas!</p>
+<p class="c_v">Parco tibi, Bigoline, mihi quoque parcere debes.</p>
+<p class="c_n">100</p><p class="vv">Heu, mea panza dolet: "slof slof", ego creppo daverum.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Aium mangiasti, tuus en ventronus amorbat,</p>
+<p class="c_v">Hunc padire tibi faciam ... sed, brutte ribalde,</p>
+<p class="c_v">Oybo, cagas: merdam faciam magiare; saporem</p>
+<p class="c_v">Summe, ribalde, tuum, mangia: non est bona? Mangia!</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_n">105</p><p class="vv">Oybo, nimis puzzat, glo glo, meschinus anego;</p>
+<p class="c_v">Non, Bigoline, bona est, prius est biasanda, repossum</p>
+<p class="c_v">Da, Bigoline, precor. Mi, mi Scaramella, socorsum</p>
+<p class="c_v">Fer, quaeso: cernis quantum male tractor ab ipso.</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Scaramella, tibi non feci despiacimentum.</p>
+<p class="c_n">110</p><p class="vv">Nescis quam peius hic me tractavit adessum.</p>
+<p class="c_t">Scaramella</p>
+<p class="c_v">Ne facias, Bigoline, leva sursum, leva, dico!</p>
+<p class="c_t">Bigolinus</p>
+<p class="c_v">Fac mihi promittat me non offendere quando</p>
+<p class="c_v">Laxatus fuerit: vis hoc promittere? Parla!</p>
+<p class="c_t">Scaramella</p>
+<p class="c_v">Hic bene promittet: non sic, Tognacce sodalis?</p>
+<p class="c_t">Tognazzus</p>
+<p class="c_n">115</p><p class="vv">O Scaramella, nimis fuit haec iniuria grandis;</p>
+<p class="c_v">Attamen ista tuum ponatur propter amorem.</p>
+<p class="c_t">Scaramella</p>
+<p class="c_v">Surgite, pastores, vestras quoque tangite dextras.</p>
+<p class="c_v">Tu, Bigoline, manens lassivas pasce capellas</p>
+<p class="c_v">Tuque, Tognazze, tuum voias seguitare viazzum.</p>
+<p class="c_n">120</p><p class="vv">Et iam Phoebeus liquidis sol stuffat in undis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">2. altera egloga, interlocutores: Pedralus et Tonellus</p>
+<p class="c_t">Pedralus</p>
+<p class="c_v">O fortuna mihi tantum perversa, ribalda,</p>
+<p class="c_v">Quae tam promittis, post haec non illa videris,</p>
+<p class="c_v">Qua causa tanti pro te mihi dantur afanni?</p>
+<p class="c_v">Tu puzolenta omni merdosior es cagatori,</p>
+<p class="c_n">5</p><p class="vv">Quamvis nonnullis videaris zuccarus esse,</p>
+<p class="c_v">Quos omnes istos capiat cagasanguis adessum.</p>
+<p class="c_v">Stentavi frustra tibi pro servire malignae,</p>
+<p class="c_v">Tuque meam testam voltasti more civettae,</p>
+<p class="c_v">Nec patior tantum schernum tantumque pudorem,</p>
+<p class="c_n">10</p><p class="vv">Sed, nisi te laxo, me carboncellus amazzet.</p>
+<p class="c_t">Tonellus</p>
+<p class="c_v">Quid sic turbatus facis hac, Pedrale, sub umbra?</p>
+<p class="c_v">Nunc procul audivi te suspirare dolentem.</p>
+<p class="c_v">Deprecor ut quod habes voias buttare deforam:</p>
+<p class="c_v">Tu bene cognoscis parum nos esse parentes,</p>
+<p class="c_n">15</p><p class="vv">Nascitur in nobis ac numquam deshonor ullus;</p>
+<p class="c_v">Tu scis quam savius villa reputatus in ista</p>
+<p class="c_v">Consilios praesto tuta cum mente piandos.</p>
+<p class="c_v">Si proprias ergo mihi vis depromere doias,</p>
+<p class="c_v">Forsitan altorium quemquam donare valebo.</p>
+<p class="c_t">Pedralus</p>
+<p class="c_n">20</p><p class="vv">Nunc nunc sperabam quod me tentare venires,</p>
+<p class="c_v">Ut faceres etiam me desperare plusoltra.</p>
+<p class="c_v">O Tonelle, benum facies te tollere nostros</p>
+<p class="c_v">Extra pedes voiasque tuum seguitare viazzum.</p>
+<p class="c_v">Ad corpus sancti - quod blastemabo ... lupini,</p>
+<p class="c_n">25</p><p class="vv">Hinc abeas, Tunelle, nisi vis rompere testam</p>
+<p class="c_v">Hoc in trambaio, post haec cridabis "oy, oyme".</p>
+<p class="c_t">Tonellus</p>
+<p class="c_v">Non dixi, maruffe, tibi quantum es grosolanus?</p>
+<p class="c_v">Scire tuas poenas cerco pro ferre socorsum,</p>
+<p class="c_v">Tuque vis ad primum tractum mihi rumpere testam?</p>
+<p class="c_t">Pedralus</p>
+<p class="c_n">30</p><p class="vv">Deh, videas videas, non magnus bastat afannus,</p>
+<p class="c_v">Qui mihi coradam banda rosegavit ab omni,</p>
+<p class="c_v">Si non ipse etiam pro me tribulare veniret.</p>
+<p class="c_v">Hic, poltrone, mane, volo me sborrare dasennum.</p>
+<p class="c_t">Tonellus</p>
+<p class="c_v">Vade pianinum, quaeso, mi chare Pedrale,</p>
+<p class="c_n">35</p><p class="vv">Iam non ira quidem stravacatur more ledammi.</p>
+<p class="c_t">Pedralus</p>
+<p class="c_v">Non ego suporto, mihi si code sella veniret,</p>
+<p class="c_v">Etsi deberem subtilem perdere bragam,</p>
+<p class="c_v">Quam soleo festis tantummodo ferre diebus.</p>
+<p class="c_t">Tonellus</p>
+<p class="c_v">Horsu, ne facias! An nescis qui sumus? Ergo,</p>
+<p class="c_n">40</p><p class="vv">Mi Pedrale, tuum sic vis tractare Tonellum?</p>
+<p class="c_v">Num tua de proprio cascat mermoria sensu?</p>
+<p class="c_v">Nescis quod chari socii sumus atque parenti?</p>
+<p class="c_v">Vade retro, si vis: non feci, non ego dixi</p>
+<p class="c_v">Tam grandem cosam, per quam me battere debes.</p>
+<p class="c_t">Pedralus</p>
+<p class="c_n">45</p><p class="vv">Non tibi de prima dixi quod sum tribulatus</p>
+<p class="c_v">Ac te debebas oculis distollere nostris?</p>
+<p class="c_v">Cerne meos vultus, si vis cognoscere doiam.</p>
+<p class="c_t">Tonellus</p>
+<p class="c_v">Do, Pedrale, tibi perdonum parte per omni:</p>
+<p class="c_v">Te bene cognovi nimium sburlasse dolorem</p>
+<p class="c_n">50</p><p class="vv">Ac de cervello mentem butasse stravoltam.</p>
+<p class="c_v">Excuso te etiam si ad primam curris in iram,</p>
+<p class="c_v">Namque Andriolum quondam fratremque Maionem</p>
+<p class="c_v">Cognovi facili boriolos esse furore.</p>
+<p class="c_v">Ergo, Pedrale meus, precor, iram pone deorsum</p>
+<p class="c_n">55</p><p class="vv">Magonemque tuum tanto de inflazzine cava;</p>
+<p class="c_v">Dicito cuncta mihi, quia sum tibi fidus amicus,</p>
+<p class="c_v">Ne Pedrale, velis tantum plorare. Quid inquis?</p>
+<p class="c_v">Nil parlas? Ego sum tibi donaturus aiuttum.</p>
+<p class="c_v">Et quamvis rodat cor tanto vermis afanno,</p>
+<p class="c_n">60</p><p class="vv">Tu tamen ad charum compagnum dicere debes,</p>
+<p class="c_v">Ut possit cunctis in rebus pacificare.</p>
+<p class="c_t">Pedralus</p>
+<p class="c_v">O Tonelle, tibi vis me nunc dicere verum?</p>
+<p class="c_v">Tu unxisti musum vel forsan bene bibisti</p>
+<p class="c_v">Et mihi ne scio quo vis praedicate proleco:</p>
+<p class="c_n">65</p><p class="vv">Non senza naspo poteris disvolvere filum.</p>
+<p class="c_v">Quos habeo dentrum quantum bene nosco dolores!</p>
+<p class="c_v">Non bastat quodme tormentant interiora,</p>
+<p class="c_v">Sed quasi sborratur medio de ventre fiatus.</p>
+<p class="c_v">Non tibi singultus, tibi nec suspiria dico,</p>
+<p class="c_n">70</p><p class="vv">Qui per iter colli vellent exire deforas,</p>
+<p class="c_v">Sed, quia sunt troppi, tendunt sborrare desotta.</p>
+<p class="c_v">Attamen, hanc nostram postquam vis noscere poenam,</p>
+<p class="c_v">Si mihi sorbotolum das vini, cuncta recontam.</p>
+<p class="c_t">Tonellus</p>
+<p class="c_v">Si tibi non bastat vinum - quin? - summe fiascum:</p>
+<p class="c_n">75</p><p class="vv">Tonellus tuus est, botazzolus atque lorettus.</p>
+<p class="c_t">Pedralus</p>
+<p class="c_v">Clo clo, quam bonus est! Refero tibi mille cotalas;</p>
+<p class="c_v">Tu quoque quin bibis?</p>
+<p class="c_t">Tonellus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ecce bibo. Dic iam mihi cosam.</p>
+<p class="c_t">Pedralus</p>
+<p class="c_v">Credo scias, Tonelle, tamen tu essendo tererus,</p>
+<p class="c_v">Quod iam quinque anni passarunt, forsitan et sex,</p>
+<p class="c_n">80</p><p class="vv">Cum Bertolinam sposavi mense Febrari;</p>
+<p class="c_v">Unde suam possum satis amplificare casadam:</p>
+<p class="c_v">De cunctis, dico, nullum cavando deforas,</p>
+<p class="c_v">Hi sunt de primis, habitant qui in valle, casatis;</p>
+<p class="c_v">Sunt bene staghenti, multum bestiamen habentes,</p>
+<p class="c_n">85</p><p class="vv">Quo multas terrae mozzas in valle ledamant.</p>
+<p class="c_v">Sed baiare volens ad longum non bonus essem:</p>
+<p class="c_v">De Bertolina solum parlare bisognat.</p>
+<p class="c_v">Ipsa suo sensu tantum maturale tenebat,</p>
+<p class="c_v">Quod centum vaccas hora beverasset in una.</p>
+<p class="c_n">90</p><p class="vv">Haec quoque bella fuit, sicut, Tonelle, videbas,</p>
+<p class="c_v">Cui pirontus erat vertex, aliquanto coputus,</p>
+<p class="c_v">Nasus distensus rampini more deorsum,</p>
+<p class="c_v">Nec sua stricta fuit nimium bochina, quod ipsa</p>
+<p class="c_v">Quando ridebat geminas toccabat oregias;</p>
+<p class="c_n">95</p><p class="vv">Quam pulchros oculos - unus niger atque gazolus,</p>
+<p class="c_v">Alter bertinus, non sguerzus, sed sine luce -</p>
+<p class="c_v">Hos inficatos mihi saepe tenebat adossum,</p>
+<p class="c_v">Nec bene noscebam si me guardaret alhoram.</p>
+<p class="c_v">Sed non de in puncto in puncto bene dicere possem</p>
+<p class="c_n">100</p><p class="vv">Quantum docta fuit grassos componere gnoccos.</p>
+<p class="c_v">Non bescurabo donec mihi vita manebit</p>
+<p class="c_v">Splendentem pellem manuum digitosque nitentes;</p>
+<p class="c_v">Ungues distensae quantum bene stare parebant,</p>
+<p class="c_v">Absque oregino purgare valebat oregias.</p>
+<p class="c_n">105</p><p class="vv">At si narrarem totum, nimis esset afannus:</p>
+<p class="c_v">Quando recordo illam, meme desnembolo totum.</p>
+<p class="c_v">Tantos costummos habuit, quod quisque stupebat,</p>
+<p class="c_v">Ac in parte omni stranium mittebat odorem.</p>
+<p class="c_v">Vellem plus prestum quam Bertolina morisset</p>
+<p class="c_n">110</p><p class="vv">Ammisisse omnes vaccas excepta Bonela.</p>
+<p class="c_t">Tonellus</p>
+<p class="c_v">O Pedrale meus, magnam tibi praesto rasonem:</p>
+<p class="c_v">Non intellexi quod Bertolina morivit;</p>
+<p class="c_v">Parce, precor, Pedrale, mihi, nam planco zenogium:</p>
+<p class="c_v">Nonquam pensassem quod te dolor iste piasset</p>
+<p class="c_n">115</p><p class="vv">Atque soratorem flatus tibi nempe stopasset.</p>
+<p class="c_v">Est equidem verum quod talem perdere fomnam,</p>
+<p class="c_v">Deberes ungis semper sgraffare masellas.</p>
+<p class="c_v">Sum bene certus ego, tibi strania cosa videtur,</p>
+<p class="c_v">Maxime dum guardas osevellos ire per omnem</p>
+<p class="c_n">120</p><p class="vv">Dispersos casam, quorum fuit illa magistra.</p>
+<p class="c_t">Pedralus</p>
+<p class="c_v">Parce, Tonelle, precor, tua si desturbio verba:</p>
+<p class="c_v">Talis, quem dicis, me scannacorus amazzat</p>
+<p class="c_v">Cognoscendo meos osivellos quomodo vadunt:</p>
+<p class="c_v">Hic vanga, hic zappa, illic badillus, aratrum,</p>
+<p class="c_n">125</p><p class="vv">Quod iam tota domus vadit sotosora daverum.</p>
+<p class="c_t">Tonellus</p>
+<p class="c_v">Si voluit, Pedrale, mori, quid flere bisognat?</p>
+<p class="c_v">Sta sursum drictus, talem depone magonem!</p>
+<p class="c_v">Ne timeas, quoniam contato stamus in uno,</p>
+<p class="c_v">In quo tale quidem asbaccum bestiamen habetur.</p>
+<p class="c_t">Pedralus</p>
+<p class="c_n">130</p><p class="vv">Heu, Bertolinam potero postponere numquam:</p>
+<p class="c_v">Quantum grassa quidem fuerant armenta per illam!</p>
+<p class="c_v">Non sic presto ussum stallae quandoque subintro,</p>
+<p class="c_v">Quod mihi paret eam stravacatam cernere zosum</p>
+<p class="c_v">Vel inter vaccas Brognolam sive Bonelam,</p>
+<p class="c_n">135</p><p class="vv">Vel inter manzos Boldrinum seu Capriolum.</p>
+<p class="c_v">Non erat anchoram bene sol damatina levatus,</p>
+<p class="c_v">Quod surgens lectu saltaverat extra casottum,</p>
+<p class="c_v">Ante omnes cosas in poco tempore septem</p>
+<p class="c_v">Mangiabat panes, quod me ingrassare parebat.</p>
+<p class="c_t">Tonellus</p>
+<p class="c_n">140</p><p class="vv">Iam, Pedrale, locum da tantis, si vis, afannis,</p>
+<p class="c_v">Plange modo quantum vis, iam sibi vita borivit.</p>
+<p class="c_v">Mocca tibi nasum, iam cessa plangere tantum</p>
+<p class="c_v">Et mecum venias villae, te namque civabo</p>
+<p class="c_v">Atque ovos faciam almancum sorbere viginti;</p>
+<p class="c_n">145</p><p class="vv">Namque meum facio benum, contentor, eamus.</p>
+<p class="blank">&nbsp;</p>
+<p class="blank">&nbsp;</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

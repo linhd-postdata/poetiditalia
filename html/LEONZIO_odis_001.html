@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Leonzio Pilato Odissea</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a95d21204" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Leonzio Pilato</b> <i>Odissea</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Leonzio Pilato Odissea</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(34, 61)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(28305,2)">
+                            Metri                        </button>
+                    </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Leonzio Pilato</b> <i>Odissea</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="28305"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Leonzio Pilato</b> <i>Odissea</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/LEONZIO|odis|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_v">Virum mihi pande Musa multimodum qui valde multum</p>
+<p class="c_v">Erravit ex quo Troie sacram civitatem depredatus fuit</p>
+<p class="c_v">Multorum hominum vidit urbes et intellectum novit</p>
+<p class="c_v">Multas autem hic in ponto passus fuit angustias proprio in animo.</p>
+<p class="c_n">5</p><p class="vv">Redimens propriam animam et reditum sociorum</p>
+<p class="c_v">Sed non sic socios salvavit desiderans licet</p>
+<p class="c_v">Ipsorum enim propriis stultitiis perierunt</p>
+<p class="c_v">Stolidi qui per boves yperionis solis</p>
+<p class="c_v">Comederunt, nam hic istis abstulit reditus diem</p>
+<p class="c_n">10</p><p class="vv">Hec a quacumque parte dea filia iovis dic et nobis</p>
+<p class="c_v">Iam alii certe omnes quot fugerant gravem destructionem</p>
+<p class="c_v">Domi erant bellum cum fugerant atque mare</p>
+<p class="c_v">Hunc autem solum reditus egentem atque uxoris</p>
+<p class="c_v">Nimpha venerabilis impediebat Calipso diva dearum</p>
+<p class="c_n">15</p><p class="vv">In speluncis cavis desiderans maritum esse</p>
+<p class="c_v">Sed quando iam tempus venit circumexpletis annis</p>
+<p class="c_v">In quo ipsi venerunt dei domum redire</p>
+<p class="c_v">Ad Itachiam nec ibi fugisse fuit agones</p>
+<p class="c_v">Et cum propriis amicis dii autem miserebantur omnes</p>
+<p class="c_n">20</p><p class="vv">Preter Neptunum hic autem solicite irascebatur</p>
+<p class="c_v">Antitheo Ulixi antequam ad propriam terram veniret</p>
+<p class="c_v">Sed hic ad Ethiopas venit procul existentes</p>
+<p class="c_v">Ethiopas qui in duas partes divisi sunt ultimi virorum</p>
+<p class="c_v">Hi quidem intrante yperione hi autem saliente</p>
+<p class="c_n">25</p><p class="vv">Vescens taurorum et agnorum hecatombe</p>
+<p class="c_v">Hi autem hic delectabatur cibo adstans sed iam alii</p>
+<p class="c_v">Iovis in atriis Olimpii congregati erant</p>
+<p class="c_v">Istis autem sermones incepit pater virorumque deorumque</p>
+<p class="c_v">Recordatus enim in animo est immaculati Egisti</p>
+<p class="c_n">30</p><p class="vv">Quen iam Agamemnonides valde gloriosus interfecit Orestes</p>
+<p class="c_v">Huius hic recordatus verba immortalibus loquebatur</p>
+<p class="c_v">Heu amici qualiter iam deos mortales inculpant</p>
+<p class="c_v">A nobis enim fantur mala esse. Sed et ipsi</p>
+<p class="c_v">Ipsorum stultitiis preter fatum angustias habent</p>
+<p class="c_n">35</p><p class="vv">Sicuti et nunc Egistho preter fatum Atride</p>
+<p class="c_v">Nupsit uxor procax hunc autem interfecit reversum</p>
+<p class="c_v">Sciens gravem perniciem ex quo antea sibi diximus nos</p>
+<p class="c_v">Mercurium cum miserimus bene spectatorem Argiphontem</p>
+<p class="c_v">Nec ipsum interficere nec procari uxori</p>
+<p class="c_n">40</p><p class="vv">Ab quidem Oreste vindicta erit Atride</p>
+<p class="c_v">Quando adoleverit et propriam desideraverit terram</p>
+<p class="c_v">Sic fatus est Mercurius sed non sensus Egisti</p>
+<p class="c_v">Flexit bona sentiens nunc autem simul omnia reddidit</p>
+<p class="c_v">Huic autem retribuit postea dea glaucopis athena</p>
+<p class="c_n">45</p><p class="vv">O pater noster Saturnine excellentissime regum</p>
+<p class="c_v">Et valde ille decenti iacet interitu</p>
+<p class="c_v">Sic pereat et alius quicumque talia faciet</p>
+<p class="c_v">Sed michi pro Ulixe bellicoso inciditur anima</p>
+<p class="c_v">Infortuna qui iam longe amicis procul nocumenta patitur</p>
+<p class="c_n">50</p><p class="vv">Insula mari circumdata ubi umbilicus est maris</p>
+<p class="c_v">Insula autem arborata dea aurem in domibus habitat</p>
+<p class="c_v">Atlantis filia omnia sentientis qui maris</p>
+<p class="c_v">Totius profunditates scit tenet autem columnas ipse</p>
+<p class="c_v">Longas que terram et celum circum tenent</p>
+<p class="c_n">55</p><p class="vv">Huius filia miserum plorantem impedit</p>
+<p class="c_v">Semper in mollibus et sapientibus sermonibus</p>
+<p class="c_v">Blanditur ut Itachie obliviscatur Nam Ulixes</p>
+<p class="c_v">Desiderans etiam fumum salientem aspicere</p>
+<p class="c_v">Proprie terre mori desiderat non autem tibi</p>
+<p class="c_n">60</p><p class="vv">Removetur amica anima Olimpie non Ulixes</p>
+<p class="c_v">Argivorum in navibus grates dabat sacra sacrificans</p>
+<p class="c_v">Troia in ampla. Cur iam sibi in tantum iratus es Iupiter</p>
+<p class="c_v">Huic autem retribuens affatus est nubium agregator Iupiter</p>
+<p class="c_v">Filia mea quale te verbum fugit septem dentium</p>
+<p class="c_n">65</p><p class="vv">Quomodo iam certe Ulixis ego mirabilis obliviscarer</p>
+<p class="c_v">Qui ultra sensum est mortalium ultraque sacra deis</p>
+<p class="c_v">Immortalibus dedit qui celum amplum habent</p>
+<p class="c_v">Sed Neptunus terram equitans dure semper</p>
+<p class="c_v">Ciclope iratus quem oculo cecavit</p>
+<p class="c_n">70</p><p class="vv">Contrarium diis Poliphemum cuius potentia est magna</p>
+<p class="c_v">Omnibus in Ciclopibus. Thoosa autem ipsum genuit nimpha</p>
+<p class="c_v">Phorcinos filia mari sine fece predominantis</p>
+<p class="c_v">In speluncis cavis neptuno cum miscuerit se</p>
+<p class="c_v">Ex hoc iam Ulixem Neptunus terram movens</p>
+<p class="c_n">75</p><p class="vv">Non interfecit errare facit procul paterna terra</p>
+<p class="c_v">Sed eya nos isti consulemus omnes</p>
+<p class="c_v">Reditu ut veniat Neptunus autem desinet</p>
+<p class="c_v">Propriam iram non certe aliquando poterit contra omnium</p>
+<p class="c_v">Immortalium nolle deorum litigare solus</p>
+<p class="c_n">80</p><p class="vv">Huic autem retribuit postea dea glaucopis Athena</p>
+<p class="c_v">O pater noster Saturnie excellentissime regum</p>
+<p class="c_v">Si certe iam nunc hoc amicum beatis deis</p>
+<p class="c_v">Reverti Ulixem multa sentientem ad propriam domum</p>
+<p class="c_v">Mercurium certe diactoron Argiphontem</p>
+<p class="c_n">85</p><p class="vv">Insulam ad Ogigiam commoveamus ut cito</p>
+<p class="c_v">Nimphe bonicome dicat verum consilium</p>
+<p class="c_v">Reditum Ulixis talasifronos ut veniat</p>
+<p class="c_v">Nam ego Itachiam veniam ut eius filium</p>
+<p class="c_v">Magis horter et sibi potentiam in sensibus ponam</p>
+<p class="c_n">90</p><p class="vv">Ad contionem cum vocaverit comosos Achivos</p>
+<p class="c_v">Omnibus procatoribus sententialiter dicere qui eius semper</p>
+<p class="c_v">Oves parvas interficiunt et pedes revolventes flexicornos boves</p>
+<p class="c_v">Mittam autem eum ad Sparten et ad Pylon amathuntam</p>
+<p class="c_v">Reditum auditurum patris amicabilis sic ubi audiet</p>
+<p class="c_n">95</p><p class="vv">Atque ubi gloriam bonam in hominibus habeat</p>
+<p class="c_v">Sic cum dixerat sub pedibus ligavit bonos sutilares</p>
+<p class="c_v">Ambrosios aureos quae ipsam tulerunt ac per mollem</p>
+<p class="c_v">Ac per infinitam terram similiter flatui venti</p>
+<p class="c_v">Accepitque fortem lanceam acutam acuto ferro</p>
+<p class="c_n">100</p><p class="vv">Robustam magnam ponderosam qua domat turmas virorum</p>
+<p class="c_v">Heroum quibus irata fuerit fortem patrem habens</p>
+<p class="c_v">Abiit autem per Olimpum carinum commota</p>
+<p class="c_v">Stetitque Itachie in loco in vestibulis Ulixis</p>
+<p class="c_v">In limine Auleo palma autem tenebat ferream lanceam</p>
+<p class="c_n">105</p><p class="vv">Assimilata amico taphiorum pastori menti</p>
+<p class="c_v">Invenit vero procatores superbos hi certe iam</p>
+<p class="c_v">Aleis ante ianuas animum delectabant</p>
+<p class="c_v">Sedentes in coriis boum quos interfecerunt ipsi</p>
+<p class="c_v">Precones autem ipsis et citi famuli</p>
+<p class="c_n">110</p><p class="vv">Hi vere vinum miscebant in crateris et aquam</p>
+<p class="c_v">Hi autem spongiis multum perforatis mensas</p>
+<p class="c_v">Tergebant et anteponebant atque carnes multas dividebant</p>
+<p class="c_v">Hanc autem multum primus vidit Telemacus deo similis</p>
+<p class="c_v">Sedebat enim in procatoribus amicam cruciatus animam</p>
+<p class="c_n">115</p><p class="vv">Respiciens patrem bonum in sensibus si ab aliq cum venerit</p>
+<p class="c_v">Procatoribus his quidem dipersionem per domos imponat</p>
+<p class="c_v">Honorem autem ipse habeat et possessionibus propriis dominetur</p>
+<p class="c_v">Hec sentiens procatoribus simul sedens aspexit Athenam</p>
+<p class="c_v">Ivit autem versus vestibulum redarguit se in animo</p>
+<p class="c_n">120</p><p class="vv">Forensem diu in ianuis stare Iuxta autem stans</p>
+<p class="c_v">Manum cepit dexteram et recepit ferream lanceam</p>
+<p class="c_v">Et ipsam vocans verbis pennosis loquebatur</p>
+<p class="c_v">Ave amice nobiscum amicaberis nam postea</p>
+<p class="c_v">Cenam cum finieris sermocinaberis cuius tibi oportunitas</p>
+<p class="c_n">125</p><p class="vv">Sic cum dixit precessit Hec autem sequebatur Pallas Athena</p>
+<p class="c_v">Isti autem quando iam intra fuerunt domum altam</p>
+<p class="c_v">Lanceam certe erexit ferens in columna longa</p>
+<p class="c_v">Vagina lancearum intus benefacta ubi alie</p>
+<p class="c_v">Lancee Ulixis talasifronos stabant multe</p>
+<p class="c_n">130</p><p class="vv">Ipsarum autem in throno sedem fecit ducens sub pannum cum extenderat</p>
+<p class="c_v">Bonum varium sub autem scabellum pedibus fuit</p>
+<p class="c_v">Penes autem ipsam currum posuit depictum extra alios</p>
+<p class="c_v">Procatores ne forensis consultatus rumore congregationis</p>
+<p class="c_v">Cena sine delectatione se haberet superbis cum advenerat</p>
+<p class="c_n">135</p><p class="vv">Ac ut ipsum de patre absente interrogaret</p>
+<p class="c_v">Cherniva pedisequa fudibili fudit ferens</p>
+<p class="c_v">Bono aureo supra argenteum lebetem</p>
+<p class="c_v">Ut lavarentur ante autem benefactam extendit mensam</p>
+<p class="c_v">Frumentum autem venerabilis tamii anteposuit ferens</p>
+<p class="c_n">140</p><p class="vv">Epulas multas cum supraposuit libenter dans adstantibus</p>
+<p class="c_v">Cibi carnium incisoria anteposuit cum tulit</p>
+<p class="c_v">Omniusmodi ante autem ipsis posuit aureos calices</p>
+<p class="c_v">Preco autem ipsis cito ambulabat pincernans</p>
+<p class="c_v">Intro autem venerunt procatores superbi isti certe postea</p>
+<p class="c_n">145</p><p class="vv">Per ordinem sederunt in sedibusque thronisque</p>
+<p class="c_v">Istis autem famuli quidem aquam in manibus fuderunt</p>
+<p class="c_v">Iuvenes autem crateras coronaverunt potu</p>
+<p class="c_v">Cererem autem famule congregabant in calathis</p>
+<p class="c_v">Isti autem ad utilia fercula prompte anteposita manus extendebant</p>
+<p class="c_n">150</p><p class="vv">Nam postquam potu et cibo desiderium extraxerunt</p>
+<p class="c_v">Procatores quibus certe in sensibus alia in cura erant</p>
+<p class="c_v">Cantilena chorea hec enim ornamenta epuli</p>
+<p class="c_v">Preco autem in manibus citharam pulchram posuit</p>
+<p class="c_v">Fimio qui iam canebat in procatoribus necessitate</p>
+<p class="c_n">155</p><p class="vv">Certe hic cytharizans concordabat bene canere</p>
+<p class="c_v">Nam Thelemacus affatus est glaucopem Athenam</p>
+<p class="c_v">Iuxta tenens caput ut non audirent alii</p>
+<p class="c_v">Forensis amice licet et me reprehendas quicquid dicam</p>
+<p class="c_v">Istis certe hec in cura sunt cythara et cantilena</p>
+<p class="c_n">160</p><p class="vv">Leviter quia alienas divitias sine ultione comedunt</p>
+<p class="c_v">Viri cuius iam alicubi alba ossa marcescunt pluvia</p>
+<p class="c_v">Iacentia in terra vel in mari unda revolvit</p>
+<p class="c_v">Si illum Itachiam videbunt iam reversum</p>
+<p class="c_v">Omnes orabunt leviores pedes esse</p>
+<p class="c_n">165</p><p class="vv">Quam ditiores auroque vesteque</p>
+<p class="c_v">Nunc hic sic periit mala morte neque aliqua nobis</p>
+<p class="c_v">Consolatio licet aliquis terrestrium hominum</p>
+<p class="c_v">Dicat venturum esse illius autem periit reditus dies</p>
+<p class="c_v">Sed eya michi hoc dic et veraciter narra</p>
+<p class="c_n">170</p><p class="vv">Quis unde es virorum ubi tibi civitas atque parentes</p>
+<p class="c_v">In qua autem navi venisti quo modo autem naute</p>
+<p class="c_v">Duxerunt ad Itachiam qui esse gloriantur</p>
+<p class="c_v">Non enim te pedestrem puto huc venire</p>
+<p class="c_v">Et michi hoc narra verum ut bene sciam</p>
+<p class="c_n">175</p><p class="vv">Vel nuper venis vel et patrius es</p>
+<p class="c_v">Amicus quia multi fuerunt viri nostra in domo</p>
+<p class="c_v">Alii quia ille conversabilis fuit hominum</p>
+<p class="c_v">Huic autem redixit glaucopis Athena</p>
+<p class="c_v">Tibi enim ego hec valde veraciter narrabo</p>
+<p class="c_n">180</p><p class="vv">Mentis Anchialio bellicosi glorior esse</p>
+<p class="c_v">Filius nam taphiis navigatoribus dominor</p>
+<p class="c_v">Nunc autem huc cum navi veni atque sociis</p>
+<p class="c_v">Navigans pernigrum pontum per aliam vocem habentes homines</p>
+<p class="c_v">Ad Temesin pro ere fero nitidum ferrum</p>
+<p class="c_n">185</p><p class="vv">Navis autem mihi hec stat in agro procul civitate</p>
+<p class="c_v">In portu ritheo sub niio arborato</p>
+<p class="c_v">Amici autem alterutrum patrii gloriamur esse</p>
+<p class="c_v">A principio sique senem interrogabis cum veneris</p>
+<p class="c_v">Laertem heroem quem non fantur ad civitatem</p>
+<p class="c_n">190</p><p class="vv">Venire sed procul in agro nocumenta pati</p>
+<p class="c_v">Vetula cum pedisequa quae sibi cibumque potumque</p>
+<p class="c_v">Anteponit quantum iam ipsum labor in membris cepit</p>
+<p class="c_v">Serpentem per locum fertilem culture vineose</p>
+<p class="c_v">Nunc autem veni iam certe ipsum fati sunt venturum esse</p>
+<p class="c_n">195</p><p class="vv">Tuum patrem sed iam hunc Dei ledunt iniuria</p>
+<p class="c_v">Non certe adhuc mortuus in terra divus Ulixes</p>
+<p class="c_v">Sed adhuc aliqua vivus impeditur Apollo in ponto</p>
+<p class="c_v">Insula in circumflua mari pessimi autem ipsum viri impediunt</p>
+<p class="c_v">Agrestes qui illum retinent nolentem</p>
+<p class="c_n">200</p><p class="vv">Nam nunc tibi ego vaticinabor sicuti in animo</p>
+<p class="c_v">Immortales ponunt et sicuti perficiendum puto</p>
+<p class="c_v">Nec vaticinator existens neque de avibus palam sciens</p>
+<p class="c_v">Non adhuc longe amico procul patria terra</p>
+<p class="c_v">Erit non si ferrea ligamenta tenent</p>
+<p class="c_n">205</p><p class="vv">Cogitabit ut veniat quia multe astutie est</p>
+<p class="c_v">Sed eya michi hoc dic et veraciter narra</p>
+<p class="c_v">Si iam ab ipso tantus filius es Ulixis</p>
+<p class="c_v">Valde certe capite et oculis bonis assimilas</p>
+<p class="c_v">Illi quia sepe taliter miscebamus alterutrum</p>
+<p class="c_n">210</p><p class="vv">Ante quam illum ad Troiam ascendisse quo alii</p>
+<p class="c_v">Argivorum optimi iverunt cavis in navibus</p>
+<p class="c_v">Ex tunc non Ulixem ego vidi neque me ille</p>
+<p class="c_v">Hanc Thelemacus scientificus contra allocutus est</p>
+<p class="c_v">Tibi enim ego amice valde veraciter narrabo</p>
+<p class="c_n">215</p><p class="vv">Mater certe me fatur illius esse. Nam ego</p>
+<p class="c_v">Non scio non certe aliquis proprium patrem ipse cognovit</p>
+<p class="c_v">Sic iam ego debui beati alicuius esse filius</p>
+<p class="c_v">Viri quem in possessionibus propriis senectus advertit</p>
+<p class="c_v">Nunc autem qui miserimus natus est mortalium hominum</p>
+<p class="c_n">220</p><p class="vv">Ex illo me fantur ortum esse postquam tu me de hoc interrogas</p>
+<p class="c_v">Huic autem dixit dea glaucopis Athena</p>
+<p class="c_v">Non certe tibi generationem dei ingloriosam retro</p>
+<p class="c_v">Fecerunt postquam te talem genuit Penelopia</p>
+<p class="c_v">Sed eya mihi hoc dic et veraciter narra</p>
+<p class="c_n">225</p><p class="vv">Que epulatio queque congregatio hec est quid autem tibi necessitas</p>
+<p class="c_v">Convivii vel nuptiarum postquam non eranos hoc est</p>
+<p class="c_v">Quoniam mihi iniuriantes superbe videntur</p>
+<p class="c_v">Comedere per domum reprehendet hoc vir</p>
+<p class="c_v">Vituperia multa respiciens quisquis sapiens adveniet</p>
+<p class="c_n">230</p><p class="vv">Huic autem Thelemacus scientificus contra locutus est</p>
+<p class="c_v">Amice postquam iam te his me interrogas atque inquiris</p>
+<p class="c_v">Apparebat certe quondam domus ista dives et irreprehensibilis</p>
+<p class="c_v">Esse donec adhuc ille vir presens erat</p>
+<p class="c_v">Nunc autem aliter volverunt dei mala consulentes</p>
+<p class="c_n">235</p><p class="vv">Qui illum certe inapparabilem fecerunt ultra omnes</p>
+<p class="c_v">Homines quia non mortuo sic contristarer</p>
+<p class="c_v">Si cum propriis sotiis interfectus fuit Traianorum in loco</p>
+<p class="c_v">Vel amicorum in manibus postquam bellum perfecit</p>
+<p class="c_v">Ex hoc sibi sepulturam certe fecerunt iam omnes Achivi</p>
+<p class="c_n">240</p><p class="vv">Atque et proprio filio magnam gloriam tulit post</p>
+<p class="c_v">Nunc autem ipsum ingloriose Arpie usurpaverunt</p>
+<p class="c_v">Corruptus est inapparabilis inexauditus mihi autem dolores fletusque</p>
+<p class="c_v">Reliquit non autem illum flens suspiro</p>
+<p class="c_v">Solum quia mihi alia dei mala flagella preparaverunt</p>
+<p class="c_n">245</p><p class="vv">Quot enim insulis dominantur optimi</p>
+<p class="c_v">Dulichie Samoque et arborosa Zachipho</p>
+<p class="c_v">Atque quot aspere Itachie predominantur</p>
+<p class="c_v">Tot matri mee procantur consumuntque domum</p>
+<p class="c_v">Hec autem non abnuit odiosas nuptias neque finem</p>
+<p class="c_n">250</p><p class="vv">Facere potest. Isti autem corrumpunt comedentes</p>
+<p class="c_v">Domum meam cito iam me destruent et ipsum</p>
+<p class="c_v">Hunc autem anxia facta allocuta est Pallas Athena</p>
+<p class="c_v">Heu amici vere iam multum absente Ulixe</p>
+<p class="c_v">Deficiet qui procatoribus vituperosis manus imponetur</p>
+<p class="c_n">255</p><p class="vv">Utinam certe nunc cum venit domum in primis ianuis</p>
+<p class="c_v">Stet tenens galeam et scutum et duas lanceas</p>
+<p class="c_v">Talis existens qualem ipsum ego primo vidi</p>
+<p class="c_v">Domo in nostra potantemque delectantemque</p>
+<p class="c_v">Ab Ephyri reversum ab ilo mermeridao</p>
+<p class="c_n">260</p><p class="vv">Ivit enim illuc cita in navi Ulixes</p>
+<p class="c_v">Pharmacum viros interficiens querens ut sibi esset</p>
+<p class="c_v">Sagittas ungere ferreas sed ille non sibi</p>
+<p class="c_v">Dedit quia iam deos venerabatur semper existentes</p>
+<p class="c_v">Sed pater sibi dedit meus diligebat enim valde</p>
+<p class="c_n">265</p><p class="vv">Talis existens cum procatoribus conversaretur Ulixes</p>
+<p class="c_v">Omnes cito morituri fierent amararum nuptiarumque</p>
+<p class="c_v">Sed certe hec deorum in genibus iacent</p>
+<p class="c_v">Vel reversus ultionem sumat vel et non</p>
+<p class="c_v">Propriis in atriis tibi autem cogitare precipio</p>
+<p class="c_n">270</p><p class="vv">Quomodo procatores expellas ab atrio</p>
+<p class="c_v">Sed eya nunc audias et meos cura sermones</p>
+<p class="c_v">Cras ad contionem cum vocaveris heroas Achivos</p>
+<p class="c_v">Sermonem dic omnibus dei autem testes sint</p>
+<p class="c_v">Procatores certe ad propria dividi precipe</p>
+<p class="c_n">275</p><p class="vv">Mater autem si sibi animus vult nubere</p>
+<p class="c_v">Retro vadat ad atrium patris valde potentis</p>
+<p class="c_v">Isti autem nuptias preparabunt et ordinabunt cedna</p>
+<p class="c_v">Multa valde quod convenit amicam filiam sequi</p>
+<p class="c_v">Tibi autem ipsi sapienter consulam sique obedias</p>
+<p class="c_n">280</p><p class="vv">Navem cum aptaveris remigatoribus viginti que optima</p>
+<p class="c_v">Venias auditurus de patre diu absente</p>
+<p class="c_v">Si quis tibi dicat mortalium vel vaticinium audias</p>
+<p class="c_v">A Iove quod maxime fert famam hominibus</p>
+<p class="c_v">Primo certe ad Pylon venias et interroga nestorem divum</p>
+<p class="c_n">285</p><p class="vv">Illinc ad Sparten ad flavum Menelaum</p>
+<p class="c_v">Ille certe ultimus venit Achivorum enea habentium indumenta</p>
+<p class="c_v">Si certe patris vitam et reditum audiens.</p>
+<p class="c_v">Vere iam consumens licet adhuc sustinebis per annum</p>
+<p class="c_v">Si autem mortuum audies non autem existentem</p>
+<p class="c_n">290</p><p class="vv">Reversus autem postea amicam ad paternam terram</p>
+<p class="c_v">Sepulturam sibi effodias et cum sepulcralibus sepelias</p>
+<p class="c_v">Multis valde qualiter convenit et viro matri da(to.)</p>
+<p class="c_v">Nam postquam iam hec perfecerisque et feceris</p>
+<p class="c_v">Cogita postea per sensum et per animum</p>
+<p class="c_n">295</p><p class="vv">Quomodo procatores in atriis tuis</p>
+<p class="c_v">Interficias vel dolo vel palam non autem te oportet</p>
+<p class="c_v">Puericantem duci quia non talis es</p>
+<p class="c_v">Vel non audis qualem gloriam accepit gloriosus horestes</p>
+<p class="c_v">Omnibus in hominibus postquam interfecit patricidam</p>
+<p class="c_n">300</p><p class="vv">Egistum dolosi consilii qui sibi patrem gloriosum interfecit</p>
+<p class="c_v">Et tu amice valde certe te video bonumque magnumque</p>
+<p class="c_v">Fortis fias ut aliquis tibi et tarde venturorum hominum benedicat</p>
+<p class="c_v">Nam ego ad navem citam veniam nunc</p>
+<p class="c_v">Atque ad socios qui iam me valde graviter anxiantes expectantes</p>
+<p class="c_n">305</p><p class="vv">Tibi autem ipsi in cura sit et meos cura sermones</p>
+<p class="c_v">Huic autem Thelemacus sciens contra locutus</p>
+<p class="c_v">Amice vere quidem hec amicabilia sentiens concionaris</p>
+<p class="c_v">Sicuti pater proprio filio et nunquam obliviscar ipsorum</p>
+<p class="c_v">Sed eya nunc expecta festinans licet ad viam</p>
+<p class="c_n">310</p><p class="vv">Ut lotusque delectatusque in amica anima</p>
+<p class="c_v">Donum habens ad navem venias gaudens in animo</p>
+<p class="c_v">Honorabile valde bonum quod tibi iocale erit</p>
+<p class="c_v">A me sicuti amicabiles amici amicis dant</p>
+<p class="c_v">Hunc autem retribuens affata est glaucopis Athena</p>
+<p class="c_n">315</p><p class="vv">Non amplius nunc impedias desiderantem viam</p>
+<p class="c_v">Donum autem quodcumque mihi dare amica anima vult</p>
+<p class="c_v">Retro venienti dabis domumque ut feram</p>
+<p class="c_v">Et valde bonum acceperis tibi autem dignum erit retributione</p>
+<p class="c_v">Hec certe iam sic cum dixit abiit glaucopis Athena</p>
+<p class="c_n">320</p><p class="vv">Avis autem sicuti Anopea volavit isti autem animo</p>
+<p class="c_v">Posuit potentiam et audaciam recordarique fecit ipsum patris</p>
+<p class="c_v">Magis adhuc quam antea Hic autem sensibus propriis intellexens</p>
+<p class="c_v">Obstupuit in animo agnovit eum Deum esse</p>
+<p class="c_v">Statim autem ad procatores ivit similis deo vir</p>
+<p class="c_n">325</p><p class="vv">Istis autem cytharista canebat gloriosus isti autem tacite</p>
+<p class="c_v">Sedebant audientes hic autem Achivorum reditum canebat</p>
+<p class="c_v">Anxium quem a Troia dedit Pallas Athena</p>
+<p class="c_v">Huius autem a palatio sensibus intellexit admirabilem cantilenam</p>
+<p class="c_v">Puella Icari sapiens Penelope</p>
+<p class="c_n">330</p><p class="vv">Per scalam autem altam descendit proprie domus</p>
+<p class="c_v">Non sola simul ipsam et pediseque due secute</p>
+<p class="c_v">Hec autem quando ad procatores venit diva feminarum</p>
+<p class="c_v">Stetit iam penes ostium inferioris domus studiose facte</p>
+<p class="c_v">Contra genas tenens mollia vela</p>
+<p class="c_n">335</p><p class="vv">Pedisequa autem vere sibi honesta exutrumque parte adstitit</p>
+<p class="c_v">Cum lacrimavit autem postea alloquebatur divum cytharistam</p>
+<p class="c_v">Fimie multa enim alia mortalium delectabilia scis</p>
+<p class="c_v">Opera virorumque deorumque quae glorificant cytharistam</p>
+<p class="c_v">Ex illis unum ipsis cane sedens isti autem procatores</p>
+<p class="c_n">340</p><p class="vv">Vinum bibant hanc autem finias cantilenam</p>
+<p class="c_v">Angustiosam que mihi scripsi in pectoribus amicam animam</p>
+<p class="c_v">Premit postquam me maxime tetigit tristitia sine fine</p>
+<p class="c_v">Tale certe caput desidero recordata semper</p>
+<p class="c_v">Viri cuius gloria amplam per helladam et medium Argon</p>
+<p class="c_n">345</p><p class="vv">Hanc autem Thelemacus sciens contra allocutus est</p>
+<p class="c_v">Mater mea cur vero invites delectabili cantori</p>
+<p class="c_v">Delectare ubi sibi intellectus commovetur non autem cantores</p>
+<p class="c_v">Causales sed iam Iupiter causalis qui dat</p>
+<p class="c_v">Viris inventoribus quomodocumque vult cuilibet</p>
+<p class="c_n">350</p><p class="vv">Isti autem non reprehensio Danaorum malam mortem canere</p>
+<p class="c_v">Illam enim cantilenam maxime glorificant homines</p>
+<p class="c_v">Que audientibus novella est</p>
+<p class="c_v">Tibi sustineat cor et animus audire</p>
+<p class="c_v">Non certe Ulixes solus amisit reditus diem</p>
+<p class="c_n">355</p><p class="vv">In Troia multi autem et alii viri perierunt.</p>
+<p class="c_v">Sed ad domum cum veneris cura quae tui opera sunt</p>
+<p class="c_v">Telam columque et pedisequis precipe</p>
+<p class="c_v">Opus laborare sermo autem viris in cura erit</p>
+<p class="c_v">Omnibus maxime autem mihi cuius certe dominium est in domo</p>
+<p class="c_n">360</p><p class="vv">Hec certe obstupefacta iterum domum intravit</p>
+<p class="c_v">Filii certe sermonem scientificum posuit animo</p>
+<p class="c_v">Atque ad palatium cum ascenderit cum pedisequis feminis</p>
+<p class="c_v">Plorabat postea Ulixem amicabilem maritum donec sibi somnum</p>
+<p class="c_v">Dulcem in superciliis posuit glaucopis Athena.</p>
+<p class="c_n">365</p><p class="vv">Procatores autem turbati sunt per atria umbrosa</p>
+<p class="c_v">Omnes animo elegerunt in lectis congregari</p>
+<p class="c_v">Istis autem Thelemacus scientificus incipit sermonem</p>
+<p class="c_v">Matris mee procatores superbam iniuriam habentes</p>
+<p class="c_v">Nunc comedentes delectemur non autem rumor</p>
+<p class="c_n">370</p><p class="vv">Sit quia bonum est audire cantorem</p>
+<p class="c_v">Talem qualis hic est deis similis voce</p>
+<p class="c_v">Mane autem a contionem sedebimus venientes</p>
+<p class="c_v">Omnes ut vobis sermonem audacter cum sententia dicam</p>
+<p class="c_v">Exite ab atriis alias autem in cura habeatis epulationes</p>
+<p class="c_n">375</p><p class="vv">Vestras possessiones comedentes alterutrum retribuentes per domos</p>
+<p class="c_v">Si autem vobis apparet hoc melius et utilius</p>
+<p class="c_v">Esse viri unius vitam inulte destruere</p>
+<p class="c_v">Destruatis ego autem deos implorabo semper existentes</p>
+<p class="c_v">Sique aliquando Iupiter det post ulta opera fieri</p>
+<p class="c_n">380</p><p class="vv">Sine ultione postea domos intra pereatis</p>
+<p class="c_v">Sic fatus. Isti autem vere omnes dentes in labiis cum inseruerint</p>
+<p class="c_v">De Thelemaco admirabantur quoniam audacter contionabatur</p>
+<p class="c_v">Hunc autem Antinous affatus est Eupithei filius</p>
+<p class="c_v">Thelemace vere valde iam te docent dii ipsi</p>
+<p class="c_n">385</p><p class="vv">Altum contionatorem esse et audacter contionari</p>
+<p class="c_v">Ne te in circumflua Itachia imperatorem Saturnius</p>
+<p class="c_v">Faciet quoniam generatione paternale est.</p>
+<p class="c_v">Hunc autem Thelemacus sciens contra allocutus</p>
+<p class="c_v">Antinoe licet mihi et admiratus eris quicquid dicam</p>
+<p class="c_n">390</p><p class="vv">Etiam hoc velim Iove dante sumere</p>
+<p class="c_v">Vel dices hoc malum in hominibus factum esse</p>
+<p class="c_v">Non certe malum regnare in domo mea cito autem tibi dabo</p>
+<p class="c_v">Divitias que sunt et preciosiores ipse</p>
+<p class="c_v">Sed certe imperatores Achivorum sunt et alii</p>
+<p class="c_n">395</p><p class="vv">Multi in circumflua Itachia viventes atque antiqui</p>
+<p class="c_v">Quorum aliquis hoc habeat postquam mortuus divus Ulixes</p>
+<p class="c_v">Hunc autem Eurimachus Polyvi filius contra allocutus</p>
+<p class="c_v">Thelemace certe hec deorum in genibus iacent</p>
+<p class="c_v">Quisquis in circumflua Itachia regnabit Achivorum</p>
+<p class="c_n">400</p><p class="vv">Possessiones autem ipse habes et domibus propriis dominaris</p>
+<p class="c_v">Non certe aliquis veniet vir qui te nolentem viribus</p>
+<p class="c_v">Possessiones destruet Itachia adhuc habitata</p>
+<p class="c_v">Sed volo te optime de forense interrogare</p>
+<p class="c_v">Unde iste vir a qua autem gloriatur esse</p>
+<p class="c_n">405</p><p class="vv">Terra ubi autem sibi generatio et patria cultura</p>
+<p class="c_v">Vel aliquam annuntiationem patris fert venturii</p>
+<p class="c_v">Vel proprium eius opus desiderans huc venit</p>
+<p class="c_v">Quare commmotus statim vadit neque expectavit</p>
+<p class="c_v">Ut sciret non certe alicui malo in vultu assimilabatur</p>
+<p class="c_n">410</p><p class="vv">Hunc autem Thelemacus sciens contra allocutus</p>
+<p class="c_v">Eurimache certe reditus amissus patris mei</p>
+<p class="c_v">Non vere annuntiationi adhuc obedio si ab aliqua veniet</p>
+<p class="c_v">Neque de vaticinio curo de quocumque mater</p>
+<p class="c_v">Ad atrium cum vocaverit vaticinatorem interrogaverit</p>
+<p class="c_n">415</p><p class="vv">Forensis autem ille meus patrius a Tafo est</p>
+<p class="c_v">Menthis Anchialio bellicosi gloriatur esse</p>
+<p class="c_v">Filius nam Taphiisis remum diligentibus dominatur</p>
+<p class="c_v">Sic fatus Thelemacus sensibus autem immortalem deam agnovit</p>
+<p class="c_v">Hi autem ad choream et desiderativam cantilenam</p>
+<p class="c_n">420</p><p class="vv">Mutati delectabantur expectabant autem vesperum ut veniret</p>
+<p class="c_v">Istis autem cantilena delectantibus niger hesperus venit</p>
+<p class="c_v">Iam tunc dormituri iverunt domum quodlibet</p>
+<p class="c_v">Thelemacus autem ubi ei thalamus pulcherime aule</p>
+<p class="c_v">Altus ordinatus erat visibili in loco</p>
+<p class="c_n">425</p><p class="vv">Illuc venit ad cubile multa sensibus cogitans</p>
+<p class="c_v">Isti autem simul accensas lampadas tulit scientifica sciens</p>
+<p class="c_v">Euriclia Opos filia Pisinoridao</p>
+<p class="c_v">Quam quondam Laertes emerat possessionibus propriis</p>
+<p class="c_v">Adolescentem adhuc existentem viginti boum autem dedit</p>
+<p class="c_n">430</p><p class="vv">Similiter autem ipsam venerabilis uxori honorabat in atriis</p>
+<p class="c_v">Cubili autem nunquam miscuit iram autem evitavit uxoris</p>
+<p class="c_v">Hec sibi statim accensas lampades tulit et ipsum maxime</p>
+<p class="c_v">Inter famulas diligebat et nutriebat parvum existentem</p>
+<p class="c_v">Aperuit autem ianuas thalami studiose facti</p>
+<p class="c_n">435</p><p class="vv">Sedit autem in lecto mollemque expoliavit vestem</p>
+<p class="c_v">Et hanc certe vetule studiosa consilia scientis posuit manibus</p>
+<p class="c_v">Hec certe hanc cum studiose duplicaverit et cum cura aptaverit vestem</p>
+<p class="c_v">In pertica cum appenderit penes perforatos lectos</p>
+<p class="c_v">Commota est ut iret a thalamo ianuam autem traxit coroni</p>
+<p class="c_n">440</p><p class="vv">Argentea atque seram extendit in clausura</p>
+<p class="c_v">Ubi hic nocturnus velatus ovis flore</p>
+<p class="c_v">Consulebat sensibus propriis de via quam dixit Athena.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

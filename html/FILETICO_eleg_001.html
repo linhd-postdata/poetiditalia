@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Martino Filetico elegia</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a97ed66c3" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Martino Filetico</b> <i>elegia</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Martino Filetico elegia</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(166, 311)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(188945,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(188945,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Martino Filetico</b> <i>elegia</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="188945"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Martino Filetico</b> <i>elegia</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/FILETICO|eleg|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_t">threnos panegyricos Martini Philetici <br />in divam Baptistam Sfortiam invicti principis <br />Federici Montefeltrii charissimam coniugem</p>
+<p class="blank">&nbsp;</p>
+<p class="c_v">Discite, mortales, nullo damnare deorum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Numina, cum veniet mortis acerba dies.</p>
+<p class="c_v">Omnibus est eadem Lachesis: precibusque moveri</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tristibus et lachrimis fata severa negant.</p>
+<p class="c_n">5</p><p class="vv">Nescit amicitias, nullos reveretur honores:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Discrimen nullum dives inopsque tenent;</p>
+<p class="c_v">Non rigidis senibus, non parcere novit ephebis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mollibus, aut pueris, virginibusve piis.</p>
+<p class="c_v">Non haec curat opes, non alta palatia regum,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Armaque magnanimi non timet ista ducis.</p>
+<p class="c_v">Mors atra deformes et tristi sydere natos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mors atra formosos ore nitente necat.</p>
+<p class="c_v">Respiciunt nullos dirarum fila sororum;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec malefacta nocent nec benefacta iuvant.</p>
+<p class="c_n">15</p><p class="vv">Inspice Baptistam gelido quae marmore clausa</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omnibus aequales edocet esse deas.</p>
+<p class="c_v">Haec est Sfortiadum generoso sanguine nata,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quorum iam toto nomen in orbe nitet;</p>
+<p class="c_v">Sfortiadum imperio Ligures, pars magna tenetur</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Italiae, Insubribus qui dare iura solent.</p>
+<p class="c_v">Sfortia Alexander, bello praeclarus et armis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Est genitor meritis notus ad astra suis;</p>
+<p class="c_v">Iustitia illustris nec non pietate fideque,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Morinus, et sancta relligione pater.</p>
+<p class="c_n">25</p><p class="vv">Te frater, Baptista, tuus: cui sydera partem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Magnam orbis galea spondet et alma fides,</p>
+<p class="c_v">Indole qui pulchra Latii Constantius oris</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cognitus excellet inclyta gesta patris;</p>
+<p class="c_v">Te quoque nobilitat mater Constantia factis,</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E quibus aeternum nomen in orbe tenet;</p>
+<p class="c_v">Quam poscit votis gemituque Pisauria tellus:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Illius haec iusta sub ditione fuit.</p>
+<p class="c_v">Quis memorare queat quantis virtutibus ipsa</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fulseris et laudes connumerare tuas?</p>
+<p class="c_n">35</p><p class="vv">Dicite, Pierides: vobis datur ista potestas:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A teneris vestra semper alumna fuit.</p>
+<p class="c_v">Nascentem primae vos hanc a matre tulistis:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aonidum sancto lacte educata fuit;</p>
+<p class="c_v">Ubere non alio fuerat nutrienda, Camoenae,</p>
+<p class="c_n">40</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non alios inter ludere digna choros.</p>
+<p class="c_v">Haec tunc vobiscum ambrosiae libabat odores,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Divinumque sibi pocula nectar erat.</p>
+<p class="c_v">Grammata vos primae teneram docuistis alumnam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Callebat lingua diva puella duas.</p>
+<p class="c_n">45</p><p class="vv">Omnia cui dederant nascenti numina munus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Invidere tamen impia fata nimis,</p>
+<p class="c_v">Iupiter ingenium: faciem formosis Apollo:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mercurius linguam: docta Minerva manus:</p>
+<p class="c_v">Lumina syderei Charites splendentia vultus</p>
+<p class="c_n">50</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et laetos oculos intulit alma Venus.</p>
+<p class="c_v">Addidit auratos divum regina capillos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Atque pudicitiam Delia casta dedit;</p>
+<p class="c_v">Ex quo crediderim caelesti semine natam:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omnia divini signa vigoris erant.</p>
+<p class="c_n">55</p><p class="vv">Glorior hanc tecum plures docuisse per annos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Teque probasse meas, Calliopea, manus;</p>
+<p class="c_v">Me duce Parnassi studiosa cacumina montis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Scanderat: et colles, Cirrha benigna, tuos;</p>
+<p class="c_v">Permessi sacro biberat de fonte liquores,</p>
+<p class="c_n">60</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hippocrinaeas, me duce, novit aquas.</p>
+<p class="c_v">Scripserat hinc quaedam teneris, nec fallor, ab annis;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Docta fuit prosa, carmine docta fuit,</p>
+<p class="c_v">Et potuit rerum dubias cognoscere causas:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non modo grammaticam novit et historias.</p>
+<p class="c_n">65</p><p class="vv">Hac orante patres sacri stupuere senatus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Obstupuit praeses maximus ecclesiae,</p>
+<p class="c_v">Non melius doctae quem mirabantur Aethnae</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Orasset, cultus nec Cicero melius.</p>
+<p class="c_v">Haec erat innumerae radians virtutis honore,</p>
+<p class="c_n">70</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vincebat priscos relligione patres.</p>
+<p class="c_v">Haec precibus celebrare piis, haec thure solebat</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Caelicolas omnes, lumina digna polo,</p>
+<p class="c_v">Qua pietate, dei mater sanctissima virgo,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Te colere, et nati numina vera tui.</p>
+<p class="c_n">75</p><p class="vv">Donabat magnis opibus virtute nitentes:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; His gemmam, his auri pondera magna dabat.</p>
+<p class="c_v">Qua pia nulla magis nec munificentior ulla</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Extitit, aut toto gratior orbe fuit.</p>
+<p class="c_v">Servavit castos plus quam Lucretia mores,</p>
+<p class="c_n">80</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vincitur exemplo turba Sabina novo.</p>
+<p class="c_v">Si qua fuit recti cultrix et semper amanda</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iustitiae meritis haec fuit una suae;</p>
+<p class="c_v">His animos populi placida cum pace regebat</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Artibus et divi coniugis auspitio,</p>
+<p class="c_n">85</p><p class="vv">Quicum tantus amor tanta et concordia mansit,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Obsequii tantum, denique tanta fides.</p>
+<p class="c_v">Vincitur Alcestes charo pro coniuge ducens</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Posse mori, Evanne Lygdamiasque simul.</p>
+<p class="c_v">Haec genere, haec patria, magno decorata parente:</p>
+<p class="c_n">90</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pluribus haec meritis nobilitata suis.</p>
+<p class="c_v">Est tamen excelsi magis illustrata mariti</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Laudibus: elucent praemia quanta ducis!</p>
+<p class="c_v">Hic est qui meruit multos sub Marte triumphos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et sublime suum nomen ad astra tulit,</p>
+<p class="c_n">95</p><p class="vv">Qui gessit semper victricia signa sub omni</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Militia, et magnum rettulit inde decus.</p>
+<p class="c_v">Innumeros bello populos et multa subegit</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Oppida, magnanimum plurima castra ducum.</p>
+<p class="c_v">Cognita iam totum Federici gesta per orbem</p>
+<p class="c_n">100</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Principis invicti, cognita bella ducis;</p>
+<p class="c_v">Excellit virtute omnes quos nostra tulerunt</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saecula; Caesareos inter habendus avos;</p>
+<p class="c_v">Non sinit hic quenquam celebri lucescere phama,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Splendoris tantum solus in orbe tenet,</p>
+<p class="c_n">105</p><p class="vv">Et collata suis nigrescere cuncta videntur:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tantum lucis habent omnia facta ducis,</p>
+<p class="c_v">Non aliter quam cum nascentis lampade Phoebi</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Deponunt radios sydera cuncta suos.</p>
+<p class="c_v">Quid memorem validis princeps quae gesserit armis?</p>
+<p class="c_n">110</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non est materia carmine digna meo.</p>
+<p class="c_v">Vix haec Virgilius posset, vix grandis Homerus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dicere, scripserunt qui graviore lyra;</p>
+<p class="c_v">Vix etiam tantis millena volumina rebus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sufficerent, quantas pace vel ense tulit.</p>
+<p class="c_n">115</p><p class="vv">Principis anguigeri cum signa superba teneret,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tunc nimium Veneti contremuere patres,</p>
+<p class="c_v">Regia cum multos ageret vexilla per annos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nunc quibus incepto praesidet auspitio,</p>
+<p class="c_v">Et regeret divi numerosas praesidis alas,</p>
+<p class="c_n">120</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Signaque Romanae duceret ecclesiae:</p>
+<p class="c_v">Proelia quanta tulit felici sydere princeps,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Oppida quanta ducis castraque capta manu!</p>
+<p class="c_v">Edomuit bello populos, urbesque superbas</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Multaque militibus diripienda dedit.</p>
+<p class="c_n">125</p><p class="vv">Quantum consilio et galea Monfeltrius heros</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Evalet, experti plurima turba ducum.</p>
+<p class="c_v">Fortia Sismundi testantur regna potentis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Armaque sunt testes et malatesta domus,</p>
+<p class="c_v">Victus et hic regno tandem spoliatus et armis,</p>
+<p class="c_n">130</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cessit vexillis dux Federice tuis.</p>
+<p class="c_v">Mira tua et probitas et magna potentia dextrae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Arbitrio bellum statque caditque tuo;</p>
+<p class="c_v">Donasti natum fuerant quae rapta parenti:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et generum princeps hunc facis esse tuum;</p>
+<p class="c_n">135</p><p class="vv">Atque tuo armipotens domus Anguillaria telo</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Decidit, ecclesiae quae modo terror erat.</p>
+<p class="c_v">Tu Senonum duro regem quasi Marte cedentem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eripis, et regnum protegis auxilio.</p>
+<p class="c_v">Belligeros Senonas docuisti pellier armis</p>
+<p class="c_n">140</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Italia, atque fugae turpia terga dare:</p>
+<p class="c_v">Quo Pherdinandi tuta cum pace quiescunt</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Imperia, et laeta est nobilis Ausonia.</p>
+<p class="c_v">Quid memorem qua bella gerat qua sedulus arte</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Proelia, quo cingat robore castra vafer:</p>
+<p class="c_n">145</p><p class="vv">Qua concursuras hortetur voce cohortes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ante alios celeri conspiciendus equo?</p>
+<p class="c_v">Hunc Bellona ducem docuit Mavortis alumnus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Artibus erudiit docta Minerva simul;</p>
+<p class="c_v">Hinc pugnaturas acies non doctius alter</p>
+<p class="c_n">150</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Instruit: Arimini quod bene novit ager,</p>
+<p class="c_v">Quod Fabiana simul testantur sanguine multo</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moenia, quod Senonum Gallia novit opus.</p>
+<p class="c_v">Hunc quoque bellantem spectarunt numina coelo,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Laudavere manus numina cuncta ducis.</p>
+<p class="c_n">155</p><p class="vv">Quis melius novit circumvallare catervis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Oppida, vel cuneis vincere posse viros?</p>
+<p class="c_v">Artibus his coepit fortunae moenia Fani</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Atque Theanei praesidis auspitio:</p>
+<p class="c_v">Affueras roseo radians, Nicolae, galero,</p>
+<p class="c_n">160</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pontificis summi palma secunda Pii.</p>
+<p class="c_v">Expavitque ducis nuper Volaterra phalanges:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Capta fuit paucis haec quoque militibus,</p>
+<p class="c_v">Cum tua, bellipotens Florentia, signa negaret,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et vellet misera libera iura sequi.</p>
+<p class="c_n">165</p><p class="vv">Rettulit inde duci meritas Florentia grates,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cuius ad optatum venerat auxilium;</p>
+<p class="c_v">Ingenti tunc ipsa ducem natumque triumpho</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Excepit laeto terra benigna sinu.</p>
+<p class="c_v">Argenti pateras et pondera divitis auri</p>
+<p class="c_n">170</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Praemia virtutis interhabenda dedit,</p>
+<p class="c_v">Donavit multo longe radiantibus auro</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aedibus, et galeis aere nitente ducem:</p>
+<p class="c_v">Quarum gemmato fulgebat crista leone</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aurea: belligero munera digna deo.</p>
+<p class="c_n">175</p><p class="vv">Muneribus summis longum testentur amorem:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Addita sunt culti iugera magna soli.</p>
+<p class="c_v">Humanis confide bonis: confide benigno</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fatorum vultu, syderibusque tuis:</p>
+<p class="c_v">Inter laetitiam meritosque e Marte triumphos</p>
+<p class="c_n">180</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nuntius affertur coniugis interitus.</p>
+<p class="c_v">Quae sibi chara magis quam dulci corpora vitae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Inter delitias haec erat una viro,</p>
+<p class="c_v">Dimidiumque animae, et divi pars altera sensus:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tantum virtutes promeruere suae.</p>
+<p class="c_n">185</p><p class="vv">Cum gravis invicti vexasset nuntius aures</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Principis, attonitus mox redit Eugubium.</p>
+<p class="c_v">Hic te saeva mali labes, Baptista, tenebat:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et tulit extremum Parca severa diem.</p>
+<p class="c_v">Sed te nondum animam, veniens, efflasse benignam</p>
+<p class="c_n">190</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Repperit et lachrimans talia verba dedit:</p>
+<p class="c_v">"Quid tantum, Baptista, mali te torquet, et unde,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Unde potest nobis tam ferus esse deus?</p>
+<p class="c_v">Sume animum sortemque malam devincere ferendo:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Te videam reditu convaluisse meo".</p>
+<p class="c_n">195</p><p class="vv">Principis adventu visa est resipiscere coniunx,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed moesto tales reddidit ore sonos:</p>
+<p class="c_v">"Venisti tandem, multis optate diebus;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gratulor incolumem te rediisse mihi:</p>
+<p class="c_v">Et tua quod toto splendescit gloria mundo</p>
+<p class="c_n">200</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quodque tuum nomen sentit uterque polus;</p>
+<p class="c_v">Laetor et ante necem chari me coniugis ora</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cernere, pauca simul me potuisse loqui.</p>
+<p class="c_v">Venit summa dies, coniunx charissime, leti;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Praetendunt certam fata severa necem:</p>
+<p class="c_n">205</p><p class="vv">Stat sua cuique dies, nunquam data fata moventur,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omnibus et vitae terminus unus adest.</p>
+<p class="c_v">Quem dederant vitae cursum mea fata peregi,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sunt animo forti iura ferenda deae,</p>
+<p class="c_v">Est grave delitias et plurima linquere vitae</p>
+<p class="c_n">210</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gaudia non divis inficienda choris;</p>
+<p class="c_v">Nil tamen est gravius, quam te, dulcissime coniunx,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Deserere et nati pignora chara novi:</p>
+<p class="c_v">Qui nostrum commune decus, spes ampla parentum est,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plurimus et nostrae posteritatis honos.</p>
+<p class="c_n">215</p><p class="vv">Hunc tibi commendo et dulces ante omnia natos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Commendo Antoni iura secunda tui:</p>
+<p class="c_v">Qua pietate fuit tu nosti Octavius in me</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quam nostro semper deditus obsequio:</p>
+<p class="c_v">Quo nullus sancta populos in pace regenti</p>
+<p class="c_n">220</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Est comes utilior, nullus et hoc melior.</p>
+<p class="c_v">Hic tibi sit summo semper coniunctus amore,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Solare occasum, te precor, hisce meum.</p>
+<p class="c_v">Parce, precor, lacrimis, dilecte, pelle dolorem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coniugis et vive laetus et incolumis.</p>
+<p class="c_n">225</p><p class="vv">Te solare, rogo: moriens, nunc vivere primum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Incipio: tu fac sis memor usque mei.</p>
+<p class="c_v">Inter coelicolas aeterno perfruar aevo.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Spiritus unde prius venerat astra colet".</p>
+<p class="c_v">His animum dictis cruciat dum maesta mariti,</p>
+<p class="c_n">230</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dumque suo properat dicere plura viro,</p>
+<p class="c_v">Dum quoque conatur domini dare brachia collo,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Deficit ore sonus: deserit ossa calor:</p>
+<p class="c_v">Et felix animus languenti corpore cedens</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Advolat aetherei regna beata poli.</p>
+<p class="c_n">235</p><p class="vv">Ingemit et maestos humectat flumine vultus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vixque suas princeps continet ore manus.</p>
+<p class="c_v">Et rigidum quamquam superat gravitate Catonem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moerorem tantum dissimulare nequit.</p>
+<p class="c_v">Quis tam crudelis saeva de tigride natus</p>
+<p class="c_n">240</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non tingat lachrimis hac moriente genas?</p>
+<p class="c_v">Non matrum: non turba virum: iuvenumque senumque</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Huius ob interitum lumina sicca refert.</p>
+<p class="c_v">Miscentur luctu, resonant plangoribus aedes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Femineus clamor sydera summa ferit.</p>
+<p class="c_n">245</p><p class="vv">Extemplo attonitam defertur phama per urbem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fletibus et gemitu tristia tecta fremunt.</p>
+<p class="c_v">Non aliter quam si mediam penetrasset in urbem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hostis, et arderent igne cremante domus.</p>
+<p class="c_v">Conveniunt matres, adeuntque palatia maesti</p>
+<p class="c_n">250</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Principis et fedant unguibus ora suis.</p>
+<p class="c_v">Tristibus et multis plangunt sua pectora pugnis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Damnatur coelum numina terra fretum,</p>
+<p class="c_v">Quae tam immaturam potuerunt tradere mortem:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ante diem dominam mersit acerba lues.</p>
+<p class="c_n">255</p><p class="vv">Hanc summi flevere duces, et plurima regum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Oppida, quae late maximus orbis habet;</p>
+<p class="c_v">Demisit lachrimas sacro spectante senatu</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Praeses Romanae maximus ecclesiae;</p>
+<p class="c_v">Rex etiam lachrimis Siculus sua lumina lavit:</p>
+<p class="c_n">260</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In gemitus Ligurum gaudia versa duci.</p>
+<p class="c_v">Hanc quoque deflevit Veneti pars magna senatus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hanc Picenus ager, omnis et Hetruria</p>
+<p class="c_v">Praecipue ingenti luxit Florentia fletu</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omnis et hanc gemuit Itala terra ducem.</p>
+<p class="c_n">265</p><p class="vv">Hinc oratores miserunt oppida, reges:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omnia languentum plena laboris erant:</p>
+<p class="c_v">Qui domino cepti tali pro morte doloris</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Signa darent: haec nam signa dolentis erant.</p>
+<p class="c_v">Ante omnes divae plorarunt funera Musae:</p>
+<p class="c_n">270</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Intumuit Pallas, indoluitque Venus;</p>
+<p class="c_v">Naiades hanc omnes et agrestia numina nymphae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Luxerunt Dryades, Nereidumque chorus.</p>
+<p class="c_v">Hanc regina deum flevit Saturnia Iuno,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hanc lavit fletu Iupiter ipse suo.</p>
+<p class="c_n">275</p><p class="vv">Cynthia sydereos lachrimis turbavit ocellos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plectra sonora pius fregit Apollo lyrae.</p>
+<p class="c_v">Huius ob interitum posuit crudelia Mavors</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tela manu, et lachrimis non caruere genae;</p>
+<p class="c_v">Luxerunt mores, pietas, concordia, virtus,</p>
+<p class="c_n">280</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iustitia et probitas, relligio atque fides;</p>
+<p class="c_v">Luxerunt risus et gaudia mentis honestae;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mors quoque crudelis non tenuit lachrimas.</p>
+<p class="c_v">Tunc inter luctus maesto de pectore princeps</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Erupuit tristi talia verba sono:</p>
+<p class="c_n">285</p><p class="vv">"Si lachrimis posses redimi Baptista tuorum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Alternaque tui vivere morte viri,</p>
+<p class="c_v">Ipsa meis precibus luctuque redempta fuisses:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nulla quidem posset mors gravis esse mihi,</p>
+<p class="c_v">Sed nequeunt certe crudelia fata moveri:</p>
+<p class="c_n">290</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Talia sunt aequo damna ferenda iugo.</p>
+<p class="c_v">Corpore digna tuo persolvam funera, coniunx;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quod dare nunc possum munus inane cape.</p>
+<p class="c_v">Pro meritis tumulum Phrygio de marmore condam:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Magnaque fundabo nomine templa tuo".</p>
+<p class="c_n">295</p><p class="vv">Haec ait: uxori summos indicit honores</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et parat exequias, ultima dona, suae.</p>
+<p class="c_v">Ducendum Urbini iubet alta ad moenia funus;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hic tumulus divae constituendus erat.</p>
+<p class="c_v">Effertur tristi cunctis plorantibus urbe:</p>
+<p class="c_n">300</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ducitur optato corpus inane loco.</p>
+<p class="c_v">Milia tot comitum nigra cum veste sequuntur</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A tergo, procerum milia, mille nurus,</p>
+<p class="c_v">Omnia collucent flammis, funalia noctem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exuperant, pompa nocte ferenda fuit.</p>
+<p class="c_n">305</p><p class="vv">Occurrunt populi dominae pro funere tristes:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Occurrunt gemitu crine iacente nurus.</p>
+<p class="c_v">Pectora percutiunt pugnis: it clamor Olympo.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lamentis planctu concava saxa sonant.</p>
+<p class="c_v">Postquam introgressum et media fuit urbe relatum</p>
+<p class="c_n">310</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ac domini maestos extitit ante lares,</p>
+<p class="c_v">Tunc quoque ploratu renovantur vulnera saevae</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mortis, ubique sonat luctus ubique dolor</p>
+<p class="c_v">Quicquid habet lacrimas, tunc flevit funera divae</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Principis ingemuit quicquid ubique gemit.</p>
+<p class="c_n">315</p><p class="vv">Mane sacerdotes repetunt pia munera templis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et tumulo dominae frigida membra ferunt.</p>
+<p class="c_v">Non tot Hymettus apes nec fert tot sydera coelum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quo tunc sollicitant vota precesque deos:</p>
+<p class="c_v">Inter caelicolas admittant numina divam:</p>
+<p class="c_n">320</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non opus est votis sollicitare deos.</p>
+<p class="c_v">Pluribus haec meritis coelestem ascendit Olympum:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hic sibi felicem fecerat ante locum.</p>
+<p class="c_v">Clauditur hinc tumulo tandem venerabile corpus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Incisum titulo taleque carmen habet:</p>
+<p class="c_n">325</p><p class="vv">"Sfortias invicti Federici principis uxor</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hoc Baptista gravi marmore clausa iacet;</p>
+<p class="c_v">Vixit bisdenos fatis felicibus annos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gloria divinae summa pudicitiae,</p>
+<p class="c_v">Summus amor populi, concordia summa mariti,</p>
+<p class="c_n">330</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iustitiae summus et probitatis honos.</p>
+<p class="c_v">Hic titulus fulvo totus radiabat in auro</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Incisus Phidiae Praxitelisque manu.</p>
+<p class="c_v">Spargite vos tumulum matres redolentibus herbis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Spargite Pestanis ossa benigna rosis".</p>
+<p class="c_n">335</p><p class="vv">Quicquid sudantes deplorant cortice myrrhae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fundite vos quicquid costus eous olet.</p>
+<p class="c_v">Quicquid odoris Arabs mittit superaddite matres,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assiduis spirent tura Sabea focis</p>
+<p class="c_v">Semper et exhalent opobalsama, semper amomum,</p>
+<p class="c_n">340</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Facta puellari florida serta manu:</p>
+<p class="c_v">Ver quoque perpetuum tumulo dent numina divae.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Molliter ipsa cubet: non premat ossa lapis.</p>
+<p class="c_v">Hanc bona posteritas memori veneretur honore,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Manibus et sanctis annua liba ferat.</p>
+<p class="c_n">345</p><p class="vv">Luceat assidue fulgenti lampade saxum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Felicis divae quod pia membra tenet.</p>
+<p class="c_v">Hac qui praetereunt tumulo dent oscula sacro,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et dicant flexo talia verba genu:</p>
+<p class="c_v">Salve, diva parens, numeros auctura dearum:</p>
+<p class="c_n">350</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Te quoque relligio non vetat esse deam.</p>
+<p class="c_v">Scandimus aethereum gradibus virtutis Olympum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plurima te virtus praecipit esse deam.</p>
+<p class="c_v">Nec potuit multum mors in te iuris habere:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Perpetuo vivet nomen in orbe tuum.</p>
+<p class="c_n">355</p><p class="vv">Hinc iam stella micans votis consuesce vocari</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et populo faveas tempus in omne tuo.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

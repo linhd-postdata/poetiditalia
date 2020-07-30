@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Pietro Bembo carmina expuncta</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a8e03c2b8" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Pietro Bembo</b> <i>carmina expuncta</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Pietro Bembo carmina expuncta</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(237, 507)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(352141,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(352141,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Pietro Bembo</b> <i>carmina expuncta</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="352141"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Pietro Bembo</b> <i>carmina expuncta</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/BEMBO|expu|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_t">1. de Fauno et Galatea</p>
+<p class="c_v">Cum fugeret summas Faunum Galatea per undas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et se iam medio tingueret ille mari:</p>
+<p class="c_v">"Quo fugis, o Galatea? mane, mane o Galatea:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non ego sum, dixit, non ego, Nympha, Cyclops".</p>
+<p class="c_n">5</p><p class="vv">Ignea tum roseo convertens lumina vultu:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Dii facerent esses nunc, ait illa, Cyclops:</p>
+<p class="c_v">Dummodo nulla truces Cyclopas terra habuisset,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Heu non dum flumen cum meus Acis erat".</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">2. de Christo marmoreo Pyrgotelis</p>
+<p class="c_v">Quales Asia nos apella vidit,</p>
+<p class="c_v">Europae dabat artifex videndos;</p>
+<p class="c_v">Quales viximus in priore saeclo,</p>
+<p class="c_v">Caelum Pyrgotelis dedit magistri</p>
+<p class="c_n">5</p><p class="vv">Longum posterioribus videri.</p>
+<p class="c_v">A quo Pyrgoteles vitam tulit; hunc etiam ipse</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vivum, quo potuit, fecerat esse, modo.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">3. ficus ad poetas</p>
+<p class="c_v">Exuperent cum iam vestri mea poma libelli,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quae polycarpos eram, nunc polycarmen ero.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">4. eadem</p>
+<p class="c_v">Carmina qui tulerit, pomis donatus abito,</p>
+<p class="c_v">Tot pomis, quot erunt sua carmina; carmina si me</p>
+<p class="c_v">Vestra manent, pueri, poma haec vos nostra manebunt.</p>
+<p class="c_v">Poma haec dulcia nostra magis, vel carmina vestra?</p>
+<p class="c_n">5</p><p class="vv">Carmina dulcia vestra, et poma haec dulcia nostra.</p>
+<p class="c_v">Poma haec nostra legenda, an carmina vestra legenda?</p>
+<p class="c_v">Carmina vestra legenda; legenda et poma poetae.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">5. de Pado exundante</p>
+<p class="c_v">Eridanus tumidis ripam quondam transilit undis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nil mirum: facit hoc, Borgia, te ut videat.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">6. de Arione marmoreo. Messanae Delphini insidenti <br />pro fonte, quem Panormitani perfregerunt</p>
+<p class="c_v">Me fera per medium servavit Ariona pontum:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vos, Siculi, in vestra dilaniastis aqua.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">7. ad Lycorim</p>
+<p class="c_v">Quale suo nunquam satiatus vellus in auro</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Attalus Idaeas pingere iussit acus;</p>
+<p class="c_v">Quale nec Idmonii fecerunt stamina fusi,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Texere sed sola est Palladis ausa manus;</p>
+<p class="c_n">5</p><p class="vv">Talia vir tibi dona tuus dat habere, Lycori,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hermus acidalia dona petenda Dea.</p>
+<p class="c_v">Et super his geminas forma praestante puellas</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Servitium dignas non nisi ferre tuum.</p>
+<p class="c_v">Altera Pelleo tibi venit ab usque Canopo,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Divite qua Nilus flumine culta secat;</p>
+<p class="c_v">Altera ab Eurotae campis, quam raptor Abydum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Turca levis verso ferre volebat equo;</p>
+<p class="c_v">Navita sed propere nostram vecturus ad urbem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Artibus et multa merce redemit Arabs.</p>
+<p class="c_n">15</p><p class="vv">Nec satis hoc: partes se se demittit in omnes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Officiumque pii coniugis Hermus agit.</p>
+<p class="c_v">Nam modo qua possis digitos incendere gemma</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pulchrius, aut flavas irradiare comas;</p>
+<p class="c_v">Nunc tua quo melius circundes colla monili</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaerit, et in cultu plurimus ille tuo est:</p>
+<p class="c_v">Seu tu candiduli specie tangaris elenchi,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Seu magis ire bono comptam adamante placet.</p>
+<p class="c_v">Foelix, cui talem contingit habere maritum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tamque suo cara est, si qua puella viro.</p>
+<p class="c_n">25</p><p class="vv">Si tua coniugii tibi sors optanda fuisset,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quem potius cuperes, non habuisse potes.</p>
+<p class="c_v">Ille bonam faciem cultu torpere maligno</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non sinet, et taciti damna subire situs:</p>
+<p class="c_v">Sed tibi quae placido tribuerunt Numina vultu,</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defendet placida perpolietque manu.</p>
+<p class="c_v">Quam bene, quod facies haec tam bona contigit illi;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cultori facies haec data nempe suo est.</p>
+<p class="c_v">Vivere quo posses multos formosa per annos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sic tibi crediderim consuluisse Deos.</p>
+<p class="c_n">35</p><p class="vv">Si minus hic mitis, vel tu formosa fuisses,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Alterius poteras forsitan esse viri.</p>
+<p class="c_v">Talis at huic uni fueras nuptura marito,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iampridem et formae debitus ille tuae est.</p>
+<p class="c_v">Utque tuae pietas illius debita formae,</p>
+<p class="c_n">40</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sic illi fuerat debita forma tua.</p>
+<p class="c_v">Novi ego: vos Charites primis iunxere sub annis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et manibus tedas conseruere suis:</p>
+<p class="c_v">Quasque ita venturo possem proferre sub aevo,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Has ibi tum voces e tribus una dedit:</p>
+<p class="c_n">45</p><p class="vv">"Conveniunt placidi pulchro cum pectore mores,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et formosa pio danda puella viro est".</p>
+<p class="c_v">Sed cave ne nimio subeant mala gaudia fastu,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quamque dedet, placeat plus tua forma tibi.</p>
+<p class="c_v">Et dolet, et dicam: vellem quoque falsa monere:</p>
+<p class="c_n">50</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exiguum formae gaudia tempus habent.</p>
+<p class="c_v">Est aliud maius multoque potentius istis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sub nulla positum conditione bonum,</p>
+<p class="c_v">Quod neque fallenti carpit pede curva senectus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ipsa nec invisi flamma maligna rogi;</p>
+<p class="c_n">55</p><p class="vv">Cui neque Erithreos possis conferre lapillos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec bis Getula vellera tincta manu:</p>
+<p class="c_v">Quod neque dat facies vobis, neque cura, puellae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed casti mores ingenuusque pudor.</p>
+<p class="c_v">Illud habet quaecunque proba est, quaecunque pudica,</p>
+<p class="c_n">60</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaeque virum, debet qualiter uxor, amat.</p>
+<p class="c_v">Haec tibi forma prior potioraque gaudia sunto:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hic tibi sit cultus, hic tua cura decor.</p>
+<p class="c_v">Nam quo compta magis, vel quo speciosior ulla est,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hoc citius petimus, num sit et illa proba.</p>
+<p class="c_n">65</p><p class="vv">Nec cultus, nec forma placet sine pondere morum:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plus etiam morum pondera laudis habent.</p>
+<p class="c_v">Aspice quam vivat totum cantata per orbem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exemplum casti Penelopea tori.</p>
+<p class="c_v">Pergama corruerant decimo servata sub anno,</p>
+<p class="c_n">70</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et Danaum Phrygias hauserat ignis opes.</p>
+<p class="c_v">Iamque lares patrios Pelopeia turba tenebat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In media multo flore iacente via.</p>
+<p class="c_v">Oscula quisque suae dederat repetita puellae</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Atque expectato solverat ora sono;</p>
+<p class="c_n">75</p><p class="vv">Narraratque suos illa pendente labores,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pinxerat et minimo castra ratesque mero;</p>
+<p class="c_v">Spectaratque viri positas ex ordine praedas</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Uxor et audaci parta trophaea manu.</p>
+<p class="c_v">Forsitan et lateri pugnacem aptaverat ensem</p>
+<p class="c_n">80</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et galeae longas presserat orbe comas.</p>
+<p class="c_v">Sola viri reditum votis operata pudicis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penelope surdos flebat habere Deos:</p>
+<p class="c_v">Cumque darent aliae pexis in crinibus aurum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et tegeret Graias splendida palla nurus,</p>
+<p class="c_n">85</p><p class="vv">Ipsa suos non compta sinus, non compta capillos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stabat, et in vultu signa dolentis erant.</p>
+<p class="c_v">Dixerat Icarius: "quid te, mea nata, fatigas?</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quid quereris lentum non rediisse virum?</p>
+<p class="c_v">Dum bene tu longas consumis frigida noctes,</p>
+<p class="c_n">90</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et potes in vacuo stulta cubare toro,</p>
+<p class="c_v">Quis scit an externam prudens amet ille puellam</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Interea, et siccos non sinat ire dies,</p>
+<p class="c_v">Castaque Penelope mentem non tangat Ulissis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Decideritque viri nomen ab ore tuum?</p>
+<p class="c_n">95</p><p class="vv">Certe ego dudum illam timui, quam fortibus herbis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fama est Argolicos detinuisse viros:</p>
+<p class="c_v">Et modo quaerenti quaedam mihi dicta Calypso est</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Naufragium passo concubuisse duci.</p>
+<p class="c_v">Ominer incassum: sed me tamen omnia tangunt,</p>
+<p class="c_n">100</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Veraque nescio quo sunt mala cuncta modo.</p>
+<p class="c_v">Dum tamen hoc tantum nostras pervenit ad aures,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Causa tui luctus quaelibet esse potest.</p>
+<p class="c_v">Quamlibet ille potest de se fecisse parentem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quosque pater dicat, quamque maritus habet.</p>
+<p class="c_n">105</p><p class="vv">Possidet et carae dotalia coniugis arva,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Inque peregrino moenia magna solo,</p>
+<p class="c_v">Oblitus miserique patris natique tuique.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I nunc et costans dicier uxor ama!</p>
+<p class="c_v">Nempe mihi tanti non est faciendus Ulisses,</p>
+<p class="c_n">110</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In viduo maneas semper ut ipsa toro.</p>
+<p class="c_v">Nec tam dura mihi fuerat sperata senectus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Esset ut a lachrymis illa gravanda tuis.</p>
+<p class="c_v">Eia age, rumpe moras vacuumque relinque cubile:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quod tibi vir nunc est, te licet esse viro.</p>
+<p class="c_n">115</p><p class="vv">Elige de multis, cui sis iungenda marito:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En ultro veniunt ad tua vota proci.</p>
+<p class="c_v">Nec praescire labor tibi, quem nolimve velimve est,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dum tibi quis placeat, iam mihi quisque placet.</p>
+<p class="c_v">Tantum ne dubita: quid enim dubitabile verum est?</p>
+<p class="c_n">120</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hora tibi melior non reditura fugit.</p>
+<p class="c_v">Heu nimium propere subit erumnosa senectus:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cur fraudas annos, filia dura, tuos?"</p>
+<p class="c_v">Dixit et amplexus carae dedit oscula natae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et patriae lachrymas non tenuere genae.</p>
+<p class="c_n">125</p><p class="vv">Illa sub haec oculos aegre demissa tenebat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Candida purpureus tinxerat ora pudor.</p>
+<p class="c_v">Quid faciat? cedat ne patri laesura maritum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; An neget et duro vulneret ore patrem?</p>
+<p class="c_v">Hinc pietas aetasque sui lachrymaeque parentis,</p>
+<p class="c_n">130</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Inde maritalis obstat et urget amor.</p>
+<p class="c_v">Plus tamen urget amor superatque in coniuge coniux;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed timet affectum sollicitare senem.</p>
+<p class="c_v">Dumque timet, radii manibus cecidere pudicis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Atque oblita suum dextra reliquit opus.</p>
+<p class="c_n">135</p><p class="vv">Stamina tum relegens revolutaque pensa reponens,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Per causam tacito tempora fronte terit.</p>
+<p class="c_v">Ah etiam rupit lenti bona litia fili,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ut traherent certas illa plicanda moras:</p>
+<p class="c_v">Ruptaque cum posset firmo connectere lino,</p>
+<p class="c_n">140</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Infirmo vanum callida fecit opus.</p>
+<p class="c_v">Quid te parva iuvat mora temporis, Icarione?</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ad tibi fallendos nil facit illa dies.</p>
+<p class="c_v">Tela erat ante oculos, tibi quam texebat, Ulisses:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ad telam sensus contulit illa suos.</p>
+<p class="c_n">145</p><p class="vv">Protinus et tenui, "faveas mihi", murmure, dixit,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Iniice tu longas officiosa moras".</p>
+<p class="c_v">Inde hilari moestum vultu solata parentem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Talia composito pectore verba refert:</p>
+<p class="c_v">"Tela haec caepta meo cum perficietur Ulissi,</p>
+<p class="c_n">150</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ipsa libens veniam sub tua iussa, Pater".</p>
+<p class="c_v">Accipit Icarius promissaque tempora servat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Spargit et in tepidos thura merumque focos.</p>
+<p class="c_v">Dumque parat natae thalamos taedasque maritas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Producit pactam tela retexta moram.</p>
+<p class="c_n">155</p><p class="vv">Sic illa invitoque parente, ultroque petita</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Absenti potuit casta manere viro.</p>
+<p class="c_v">Et ne forte putes paucos mansisse per annos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quatuor huic spatium lustra fuere morae.</p>
+<p class="c_v">Sed legitur nunc illa omnique legetur ab aevo:</p>
+<p class="c_n">160</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Haec merces tanto digna labore fuit.</p>
+<p class="c_v">Tu quoque perpetuo celebrabere, pulchra Lycori,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tu quoque venturo nomen ab orbe feres;</p>
+<p class="c_v">Si modo Penelopen castasque imitata maritas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Materiem dederis laudibus ipsa tuis.</p>
+<p class="c_n">165</p><p class="vv">Hoc tamen ut facias, non expectandus Ulisses,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Icariusve tibi decipiendus erit.</p>
+<p class="c_v">Prona via est, qua carpis iter: tibi cura marito</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sit tantum ut placeas conveniasque tuo.</p>
+<p class="c_v">Ille quidem nostro iuvenis rarissimus aevo est:</p>
+<p class="c_n">170</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Convenies isti nec nisi rara viro.</p>
+<p class="c_v">Nec quia non praestes, te nos nunc ista monemus:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed potes hortatu pronior esse meo.</p>
+<p class="c_v">Hoc tibi pro tanto debemus coniuge, qui nos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thesea Pirithous sic ut amavit, amat,</p>
+<p class="c_n">175</p><p class="vv">Cui tu sera tuos iungas foeliciter annos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Comprecor, o digno iuncta puella viro.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

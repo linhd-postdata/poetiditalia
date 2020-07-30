@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Angela Nogarola liber de virtutibus</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a8ece3e2c" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Angela Nogarola</b> <i>liber de virtutibus</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Angela Nogarola liber de virtutibus</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(101, 181)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(106096,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(106096,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Angela Nogarola</b> <i>liber de virtutibus</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="106096"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Angela Nogarola</b> <i>liber de virtutibus</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/ANGELA|virt|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_v">Ardua virtutum faciles cape, lector, ad usus;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Alta solent humiles carpere poma manus.</p>
+<p class="c_v">Utilis est operis magnos relevare labores</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et grave per planum ducere pondus iter.</p>
+<p class="c_n">5</p><p class="vv">Verba nocent aptis si non proferentur habenis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Turbat ut Armenicam dissona corda liram.</p>
+<p class="c_v">Saepe semel missam nequit os reticere loquelam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe nequit sisti qui male fertur equus.</p>
+<p class="c_v">Si nec ob hoc vivam tacitus contemno loquelam,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non est pro lolio reiicenda fides.</p>
+<p class="c_v">Vitrea pressa nocent delapsaque vasa terentur,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Os quoque nec mutum nec decet esse sagax.</p>
+<p class="c_v">Non est propositi sub verbis fallere nostri,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si quis enim fallit, fallitur ipse magis.</p>
+<p class="c_n">15</p><p class="vv">Nil docto mendace potest truculentius esse,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non decet immitem pellis ovina lupum.</p>
+<p class="c_v">Sed sibi plus alio patitur qui detrahit hosti,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plus sibi quam cuique ferre gravatus obest.</p>
+<p class="c_v">Quamplures aliena notant, sua carmina nunquam,</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Albula non oculis est manifesta suis.</p>
+<p class="c_v">Lingua modesta praeest regibus dominisque superbis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omnia temperies exuperare potest.</p>
+<p class="c_v">Si timeas Dominum, te cuncta creata timebunt,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Obsequium regni regis amicus habet.</p>
+<p class="c_n">25</p><p class="vv">Non reverens Christum revereberis omne creatum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Regi suspectus fronde cadente cadit.</p>
+<p class="c_v">Impia te fugiat neque alta superbia tollat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quo magis ascendit plus cito flamma cadit.</p>
+<p class="c_v">Glorificans humilem sequitur praecelsio mentem</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Planaque plus arbor fructificare solet.</p>
+<p class="c_v">Altius ut scindit plus fervida tollitur unda,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Funditur in nihilum mens feritate tumens.</p>
+<p class="c_v">Inflat se nimia fraudatus laude superbus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et nimio cantu pressa cicada crepat.</p>
+<p class="c_n">35</p><p class="vv">Gloria plus miseros solet offuscare superbos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Denique plus claudum crura levare solent.</p>
+<p class="c_v">Inclita laus humiles sequitur virtutes amicas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mollis enim vestis regibus apta placet.</p>
+<p class="c_v">Magna solent altos contundere fulmina montes,</p>
+<p class="c_n">40</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fructus tristitiae saepe superbum erit.</p>
+<p class="c_v">Laeta fructificant cum valles fertilitate,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fructificant humiles, est quibus alta quies.</p>
+<p class="c_v">Vana superborum vacuat iactatio mentem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et tenuem pennam ventus abire facit.</p>
+<p class="c_n">45</p><p class="vv">Firma solet virtus humiles servare quietes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non cadit in plana qui requiescit humo.</p>
+<p class="c_v">Saepe solet blandus minace superbior esse,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe magis rapida plana nocebit aqua.</p>
+<p class="c_v">Vult summo superesse deo, cum quisque superbit,</p>
+<p class="c_n">50</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed cedens oleo quaelibet unda subest.</p>
+<p class="c_v">Gratior est humilis, latitant bona cuius in imis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plus fago cucumer sublatitando placet.</p>
+<p class="c_v">Non suus est humilis, sed se magis abnegat ipse</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et multum fructum mortua grana ferunt.</p>
+<p class="c_n">55</p><p class="vv">Pestem nemo potest mulieris ferre superbae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nemo sub accenso sustinet igne manum.</p>
+<p class="c_v">Gloria quos inflat, crepitu iactantia frangit,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vesicae tumidae parvulus ictus obest.</p>
+<p class="c_v">Dat cunctis humilis, dat condimenta saporis,</p>
+<p class="c_n">60</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fercula cum condit, diligit ima piper.</p>
+<p class="c_v">Regum corda solent humiles pacare ministri,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec sibi prostratis vult ferus esse leo.</p>
+<p class="c_v">Difficiles non quaerit opes humilis vir et aptus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaeque volant alte non capiuntur aves.</p>
+<p class="c_n">65</p><p class="vv">Invidiae stimulos studeas vitare feroces,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si subdas animo quaeque superba tuo.</p>
+<p class="c_v">Se ferit ante suo si quem ferit invidiatu,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vipera prole sua se perimente perit.</p>
+<p class="c_v">Pectora saeva dolent aliena prosperitate</p>
+<p class="c_n">70</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et glacies solis tacta calore perit.</p>
+<p class="c_v">Invida pestifero latitant in corde venena,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et quo plus latitat plus basiliscus obest.</p>
+<p class="c_v">Sola sub invidia non est fortuna dolentis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sola carent stimulis ossa sepulta suis.</p>
+<p class="c_n">75</p><p class="vv">Omnibus innocui sunt simplicitatis amici,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Simplex ne noceat felle columba †</p>
+<p class="c_v">Innocui nullo poterunt ledente lederi,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fornax argentum purius igne facit.</p>
+<p class="c_v">Saepe nocivus obest sibi, non cui credit obesse,</p>
+<p class="c_n">80</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe sagittantem falsa sagitta ferit.</p>
+<p class="c_v">Invida per subitam morietur femina linguam</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iactaque per rabidam prora peribit aquam.</p>
+<p class="c_v">Dilectum plus habet pastor pecus ubere pleno</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plusque placet proprio femina casta viro.</p>
+<p class="c_n">85</p><p class="vv">Vir sapiens prodesse cupit nec ledere quemquam</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Parsque valens corpus non ledit ulla suum.</p>
+<p class="c_v">Non nocet indicio livor praevisus aperto,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ad visus hominis mox basiliscus obest.</p>
+<p class="c_v">Praevisos latitans perimit basiliscus ocellos,</p>
+<p class="c_n">90</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Invidus anticipat quos nociturus adit.</p>
+<p class="c_v">Obstupet innocuus sibi cum videt prior hostem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vox fugit illius qui videt ante lupum.</p>
+<p class="c_v">Saepe repentinus placidum mare ventus adinflat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Invidus unanimem non sinit esse domum.</p>
+<p class="c_n">95</p><p class="vv">Foeda cruore suo crudum sunt ora leonum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe suo dirum lividus ore notat.</p>
+<p class="c_v">Saepe ferit lingua gladio crudelius anguis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Invidus in verbis est homicida suis.</p>
+<p class="c_v">Vacca pio vitulum nunquam sine lingit amore,</p>
+<p class="c_n">100</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gratus vir lingua cuique placere solet.</p>
+<p class="c_v">Pulcra sub infestis requiescunt lilia spinis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mitibus et gratis nemo nocere potest.</p>
+<p class="c_v">Fervida corda gerens gelida revoceris ab unda,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Frigida sudanti pocula saepe nocent.</p>
+<p class="c_n">105</p><p class="vv">Te tua praecipitat si non caveberis ira,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Precipites odio saepe vigore carent.</p>
+<p class="c_v">Mitia pacificam pariunt praecordia mentem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mitis nectareum parturit uva merum.</p>
+<p class="c_v">Pallida vexantes homines facit ira cruentos,</p>
+<p class="c_n">110</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe gravis grando durius hoste ferit.</p>
+<p class="c_v">Proficit exultans gelidam vir nudus ad undam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Proficit herba virens non superata gelu.</p>
+<p class="c_v">Nanque dolet frustra de re quae transitur ira,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mortuus in vanum sollicitatur equus.</p>
+<p class="c_n">115</p><p class="vv">Mansuetudo feram flectit sine verbere mentem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et gelidum membrum molle medulla facit.</p>
+<p class="c_v">Omnia vir placidus vitiorum proelia vincit</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omne animalque ferum placat amica manus.</p>
+<p class="c_v">Solus in adversis novit requiescere mitis,</p>
+<p class="c_n">120</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Solus ovat piscis, quando procella tumet.</p>
+<p class="c_v">Dissipat ira virum, per quam caro mensque necatur,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dissipat et frondes pronaque grando ruens.</p>
+<p class="c_v">Inreverens mulier solitam non deserit iram,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mortiferum semper virus in angue viget.</p>
+<p class="c_n">125</p><p class="vv">Nil muliere bona, nil est moderatius unquam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nil ove sub caelo mitius esse potest.</p>
+<p class="c_v">Nobilis exuperat diras patientia mentes</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et ferus a placida vincitur ignis aqua.</p>
+<p class="c_v">Labilis instabilem necat impatientia mentem</p>
+<p class="c_n">130</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vincitur et validus saepius igne Calips.</p>
+<p class="c_v">Non quam se alios habet iracundus amicos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Utque aliis sibi sic vipera semper obest.</p>
+<p class="c_v">Magna quidem facies, validos si viceris hostes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed plus est animo se dominare suo.</p>
+<p class="c_n">135</p><p class="vv">Flamma domum superans non linquit abire colonum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ira virum memorem non sinit esse sui.</p>
+<p class="c_v">Nullius adversi patiens terrore movetur,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Firmius in saxo stat fabricata domus.</p>
+<p class="c_v">Duro spina sono crepituque laborat in igne,</p>
+<p class="c_n">140</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ira loquax homines asperitate cremat.</p>
+<p class="c_v">Saepe lupum nocuit dapibus aluisse necandum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iracundus obest, cui sociatus erit.</p>
+<p class="c_v">Exsperata ferunt valiturum semina morum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et sua vir patiens vota videbit ovans.</p>
+<p class="c_n">145</p><p class="vv">Frigora tristitiae nunquam tua corda coercent,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Felix tristitiam mentis constantia frangit,</p>
+<p class="c_v">Felici glacies sole cadente fluit.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Laeta parit longam felix constantia mentem,</p>
+<p class="c_v">Laeto radicis munere ligna virent.</p>
+<p class="c_n">150</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tristitiae vitium virtutes dissipat omnes</p>
+<p class="c_v">Et prohibet virens fructificare gelu.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nil nisi quod tantum norit revocabile memor,</p>
+<p class="c_v">Nil nisi quod non est umbra pavoris habet.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Temperat insolitam mentis constantia linguam,</p>
+<p class="c_n">155</p><p class="vv">Frenis immoniti morigerantur equi.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe levi mulier maeroris frangitur ictu</p>
+<p class="c_v">Et tenulis herbis parvula pulsa nocet.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fortior est constans procelso femina monte</p>
+<p class="c_v">Terraque plus stabilis cernitur esse polo.</p>
+<p class="c_n">160</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tristitiae vitium non est nisi mortis amicum,</p>
+<p class="c_v">Non nisi mors aliis vita draconis erit.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Carneus ex animo maeror solet esse superbo,</p>
+<p class="c_v">Ex foeda testa foetidus exit odor.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dulcia dirus habet quasi sint contraria maeror</p>
+<p class="c_n">165</p><p class="vv">Ipsaque leproso vita nocere solet.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Laetitiae nutrix pascit constantia mentem,</p>
+<p class="c_v">Vivere iocunde firmior esca facit.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Semet ad ima ferent religati Tartara tristes,</p>
+<p class="c_v">Semet et araneae musca dat acta cibum.</p>
+<p class="c_n">170</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe ferox sequitur mox declinatio tristem,</p>
+<p class="c_v">Fessus se mergit saepe natator aquis.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mens tua tristitiae constantibus obviet armis,</p>
+<p class="c_v">Hoste sub immiti vulgus inerme cadit.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Laeta facit vigiles hominum constantia mentes,</p>
+<p class="c_n">175</p><p class="vv">Formicam vigilem non premit ulla fames.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Durius assiduo ferrum consumitur ictu,</p>
+<p class="c_v">Crebris tristitiis annihilatur homo.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Uno turba fugit percussa et fulminis ictu,</p>
+<p class="c_v">Tristis adoretur nec sociatus erit.</p>
+<p class="c_n">180</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Provocat artifices proprio res capta decore</p>
+<p class="c_v">Et facies hilaris crescere quaeque facit.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mardocheus ovans animae maerore necatur,</p>
+<p class="c_v">Ledere maesta volens mens sibi primo nocet.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; At tristes casus inimici non hilarescas,</p>
+<p class="c_n">185</p><p class="vv">Vir probrum extrema plus sibi febre cavet.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Utilis est domibus pastus moderatior ignis,</p>
+<p class="c_v">Utilis est homini potus et esca brevis.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Igne domus valido consumitur intus et extra,</p>
+<p class="c_v">Igne cor, et corpus crapula rodit edax.</p>
+<p class="c_n">190</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sat solet esse bonum gentem superare cruentam,</p>
+<p class="c_v">Sed melius cupidam vincere posse gulam.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Libera saepe ruit citius gula mortis ad ima</p>
+<p class="c_v">Et solet in praeceps currere liber equus.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Impius in scelerum gaudet gravitate suorum</p>
+<p class="c_n">195</p><p class="vv">Lentaque balbutit lingua gravata mero.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sordescit rivus pluviali plenus ab imbre,</p>
+<p class="c_v">Sordet et insolito flumine plena gula.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fercula saepe virum rapiunt metuenda gulosum</p>
+<p class="c_v">Escaque decipulae saepe retemptat avem.</p>
+<p class="c_n">200</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Urbe fugit populus diro qui vincitur hoste,</p>
+<p class="c_v">Mens fugit, utque furit gutture victa caro.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe gula saturi pereunt absentia dicta,</p>
+<p class="c_v">Saepe gula moritur ni reprimatur equus.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nulla gulae possunt fore sufficientia pesti,</p>
+<p class="c_n">205</p><p class="vv">Plus sitit ydropicus, cum sitiendo bibit.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Impia mortiferae mens subditur ebrietati,</p>
+<p class="c_v">Vipera vipereo mordet amore parem.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omnia luxuriae cupidis dulcedine desunt,</p>
+<p class="c_v">Nil nisi sufficiens ignis habere potest.</p>
+<p class="c_n">210</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dulcius ebrietas intrat nocitura profanos,</p>
+<p class="c_v">Mulce sibi diro virus in angue manet.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cum tibi vina placent, non immoderatus regnet,</p>
+<p class="c_v">Perdit enim cursus immoderatus equum.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dissipat insignem tineae corrosio vestem,</p>
+<p class="c_n">215</p><p class="vv">Ebria congestas femina rodit opes.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Alta ferunt sapidos sitientia vascula potus,</p>
+<p class="c_v">Sobria fert mulier gaudia multa viro.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dulces sobrietas praebet virtutibus escas,</p>
+<p class="c_v">Dulces dat soboli mater amica dapes.</p>
+<p class="c_n">220</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Umbra viatores nimio demulcet ab aestu,</p>
+<p class="c_v">Sobrietas bomines absque dolore nutrit.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Abstinet ore suo quod pascat avicula pullos,</p>
+<p class="c_v">Abstinet ut sensus et bene doctus alat.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non igitur superare gula feritatis amica,</p>
+<p class="c_n">225</p><p class="vv">Sed sis angelica sobrietate pius.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Luxuriam forti studeas religare catena,</p>
+<p class="c_v">Nam prodest rapido forte ligamen equo.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Luxuriamque magis lacerat mulcendo voluptas</p>
+<p class="c_v">Plusque cibo sapido piscibus hamus obest.</p>
+<p class="c_n">230</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Blanda Venus diro praecordia fine remordet</p>
+<p class="c_v">Et Sirena canens membra quiete necat.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Innumeri lacerant foetentia corpora vermes,</p>
+<p class="c_v">Innumeras poenas luxuriosus habet.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ebrius est nullo iam mortuus aptus honori,</p>
+<p class="c_n">235</p><p class="vv">Mortuus eiicitur vilis ab aede canis.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rex sua sceptrifero felix tenet omnia sceptro</p>
+<p class="c_v">Virque pudicitiae cuncta quietus agit.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Grata paraleticis mors est vexatio membris,</p>
+<p class="c_v">Mors est, femineus dum male vexat amor.</p>
+<p class="c_n">240</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plurima lascivus cupiens nil obtinet apte,</p>
+<p class="c_v">Non habet in visco tenta quod optat avis.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sola placent celebri convivia splendida regi,</p>
+<p class="c_v">Sola placent alto pectora casta deo.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plus meretrix omni est sordida ceno,</p>
+<p class="c_n">245</p><p class="vv">Omni plus auro femina casta nitet.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Absque pudicitia labuntur ad infima mores,</p>
+<p class="c_v">Absque ratis malo nauta perire solet.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepius hospitium dictat bonus hospes amicum,</p>
+<p class="c_v">Hospite dictantur pectora saepe deo.</p>
+<p class="c_n">250</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fili spe vitae semper .........</p>
+<p class="c_v">Spe celebris mellis fert gula laeta famem.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nullus avaritiae stimulus tua pectora pungat,</p>
+<p class="c_v">Et ricius vulpi saepe petitus obest.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et nisi desit humus studet anxia fodere talpa,</p>
+<p class="c_n">255</p><p class="vv">Perpetuas acquirit opes vir qui miseretur,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quo plus mamma nutrit plenior esse solet.</p>
+<p class="c_v">Saepe cupido sua consumitur anxietate</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et minus esuriens illaqueatur avis.</p>
+<p class="c_v">Quidquid habent cupidi nihil est quibus omnia desunt,</p>
+<p class="c_n">260</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Amplius accendit cum datur esca faci.</p>
+<p class="c_v">Saepe solent volucres alienos pascere pullos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe suas alvus dat ......... opes.</p>
+<p class="c_v">Hinc timet, inde dolet, cupit hinc, si pausat avarus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ventus, spina ista saepe quiete carent.</p>
+<p class="c_n">265</p><p class="vv">Non turbant adversa pios nec prospera tollunt</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec lauri foliis aestus hyemsque nocet.</p>
+<p class="c_v">Pestis avaritiae fragili regnat in muliere,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe etenim lignum siccius ignis amat.</p>
+<p class="c_v">Provida non capitur temerato femina quaestu,</p>
+<p class="c_n">270</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Capta cibum laquei non temerabit avis.</p>
+<p class="c_v">Extra viva fluit nec surgere desinit unda,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nunquam deficiet dans miserator opes.</p>
+<p class="c_v">Aret humus sterilis iactataque semina perdit,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quidquid habet perimens aret avarus homo.</p>
+<p class="c_n">275</p><p class="vv">Quisquis opes habitus nequit expugnare †</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui nescit multa nare peribit aqua.</p>
+<p class="c_v">Nemo deo prmiussa sibi vitabit ab alto,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bos nequit imposito tollere colla iugo.</p>
+<p class="c_v">Anxius opprimitur, ditescit saepe quietus,</p>
+<p class="c_n">280</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Planta perit motu, planta quiete manet.</p>
+<p class="c_v">Dat miseris solitum miseratrix femina victum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In ligno vili mella recondit apis.</p>
+<p class="c_v">Caeca licet cautum male mens disponit aratrum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nemo valet recte scribere luce carens.</p>
+<p class="c_n">285</p><p class="vv">Vasa sub incauti figuli fornace peribunt,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mens sub avaritia perdita fugat opes.</p>
+<p class="c_v">Multi si fabricent aliquid dat pondus opusque,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Luctantes cupidi dant sua seque neci.</p>
+<p class="c_v">Spernens iustus opes multis miseretur egenis,</p>
+<p class="c_n">290</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Caelum nulla petit pluraque quaerit homo.</p>
+<p class="c_v">Pestiferos pellunt unguenta opima dolores,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omne bonus vitium frangit amore pio.</p>
+<p class="c_v">Concava saepe nocent ad equorum scandala cursus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et sociis planum turbat avarus iter.</p>
+<p class="c_n">295</p><p class="vv">Non tibi praebebit oleum nisi bacca coacta,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non tibi dat linum ni primo aretur ager.</p>
+<p class="c_v">Non mola dat gratam cribro nisi tersa farinam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non nisi cogatur praebet avarus opes.</p>
+<p class="c_v">Saepe pilus turbat calami scribentis acumen</p>
+<p class="c_n">300</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Communique bono mixtus avarus obest.</p>
+<p class="c_v">Pictor nanque prius proprio dat signa colore</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et sua cuique pii praemeditata ferunt.</p>
+<p class="c_v">Sanguis Azach fusus doceat te regis iniqui,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ut tibi sint tuamet non aliena velis.</p>
+<p class="c_n">305</p><p class="vv">† afestam constringe † memoratus avorum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cum pluviae superant insitaque † nocent.</p>
+<p class="c_v">Quaerere magna solet stomachus fomenta †</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe canis latrans vulnera saeva facit.</p>
+<p class="c_v">Membra valere facit partum moderatione</p>
+<p class="c_n">310</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et lira dulcisonos dat moderata sonos.</p>
+<p class="c_v">Saepe focus nimius propriam consurgit in iram,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe cibus nimius mors solet esse suis.</p>
+<p class="c_v">Sibilat esuriens miseranda milvus in †</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et sua lascivus vota gemendo linit.</p>
+<p class="c_n">315</p><p class="vv">Stultus opes minuens damnum mercator ad †</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stulta Venus minuens lecta dolendo fovet.</p>
+<p class="c_v">Templa pudicitiae nunquam fore tristia possunt,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nunquam continua sol sine luce manet</p>
+<p class="c_v">Saepe libido solet truculentos ledere vultus,</p>
+<p class="c_n">320</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe solet pestis ledere membra latens.</p>
+<p class="c_v">Casta pio mulier veneratur amore maritum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Casta suum turtur novit amore parem.</p>
+<p class="c_v">Vir mulierque sibi servantes foedera crescunt,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Servant alterutrum se relevando pedes.</p>
+<p class="c_n">325</p><p class="vv">Nil est nobilius quam vir mulierque pudici,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nil potius gemino lumine mundus habet.</p>
+<p class="c_v">Anulus ex rutilo gratus solet esse lapillo,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gratis habet proprium femina casta virum.</p>
+<p class="c_v">Nil nocet in tantum quam si mulier dominatur,</p>
+<p class="c_n">330</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flamma larem proprium transgrediendo nocet.</p>
+<p class="c_v">Perditur igniferis iuvenis meretricis ocellis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et pius agnus obest praerapiente lupa.</p>
+<p class="c_v">Non timet insidias vigili qui regnat in arce</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Inque pudicitia vir quasi Caesar erit.</p>
+<p class="c_n">335</p><p class="vv">Stante pudicitia gaudet caro mensque †</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ceraque melque fluunt donec † apis.</p>
+<p class="c_v">Virtu .........</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Virtus plus vicio sollicitata potest.</p>
+<p class="c_v">Ferrea vicino vis saepe resolvitur igne</p>
+<p class="c_n">340</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec vir erit stabilis cum muliere frequens.</p>
+<p class="c_v">Contineas igitur fugiasque libidinis ignes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nam loca sana solent frigidiora fore.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

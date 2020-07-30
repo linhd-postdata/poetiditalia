@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Tarquinia Molza carmina</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a91362633" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Tarquinia Molza</b> <i>carmina</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Tarquinia Molza carmina</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(312, 632)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(492412,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(492412,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Tarquinia Molza</b> <i>carmina</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="492412"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Tarquinia Molza</b> <i>carmina</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/MOLZA_T|carm|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_v">Quod mulces hominesque feros, et agrestia corda</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Carminibus, digna es nomine Molsa tuo.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">1. Fulvii Pazani ms.</p>
+<p class="c_v">Si renovat veterem in Domina Natura decorem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Oraque conspicua dote superba parit,</p>
+<p class="c_v">Qualia discordes Phrygio sub iudice Divae</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Spectanda Idaeis exhibuere iugis,</p>
+<p class="c_n">5</p><p class="vv">Cur apti desunt pictores, noscat ut illam</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Expressam vultu postera gens simili?</p>
+<p class="c_v">Dedecori aut nostrae est prior aetas, aut tibi Apelles</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cypria, quam pictis rettulit in tabulis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">2. incerti auctoris ms.</p>
+<p class="c_v">In lucem redeat si qui tibi Lesbia nomen,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cynthia quique dedit, Delia quique tibi,</p>
+<p class="c_v">Tarquiniae formam non sat per carmina fingam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec Cous Pictor exprimat in tabulis.</p>
+<p class="c_n">5</p><p class="vv">Se sola effingat, sibi nec putet esse pudori,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cum proprium possit sola referre decus.</p>
+<p class="c_v">Perfectum hoc natura sui specimen dedit unum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hoc uno vires prodidit ipsa suas.</p>
+<p class="c_v">Cum servare igitur cuncta hoc per saecula possit,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dedecus haud leve sit si interiisse sinat.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">3. Fulvii Pazani ms.</p>
+<p class="c_v">Tarquiniam quicunque nova sub imagine Pictor</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assuetae tentas arte referre manus,</p>
+<p class="c_v">Pro vultu depinge rosas, pro crinibus aurum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et niteant pura candida colla nive.</p>
+<p class="c_n">5</p><p class="vv">Sint oculi, ut cupidum si quis patietur amantem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Alternent varia spesque timorque vice.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">4. Ioannis Iurii ms.</p>
+<p class="c_v">Tarquiniae exoptas formam si fingere Pictor,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nulla suis penitus pars vacet ut numeris;</p>
+<p class="c_v">Scintillas vibrent vultus, et lumina flammas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pectoris et iaciant undique summa faces.</p>
+<p class="c_n">5</p><p class="vv">Nam dum corda hominum sancto urit, et uritur igne,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tota ardor, tota est flammea, tota et amor.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">5. eiusdem</p>
+<p class="c_v">Esse DEAM quis te dubitet, quam fingere nullus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quamlibet excellens pictor in arte potest?</p>
+<p class="c_v">At queat hoc, superos repetat si Cous Apelles,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cuius se fictam gaudet ab arte Venus.</p>
+<p class="c_n">5</p><p class="vv">Non Veneris formam, sed quam conceperat ipse,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et sibi formarat, rettulit in tabula.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">6. Benedicti Labadini</p>
+<p class="c_v">Ingenium Pallas, formam Cytherea, leporem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Effingant Charites, quem tribuere tibi:</p>
+<p class="c_v">Sic eris expressa, haec mortalis finget imago</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nulla, nisi obtingat fors tua Pigmalion.</p>
+<p class="c_n">5</p><p class="vv">Pingere conetur si te vel Cous Apelles,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non habeat numeros picta tabella suos.</p>
+<p class="c_v">Perficiat solus divina hoc arte Prometheus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Addere namque operi sensum animamque potest.</p>
+<p class="c_v">Quidquid agis, quicquid loqueris, vestigia quoquo</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vertis, et aetherea lumina clara, faces,</p>
+<p class="c_v">Te Charites comitantur, adest tibi blanda Venustas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assistuntque Sales, subsequiturque Lepor.</p>
+<p class="c_v">Ut nec pulchra tamen possis formosa videri,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Offusis oculos decipiens tenebris:</p>
+<p class="c_n">15</p><p class="vv">Sed cum sis longe ante alias pulcherrima, summa</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sanctaque sit summo forma decore tibi.</p>
+<p class="c_v">Miser ego si nullus homo te fingere possit,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Divina fingat te Deus arte Deam.</p>
+<p class="c_v">Nullus, te praeter, recte te fingere possit,</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Te vera effigie sola referre potes,</p>
+<p class="c_v">Si prolem edideris dias in luminis auras,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Corporis atque animi quae sit imago tui.</p>
+<p class="c_v">Qui videt, is nimio te deperit ustus amore,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lumina nec solitum munus obire queunt.</p>
+<p class="c_n">25</p><p class="vv">Hinc te nec tabulis, nec marmore fingere quisquam</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Est potis; effingi si tamen ipsa velis,</p>
+<p class="c_v">Pictorisque cupis manus ut tibi proroget annos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sume aliam formam, desine et esse quod es.</p>
+<p class="c_v">Si quantus Latio es Fallopi, et quantus Etrusco</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Carmine, pingendi tantus in arte fores,</p>
+<p class="c_v">Tarquiniae cum vera tuo sit pectore imago</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fixa, tua hanc posset pingere sola manus.</p>
+<p class="c_v">Πᾶσ τισ ἔῤῥωσε βλέπειν, γίνεται δ’ἂψ τυφλὸσ ἐραστησ,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Σὸν δ’οὐ κάλλοσ ὀρῶν πῶσ ἂν ἔχειτο γράφειν;</p>
+<p class="c_n">35</p><p class="vv">Ut videt, ingenti ut Pictor fit caecus amore!</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui te igitur possit pingere caecus amans?</p>
+<p class="c_v">Te pictor fit mentis inops, caecusque videndo,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et potis est vultus hic simulare tuos?</p>
+<p class="c_v">*E)υπρεπὲσ ἂν τ’ἐῖδοσ, σοφίαν, περικαλλέα μολπὴν,</p>
+<p class="c_n">40</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *A)/μμιγα πάντα γράφειν, παντελὲσ ἔργον, ἐρᾶσ,</p>
+<p class="c_v">Μαψιδίωσ πειρᾶσ, μένην δ’εἰ ζώγραφε μορφὴν</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Σὸσ, πόθοσ, οὐ κεφαλῆσ ἔμμορασ, ὀυδὲ ποδῶν.</p>
+<p class="c_v">Si formam, sophiam, cantumque effingere tentes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Perfectum faciunt quae tria iuncta decus,</p>
+<p class="c_n">45</p><p class="vv">Sit labor hic vanus; si formam finxeris unam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Illa quidem careat et capite, et pedibus.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">7. Herculis Capitonis ms.</p>
+<p class="c_v">Pictura ardentes oculos, vultusque decentes</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tarquiniae aspiciens, corporeumque decus;</p>
+<p class="c_v">Exprimere, et formam est conata referre nitentem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe, sed ingenti pondere victa fuit.</p>
+<p class="c_n">5</p><p class="vv">Quam maiora suis audentem affata Poesis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Viribus, haec mea sit cura, meusque labor,</p>
+<p class="c_v">Desine, sustineant haec nostras pondera vires,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ipsa animi referam, corporis ipsa decus.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">8. eiusdem</p>
+<p class="c_v">Si decus egregium formae, si lumina, vultus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et vera expressos arte videre cupis,</p>
+<p class="c_v">Aspice, quot nimio mortales urat amore,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aspice, quam teneat pallidus ora color:</p>
+<p class="c_n">5</p><p class="vv">Tarquiniae hic oculos, hic formam agnoscere possis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nulla potest fieri hac verior effigies.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">9. eiusdem</p>
+<p class="c_v">Si tua in assiduo motu est pulcherrima imago,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dum micat illa magis, dum magis illa viget,</p>
+<p class="c_v">Quod non effingi possis mirabere? quod te</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non queat artificis ulla referre manus?</p>
+<p class="c_n">5</p><p class="vv">Si fingi exoptas penitus, veroque decorem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exemplo expressum Diva videre tuum,</p>
+<p class="c_v">Aut face ne egregiae crescat praestantia formae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pictoris pariter aut face crescat opus.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">10. eiusdem</p>
+<p class="c_v">Quam modo Tarquiniam mire expressisse ferebant,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nunc idem penitus dicitur arte rudis;</p>
+<p class="c_v">Si formosa magis, sic fit divinior illa</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Semper, fertque novum quaelibet hora decus.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">11. Io. Baptistae Pazani ms.</p>
+<p class="c_v">Vos quibus ad verum minus apte expressa decorem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tarquiniae effigies est gravis usque dolor,</p>
+<p class="c_v">Definite in varias culpam hanc diffundere caussas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Summaque sit cunctis sensibus una satis.</p>
+<p class="c_n">5</p><p class="vv">Naturae, totis ingens qua viribus instat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nulla parem Ars potis est aemula ferre gradum.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">12. Cornelii Corandini</p>
+<p class="c_v">Dum contemplatur te a summo Pictor ad imum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lustrat et intentis singula luminibus,</p>
+<p class="c_v">Nil penitus mortale in te contendit, at esse</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Divinum affirmat vultu, oculisque decus.</p>
+<p class="c_n">5</p><p class="vv">Caelestis tamen hos demens effingere honores,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mortalique ipsos nititur arte sequi:</p>
+<p class="c_v">Nec sibi quod pingit praeconia demere laudis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Unde haec sperabat posse referre, videt.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">13. Fulvii Paciani ms.</p>
+<p class="c_v">Effigies, fulvo quam tu miraris in auro</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaslibet aethereas posse decere Deas,</p>
+<p class="c_v">Omniae Tarquiniae similis: pulchram aspicem frontem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ora, comas, oculos, candida colla, manus.</p>
+<p class="c_n">5</p><p class="vv">Illam cernendi detur modo copia, amantes</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Poscere in extrema morte videbis opem:</p>
+<p class="c_v">Illi blanditias molli componere voce;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vultu adeo vivam ficta puella refert.</p>
+<p class="c_v">Attamen haec iuvenum miseros cum ludere amores</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nesciat, hoc proprium est: cetera sunt Dominae.</p>
+<p class="c_v">Lumina (quis credat?) nostri illa fugacia amoris,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lumina erunt oculis saepe videnda meis.</p>
+<p class="c_v">Quam bene Tarquiniam Pictor mihi rettulit, arte</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Doctus Apolleas exuperare manus.</p>
+<p class="c_n">15</p><p class="vv">Felix, atque iterum felix pulcherrima imago</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Divinae formae conditione tuae.</p>
+<p class="c_v">Illa brevi facies dominae vitiabitur aevo,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tu cana nunquam conspiciere coma.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">14. Benedicti Labadini M.</p>
+<p class="c_v">Invenisse ratus summum decus inquit Apelles,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sola meum inventum mater amoris habe:</p>
+<p class="c_v">Caelestes inter soli hoc tibi convenit, extet</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ne dum in femineo corpore tantus honos.</p>
+<p class="c_n">5</p><p class="vv">Sed si Tarquiniam videat, cui summa putaram;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Infima vix dicat nota fuere nihi.</p>
+<p class="c_v">An pingam? frustra id tentem, haud imitabilis illa est,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec venia dignus tertius error erit.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">15. eiusdem</p>
+<p class="c_v">Tarquiniam intentus pictam dum spectat Alethes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aut haec caelestis dixit imago Dea est,</p>
+<p class="c_v">Aut si feminea est, natura haud femina talis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Addidit artificis plurima docta manus.</p>
+<p class="c_n">5</p><p class="vv">Sed cum deinde illam vidisset, plurima omisit</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pictor ait, fuerant quae potiora, rudis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">16. Alfonsi Saxii ms.</p>
+<p class="c_v">Tarquiniae conatus erat bis fingere Mopsus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Effigiem, Mopsi bis cecidere manus.</p>
+<p class="c_v">Attonitus tandem secum, hoc fit numine Divum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fas mirere decus tantum, imitere nefas.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">17. eiusdem</p>
+<p class="c_v">Tarquiniae effigiem multo emit Honorius auro,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Divina expressam dixit et esse manu.</p>
+<p class="c_v">Inde illam miro succensus amore videndi</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Emensus longam est, difficilemque viam.</p>
+<p class="c_n">5</p><p class="vv">Et fictum vero vinci cum cerneret ore,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non mihi sumtus ait, nec via longa gravis.</p>
+<p class="c_v">Vel semel hoc vidisse decus caeleste, labore</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possit emi Herculeo, divitiisque Midae.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">18. eiusdem</p>
+<p class="c_v">Carmina Tarquiniae cultissima legerat Alcon,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iudice et hoc fuerat Lesbia docta minus.</p>
+<p class="c_v">Expressam tabula sed cum vidisset eburna,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sindari ad hanc dixit est tua forma nihil:</p>
+<p class="c_n">5</p><p class="vv">Immo ad Tarquiniam nihil haec respondit Aconteus;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si videas, supra dixeris ire Deas.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">19. eiusdem</p>
+<p class="c_v">Tarquiniam pictor si tentes pingere, noctem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Offundent oculis lumina clara tuis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">20. Ioannis Turrii ad Fulvium Pac.</p>
+<p class="c_v">Effigies, quam tu sublimi carmine tollens,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Contendis vultu Tarquiniae esse parem,</p>
+<p class="c_v">Delapsa aut caelo est, simulacrum ut Palladis olim,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quod Diomedeae surripuere manus;</p>
+<p class="c_n">5</p><p class="vv">Aut, licet exuperet prisci quidquid tulit aetas</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Temporis, humana est si modo ficta manu,</p>
+<p class="c_v">Es quanto maior Fulvi omnibus ipse poetis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Caelesti tanto est illa decore minor.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">21. Alexandri Secchii ms.</p>
+<p class="c_v">Curnam Tarquiniam tentarint pingere multi,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nemo tamen vere pingere adhuc potuit?</p>
+<p class="c_v">Caelestis lux est, radiis late omnia lustrans:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nulla hominum hinc illi par manus esse potest.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">22. eiusdem</p>
+<p class="c_v">Icarios casus cum vellet Daedalus olim</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exprimere, hoc patriae non potuere manus.</p>
+<p class="c_v">Tarquiniae eximium divini effingere vultus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accidit Antigeni, dum decus optat, idem.</p>
+<p class="c_n">5</p><p class="vv">Cur ita? ne faceret nimius dolor obstitit illi,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Huic rapiens sensus immoderatus amor.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">23. Fulvii Paciani ad Ioannem Turrium</p>
+<p class="c_v">Non mihi Tarquiniae tenus demissa per auras</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Blandior in cupidas venit imago manus.</p>
+<p class="c_v">Nec quia ab ingenua ductam se proferat arte,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iudicium minuat picta figura tuum.</p>
+<p class="c_n">5</p><p class="vv">Nam sicut nemo tam docto carmine, solus</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quale facis, simile hoc esse negar et opus.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">24. de fonte</p>
+<p class="c_v">Hoc fonti proprium est blandos inducere somnos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Murmure dum trepidat lene sonantis aquae;</p>
+<p class="c_v">At fons hic vigilare facit, pellitque soporem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aspera dum rauca guttura voce sonant.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">25. de Cynthio card. Aldobrandino</p>
+<p class="c_v">Te celebrat, Cynthi, virtute insignis et ostro,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec tantam molem quisque subire timet.</p>
+<p class="c_v">Sic ego nunc oblita mei te extollere vellem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Carmina, sed dictis maior es ipse meis.</p>
+<p class="c_n">5</p><p class="vv">Nil igitur dicam, nisi quod mea Musa tacebit,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Divinas laudes corde loquente tuas.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">26. de eodem</p>
+<p class="c_v">Tu solus, Cynthi, te ipsum velut alter Apollo,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cuius nomen habes, concelebrare potes.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">27. de imagine B. V. a divo Luca depicta</p>
+<p class="c_v">Felsina clara virum ingeniis, et clarior almae</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quod frueris vera Virginis effigie,</p>
+<p class="c_v">Quae sic ad vivum Lucae est expressa per artem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ipsa sibi ut similis vix queat esse magis.</p>
+<p class="c_n">5</p><p class="vv">Sed tamen inde tibi surgit quoque gloria maior,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quod datur haec ipsa matre iubente dea.</p>
+<p class="c_v">Ergo illi referas tanto pro munere grates,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et certam dubiis hinc pete rebus opem.</p>
+<p class="c_v">Namque sui quae μνημόσυνον tibi dulce reliquit,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Credibile est votis velle favere tuis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">28. Ionnis Cargae ad Tarquiniam Molsam</p>
+<p class="c_v">Unica divini soboles, et gloria Molsae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Phoebe tuas vires in sua vota vocat.</p>
+<p class="c_v">Sit languor procul ille rogat, quo carpitur, et quo</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Inficitur, miseris conficiturque modis.</p>
+<p class="c_n">5</p><p class="vv">Nec datur assuetos meditari pollicis ictus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec datur assuetos voce ciere sonos.</p>
+<p class="c_v">Carminis auctorem turpe est, citharaeque parentem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non cito Tarquiniae consuluisse suae.</p>
+<p class="c_v">Est et turpe deum, medicae qui praesidet arti,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Formosae nullam ferre salutis opem:</p>
+<p class="c_v">Formosae facie, formosae corpore toto,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Par queat ut natis omnibus ire Iovis.</p>
+<p class="c_v">Nam si qua invidia, est haec, quod generosa Virago</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Castalii intactas hauriat amnis aquas:</p>
+<p class="c_n">15</p><p class="vv">Audeat et cantu Aeoliae fidibusque puellae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Oreque Romano, carminibusque loqui:</p>
+<p class="c_v">Augeat et patriam, proavosque insignis honore,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fert sibi quem Thusci fluminis unda cliens.</p>
+<p class="c_v">Est decus hoc, o Poebe, tuum surgentis Alumnae</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gloria, nam certe gloria tota tua est.</p>
+<p class="c_v">Divinum roseo dum fundit carmen ab ore</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Molsia, et argutum pectine pulsat ebur;</p>
+<p class="c_v">Dulcius in terris nihil est, quod mulceat aures</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sive hominum mavis dicere, sive Deum.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">29. ad eandem</p>
+<p class="c_v">Tarquiniae quisquis radiantes tentat ocellos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pingere, et accendit quas Amor inde faces;</p>
+<p class="c_v">Ille ortus, Aurora, tuos, et lumina mundi</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Scilicet, et caeli pingere tentat opes.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">30. ad Tarquinam Molsam de Platonis dialogo <br />abs se verso, 9 Maii 1607, Io. Bapt. Stellae</p>
+<p class="c_v">Platonis Graio manantia nectare verba</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exprimis Hetruscis Unica Molsa modis:</p>
+<p class="c_v">Ut dubitem, vestrum quis purius ore loquatur;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Debetur certe, sed tibi maius honos;</p>
+<p class="c_n">5</p><p class="vv">Quae premere ipsius vestigia paene coacta,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non finis ut gressum praeferat ille tibi.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

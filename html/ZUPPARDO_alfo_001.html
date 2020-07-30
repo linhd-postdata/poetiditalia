@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Matteo Zuppardo Alfonseis 1</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a95b36220" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Matteo Zuppardo</b> <i>Alfonseis</i> 1";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Matteo Zuppardo Alfonseis 1</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(92, 169)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(100301,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(100301,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Matteo Zuppardo</b> <i>Alfonseis</i> 1            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="100301"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Matteo Zuppardo</b> <i>Alfonseis</i> 1"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/ZUPPARDO|alfo|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <form name="toServer" method="get" action="/poetiditalia/public/testo/testo"><div class='intera'>
+<div style="float:left;margin-right:10px;margin-top:6px">Altre sezioni</div>
+<div style="float:left;margin-right:5px;margin-top:2px;">
+<select class="form-control" id="cambiaSezione" name="codice" onchange="document.toServer.submit()"><option selected="selected" value="ZUPPARDO|alfo|001">&nbsp;&nbsp;1&nbsp;&nbsp;</option>
+<option  value="ZUPPARDO|alfo|002">&nbsp;&nbsp;2&nbsp;&nbsp;</option>
+<option  value="ZUPPARDO|alfo|003">&nbsp;&nbsp;3&nbsp;&nbsp;</option>
+<option  value="ZUPPARDO|alfo|004">&nbsp;&nbsp;4&nbsp;&nbsp;</option>
+<option  value="ZUPPARDO|alfo|005">&nbsp;&nbsp;5&nbsp;&nbsp;</option>
+<option  value="ZUPPARDO|alfo|006">&nbsp;&nbsp;6&nbsp;&nbsp;</option>
+<option  value="ZUPPARDO|alfo|007">&nbsp;&nbsp;7&nbsp;&nbsp;</option>
+<option  value="ZUPPARDO|alfo|008">&nbsp;&nbsp;8&nbsp;&nbsp;</option>
+<option  value="ZUPPARDO|alfo|009">&nbsp;&nbsp;9&nbsp;&nbsp;</option>
+<option  value="ZUPPARDO|alfo|010">&nbsp;&nbsp;10&nbsp;&nbsp;</option>
+</select>
+</div>
+<div style="float:left;" class="btn-group" role="group" aria-label="...">
+<button type="button" disabled="disabled" name="previous" id="button_previous" title="Previous" onclick="muoviSezione(-1)" class="btn btn-reverse"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+<button type="button"  name="next" id="button_next" title="Next" onclick="muoviSezione(1)" class="btn btn-reverse"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+</div>
+<div style="clear:both"></div>
+</div>
+</form>
+<p></p><br /><p class="c_v">Huc date, Pyerides, huc dulcia pectora, Muse,</p>
+<p class="c_v">Huc agite et celeres repetamus nomina magni</p>
+<p class="c_v">Principis Alfonsi nuperque agitata per orbem</p>
+<p class="c_v">Cantemus meliore tuba. Tu, pulcer Apollo,</p>
+<p class="c_n">5</p><p class="vv">Adsis et nostre des vela secunda carinae.</p>
+<p class="c_v">Captivam imperii postquam Tros impius urbem</p>
+<p class="c_v">Duxit et in sanctos sitiens in sanguine sevit</p>
+<p class="c_v">Hocque ortum est terris tam detestabile crimen,</p>
+<p class="c_v">Alfonsus magnos concepit mente dolore</p>
+<p class="c_n">10</p><p class="vv">Quos hominum nulli tacitus patefecit et iram</p>
+<p class="c_v">Dissimulans forti clausit sub pectore vulnus.</p>
+<p class="c_v">Cumque animo tanti sceleris vindicta sederet</p>
+<p class="c_v">Aspiceretque fidem Christi populumque iacentem</p>
+<p class="c_v">Devictasque urbes graias atque agmina cesa</p>
+<p class="c_n">15</p><p class="vv">Totque hominum strages offensaque numina, fervet</p>
+<p class="c_v">Armis et gestis obprobria vincere rebus</p>
+<p class="c_v">Intus agit votoque suo compellere reges</p>
+<p class="c_v">Querit et afflicto pergit dare gaudia mundo.</p>
+<p class="c_v">Cumque igitur firma hec esset sententia menti,</p>
+<p class="c_n">20</p><p class="vv">Alfonso in somnis vultu veneranda venusto</p>
+<p class="c_v">Aspectuque gravis virgo, laniata capillos,</p>
+<p class="c_v">Vulneribus quoque fossa suis lachrimisque fluentes</p>
+<p class="c_v">Uda genas visa est, talesque a pectore questus</p>
+<p class="c_v">Reddidit: "O mundi princeps, o firma columna,</p>
+<p class="c_n">25</p><p class="vv">O rebus concessa salus, mea vulnera, Cesar,</p>
+<p class="c_v">Aspice et a collo pendentes cerne capillos</p>
+<p class="c_v">Et lachrimis succurre meis! Cur pectora, princeps,</p>
+<p class="c_v">Curve meos pateris foedari in sanguine vultus</p>
+<p class="c_v">Et lateri dare rostra canes? Fortissime Cesar,</p>
+<p class="c_n">30</p><p class="vv">Eia, age, surge, veni, propera, cape proelia! Quisnam</p>
+<p class="c_v">Te valet excepto casus defendere et alme</p>
+<p class="c_v">Virginis arma tue, vel quis sua iura tueri</p>
+<p class="c_v">Atque, fatigatis per tanta pericula membris,</p>
+<p class="c_v">Speratam in terris hodie conferre salutem?</p>
+<p class="c_n">35</p><p class="vv">Stringe tuo capiti galeam! Sit dextera fortis</p>
+<p class="c_v">Et Christi clipeata fide! Tibi relligionis</p>
+<p class="c_v">Iura per antiquos concessa fuere parentes.</p>
+<p class="c_v">O spes sola mei, lux o mea candida, Cesar,</p>
+<p class="c_v">Arma cape et Teucros tanta virtute superbos</p>
+<p class="c_n">40</p><p class="vv">Opprime et antiquum tua sumant arma furorem,</p>
+<p class="c_v">Quippe tibi soli tanta est iniuria casus</p>
+<p class="c_v">Et soli vindicta tibi: sunt munera magni</p>
+<p class="c_v">Officii hec, Alfonse, tui. Mea vulnera rursus</p>
+<p class="c_v">Respice et attonitum per tanta pericula mundum</p>
+<p class="c_n">45</p><p class="vv">Protege et umbrosa facias requiescere silva.</p>
+<p class="c_v">Ipse potes tantos solus medicare dolores</p>
+<p class="c_v">Cunque tuis armis tantas extinguere flammas</p>
+<p class="c_v">Et tantum cohibere nefas; impune videri</p>
+<p class="c_v">Ne tantum patiare scelus nec vulnera, Cesar!</p>
+<p class="c_n">50</p><p class="vv">Cum Natura, suo gradiens certo ordine, corpus</p>
+<p class="c_v">Gessisset mortale tuum et tibi quaeque dedisset</p>
+<p class="c_v">Qualia sunt homini, gestis tamen undique rebus</p>
+<p class="c_v">Immortalis eris vivesque per omnia magnus</p>
+<p class="c_v">Tempora et a cunctis pius ipse vocabere votis".</p>
+<p class="c_n">55</p><p class="vv">Hec ait et stratis herens dehinc virgo parumper</p>
+<p class="c_v">Accipit Alfonsum secumque per avia ducit</p>
+<p class="c_v">In montem excelsum. Loquitur post talia rursus:</p>
+<p class="c_v">"Aspice per longas multum distantia valles</p>
+<p class="c_v">In plano loca plena viris urbemque iacentem,</p>
+<p class="c_n">60</p><p class="vv">Unde levis fumus surguntque ad sidera nubes:</p>
+<p class="c_v">Urbs illa imperii est, quam sevus barbarus imis</p>
+<p class="c_v">Sedibus evertit gladioque et sanguine gaudens</p>
+<p class="c_v">Corpora sanctorum strata in tellure cruentat.</p>
+<p class="c_v">Agredere hanc armis urbem pacemque per omnes</p>
+<p class="c_n">65</p><p class="vv">Componas primum populos, dehinc proelia misce</p>
+<p class="c_v">Cum Teucro intrepidus venturaque cetera comple,</p>
+<p class="c_v">Que tibi sub dubio ostendet Fortuna favore.</p>
+<p class="c_v">Nanque ego, missa Deo, quamvis tu multa videbis</p>
+<p class="c_v">Ambigua in primis ipsamque minantia mortem,</p>
+<p class="c_n">70</p><p class="vv">Nuncio venturos summa cum laude triumphos,</p>
+<p class="c_v">Imperium sceptrumque tibi: quam protinus armis</p>
+<p class="c_v">Impiger ascendes ducesque ad sidera nomen</p>
+<p class="c_v">Preclara virtute tuum. Tuque, optime Cesar,</p>
+<p class="c_v">Expedias, fractis concede piacula rebus!".</p>
+<p class="c_n">75</p><p class="vv">Postquam igitur virgo monstravit singula regi</p>
+<p class="c_v">Magnanimo gessit quondam quae Teucer in urbe,</p>
+<p class="c_v">Addidit hanc celi pulsantem sidera vocem:</p>
+<p class="c_v">"Alfonse, Alfonse!"; atque his ictus vocibus ether</p>
+<p class="c_v">Excitat a somno regem, qui, visa per ipsos</p>
+<p class="c_n">80</p><p class="vv">Expediens somnos, corpus regale repente</p>
+<p class="c_v">Excipit a stratis. Obscure candida nocti</p>
+<p class="c_v">Successit properata dies et lumina mundo</p>
+<p class="c_v">Dat Phebus; subeunt mortalia pectora cure.</p>
+<p class="c_v">Protinus accitos equites proceresque ducesque</p>
+<p class="c_n">85</p><p class="vv">Prestantesque omnes animi virtute Quirites</p>
+<p class="c_v">Invictus bello princeps animosus in unum</p>
+<p class="c_v">Collocat atque illis animi secreta resolvit.</p>
+<p class="c_v">Dic tu, Musa, mihi quanto sua lingua lepore</p>
+<p class="c_v">Fulserit et fluvius qualis decurrerit alto</p>
+<p class="c_n">90</p><p class="vv">Principis ore pii, nec non prudentia quantum</p>
+<p class="c_v">Huc illucque fluens partes discusserit omnes!</p>
+<p class="c_v">Incipiens igitur tales a pectore voces</p>
+<p class="c_v">Edidit, Alfonsum cunctis spectantibus ipsum:</p>
+<p class="c_v">"Preteritum, o proceres, repetens ego tempus ab illo,</p>
+<p class="c_n">95</p><p class="vv">Huc me quo viridis duxit mea prima iuventus,</p>
+<p class="c_v">Cuncta inde aspiciens animoque priora revolvens,</p>
+<p class="c_v">Contra hostes Fidei mea semper mens animusque</p>
+<p class="c_v">Ire fuit belloque viros temptare superbos.</p>
+<p class="c_v">Morte patris postquam, mundum volventibus astris,</p>
+<p class="c_n">100</p><p class="vv">In nostras venere manus sceptra imperiumque,</p>
+<p class="c_v">Quesierim quantum regem Cartaginis ipsum</p>
+<p class="c_v">Perdere ab armata dignoscere classe potestis.</p>
+<p class="c_v">Quod nobis dono celestia numina dedunt,</p>
+<p class="c_v">Nil ultra temptare licet: sic postulat ordo</p>
+<p class="c_n">105</p><p class="vv">Et sub sidereo procedens lumine fatum.</p>
+<p class="c_v">Post hec succedunt regni pia iura fidesque,</p>
+<p class="c_v">Partenopes, tanto nobis quesita labore;</p>
+<p class="c_v">Nunc autem quanto poscat nos sanguine Teucer</p>
+<p class="c_v">Et quantas bello exultans devicerit urbes</p>
+<p class="c_n">110</p><p class="vv">Ac quantum christos et Christi extinguere nomen</p>
+<p class="c_v">Et siciat quantum nostros delere penates,</p>
+<p class="c_v">Omnia sunt nostris hec nota pericula regnis.</p>
+<p class="c_v">Preterea, quotiens nostros ego pectore volvo</p>
+<p class="c_v">Tot victos bello reges, mens estuat intus</p>
+<p class="c_n">115</p><p class="vv">Impellorque animo et totis cum viribus ipsam</p>
+<p class="c_v">Vindictam amplector magnaque cupidine bellum</p>
+<p class="c_v">Exquiro, ut nostris iniuria cesset ab armis.</p>
+<p class="c_v">At nostri reges tanta impietate furentem</p>
+<p class="c_v">Teucrum dissimulant sentire et relligionis</p>
+<p class="c_n">120</p><p class="vv">Undique perruptum monstrant non cernere murum;</p>
+<p class="c_v">Quare propositum dudum quod mente resedit,</p>
+<p class="c_v">Nullo unquam certe moriturum sidere, firmum</p>
+<p class="c_v">Ac fixum immotumque manet, cum tempore votum</p>
+<p class="c_v">Crescit et huic vires currens mea suggerit etas.</p>
+<p class="c_n">125</p><p class="vv">Ipsum igitur tanto crassantem in sanguine Teucrum</p>
+<p class="c_v">Est animus petere et totas effundere vires</p>
+<p class="c_v">Cumque bonis animam hanc atque omnia credere bello</p>
+<p class="c_v">Et gentem argolicam pro religione tueri.</p>
+<p class="c_v">Quo possum meliore animo et meliore labore</p>
+<p class="c_n">130</p><p class="vv">Obsequium praestare Deo? Quove ordine possum</p>
+<p class="c_v">Plus facili optatam celi mihi querere pacem?</p>
+<p class="c_v">Te, bone Christe, sequor, mundum cum sanguine cuius</p>
+<p class="c_v">Luciferi a manibus pietas divina redemit;</p>
+<p class="c_v">Aspicias mea vota, Deus, faber optime mundi,</p>
+<p class="c_n">135</p><p class="vv">Servitioque tuo subito ventura secundes!</p>
+<p class="c_v">Quanvis quae teneo tua sint hec omnia, certe</p>
+<p class="c_v">Vota reor placitura tibi; tibi sola voluntas</p>
+<p class="c_v">Sufficit; illa gerit tibi munera, thura precesque.</p>
+<p class="c_v">Longa patrum in natos dudum doctrina probatur:</p>
+<p class="c_n">140</p><p class="vv">Ante oculos primum mores vitamque animumque</p>
+<p class="c_v">Natorum accipiant, sub qua ratione tueri</p>
+<p class="c_v">Seque suumque queant, possint quove ordine caute</p>
+<p class="c_v">Rem gerere et visa postquam virtute nitentes</p>
+<p class="c_v">Prestiterint, illis sua queque negocia ponant.</p>
+<p class="c_n">145</p><p class="vv">Exemplo, proceres, si forte hortamur in isto</p>
+<p class="c_v">Iam natum Alfonsum, Teucrum nova bella videbunt</p>
+<p class="c_v">Itala aragoneis coniuncta. Quid arma minari,</p>
+<p class="c_v">Quidve queant animi fortes, quid proelia tandem</p>
+<p class="c_v">Barbarus accipiet, Martis sub nomine cepta?</p>
+<p class="c_n">150</p><p class="vv">Colligite ergo, duces, vires, solita arma decusque</p>
+<p class="c_v">Summite et effuso repetamus sanguine celum!</p>
+<p class="c_v">Nam licet in dubiis stent multa pericula rebus,</p>
+<p class="c_v">Utraque nos properans faciet victoria letos.</p>
+<p class="c_v">Ergo hanc iudiciis legem decernite vestris</p>
+<p class="c_n">155</p><p class="vv">Et cuncta, ut facitis, decori postponite nostro".</p>
+<p class="c_v">Plurima disseruit facundo a pectore princeps,</p>
+<p class="c_v">Que tanquam a dulci fluxere cadentia fonte.</p>
+<p class="c_v">Ab dictis tacuit, quae sint sua vota suorum</p>
+<p class="c_v">Expectans. Princeps tandem prior ipse Salerni</p>
+<p class="c_n">160</p><p class="vv">Incipit et letum profert a pectore votum:</p>
+<p class="c_v">"Magnanime o princeps, regum o fortissime, Cesar,</p>
+<p class="c_v">Cuius ab imperio pacem coluere tiramni,</p>
+<p class="c_v">Depositisque armis felix sedet itala tellus,</p>
+<p class="c_v">Propositum hoc sanctum quis non a sydere ductum</p>
+<p class="c_n">165</p><p class="vv">Dixerit? Hasque tuas reor esse a numine voces</p>
+<p class="c_v">Teque loqui spirante Deo, dignissime Cesar.</p>
+<p class="c_v">Ipse ego me viresque meas corpusque animumque</p>
+<p class="c_v">Offero. Pestiferum celeres surgamus in hostem!".</p>
+<p class="c_v">Quam mora longa foret describere singula, quantum</p>
+<p class="c_n">170</p><p class="vv">Letitia caluere animi comitumque ducumque</p>
+<p class="c_v">Et quantum accensos dederint nova bella Quirites!</p>
+<p class="c_v">Ut tandem expediam, laudantur vota benigni</p>
+<p class="c_v">Principis atque animo rutilans facundia forti;</p>
+<p class="c_v">Certandi studio fervens preclara iuventus</p>
+<p class="c_n">175</p><p class="vv">Gaudet et in sanctum properat gens itala bellum.</p>
+<p class="c_v">Postquam igitur proceres leti sua vota dederunt,</p>
+<p class="c_v">Ipse iterum princeps placido sic disserit ore:</p>
+<p class="c_v">"Quanta meis hodie rebus sit nata voluntas</p>
+<p class="c_v">Et menti tranquilla quies, quae corpore vires</p>
+<p class="c_n">180</p><p class="vv">Atque animo, proceres, posset nec promere certe</p>
+<p class="c_v">Nec facilis mea lingua loqui. Magna addita ceptis</p>
+<p class="c_v">Spes votis quoque firma meis; licet ante fuisset</p>
+<p class="c_v">Strenua pro meritis vestris mihi cognita virtus,</p>
+<p class="c_v">Nunc illam expertus claro plus sidere vidi</p>
+<p class="c_n">185</p><p class="vv">Fulgentem. Maior magnis hec gloria regnis,</p>
+<p class="c_v">Clarius obsequio nihil est quam recta voluntas</p>
+<p class="c_v">Atque animi sincera fides: hec ipsa fuere</p>
+<p class="c_v">Consiliis ostensa bonis atque ordine vestris</p>
+<p class="c_v">Et multis conspecta modis tantumque tulerunt</p>
+<p class="c_n">190</p><p class="vv">Fortia virtutis mihi pectora vestra, Quirites,</p>
+<p class="c_v">Ut si forte animum leporis Natura dedisset</p>
+<p class="c_v">Audacem, auxiliis eadem daret optima vestris".</p>
+<p class="c_v">At Deus omnipotens, cui sunt nota omnia soli</p>
+<p class="c_v">Consilia atque hominum mentes, sublimis ab alto</p>
+<p class="c_n">195</p><p class="vv">Hec videt et secum celi pia numina gaudent.</p>
+<p class="c_v">Quoque magis princeps clara ratione videret</p>
+<p class="c_v">Se carum gratumque Deo, Deus altus ab alto</p>
+<p class="c_v">Dat signum solem, nimbos et lumina terris;</p>
+<p class="c_v">Ipse deus belli, Mars, gaudet, gaudet et omnis</p>
+<p class="c_n">200</p><p class="vv">Turba equitum signo. Votum hoc Fortuna secundum</p>
+<p class="c_v">Reddat et in santos procedat amica labores!</p>
+<p class="c_v">Surge igitur, princeps, contra pete prelia Teucrum</p>
+<p class="c_v">Et tibi signatos bello perquire triumphos!</p>
+<p class="c_v">Aspice tot gemitus, luctus! Tu ferre salutem,</p>
+<p class="c_n">205</p><p class="vv">Tu potes, altus, opem; totus te flagitat orbis.</p>
+<p class="c_v">Adsis acque fremens percussum ulciscere Christum,</p>
+<p class="c_v">Ut tibi det meritas laudes et premia mundus</p>
+<p class="c_v">Eternamque tuo capiti Deus ipse quietem.</p>
+<p class="c_v">Unus eris toto, princeps, celeberrimus orbe</p>
+<p class="c_n">210</p><p class="vv">Letaque tota tuum celebrabit Grecia nomen</p>
+<p class="c_v">Et cantu ad Parthos versuque volabit ad Indos.</p>
+<p class="c_v">Fer tecum vates, tecumque, Alfonse, poetas,</p>
+<p class="c_v">Optima quo lustrent tua gesta poemata, quove</p>
+<p class="c_v">Inclita per populos properet tua fama futuros.</p>
+<p class="c_n">215</p><p class="vv">Stringe igitur bellum, nova proelia posce, falanges</p>
+<p class="c_v">In terris pelagoque rates atque omnia demum</p>
+<p class="c_v">Expedias! Decuit rapto sub tempore reges</p>
+<p class="c_v">Confestim vigiles rebus dare vota futuris.</p>
+<p class="c_v">Stringe iterum bellum! Quot tu nova regna videbis,</p>
+<p class="c_n">220</p><p class="vv">Quotque urbes, populos, aut quae clamantia nomen</p>
+<p class="c_v">Principis Alfonsi varia lingua ora sonabunt!</p>
+<p class="c_v">Solus eris magnus, solus venerabere mundo</p>
+<p class="c_v">Victor et extingues regum memorata priorum;</p>
+<p class="c_v">Te tandem imperio capiet tua maxima Roma</p>
+<p class="c_n">225</p><p class="vv">Et te perpetuis Capitolia leta triumphis.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

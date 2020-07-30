@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Tifernate hymnus in Trinitatem</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a9780686e" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Tifernate</b> <i>hymnus in Trinitatem</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Tifernate hymnus in Trinitatem</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(145, 252)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(129973,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(129973,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Tifernate</b> <i>hymnus in Trinitatem</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="129973"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Tifernate</b> <i>hymnus in Trinitatem</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/TIFERNAT|trin|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_v">Hic meliore lyra, maiori hic carmine Clio</p>
+<p class="c_v">Adsis, sancta, precor; Nam parvi magna movemus,</p>
+<p class="c_v">Atque Deum pariter trinum cantamus, et unum,</p>
+<p class="c_v">Qui terram regit immensam, ventosque, fretumque,</p>
+<p class="c_n">5</p><p class="vv">Et iubar, et currum solis, lunamque nitentem</p>
+<p class="c_v">Stellarumque poli flexum, et sublimia tecta,</p>
+<p class="c_v">Qui demum ingentes mundi moderatur habenas,</p>
+<p class="c_v">Hic neque nascendo cepit, neque desinet unquam,</p>
+<p class="c_v">Sanctus, et aeternus, nullo mutabilis aevo,</p>
+<p class="c_n">10</p><p class="vv">Non hic a puero tulit incrementa pusillo,</p>
+<p class="c_v">Non longo exhaustum spacio, tristemque senectam</p>
+<p class="c_v">Persensit, quem semper habet, servatque vigorem</p>
+<p class="c_v">Mendaces homines quorum facundia fuco</p>
+<p class="c_v">Desuper inducto credi vel falsa coercet.</p>
+<p class="c_n">15</p><p class="vv">Ipsa sed in primis mentita est gnosia crete</p>
+<p class="c_v">Idaeo commenta Iovem crevisse sub antro.</p>
+<p class="c_v">Si deus ut grai perhibent, erat ille deorum</p>
+<p class="c_v">Tempora non varios illi distincta per annos,</p>
+<p class="c_v">Decurrunt, qui cuncta simul praesentia cernit,</p>
+<p class="c_n">20</p><p class="vv">Nescius occasum, postremo nescius ortum,</p>
+<p class="c_v">Hic pater, hic magni solus dominator olympi,</p>
+<p class="c_v">Sed patrem nemo certa sine prole vocabit,</p>
+<p class="c_v">Mens igitur, nec parva loquor, foecunda parentis</p>
+<p class="c_v">Germen ab aeterno, atque ante omnia saecula natum</p>
+<p class="c_n">25</p><p class="vv">Maiestate parem genuit: qui sensile corpus</p>
+<p class="c_v">Consilio patris archano, et mortalia sumpsit</p>
+<p class="c_v">Ora sibi, atque hominum concretos induit arctus,</p>
+<p class="c_v">Scilicet ut primae commissa ab origine gentis,</p>
+<p class="c_v">Contractamque sua labem cum morte piaret.</p>
+<p class="c_n">30</p><p class="vv">Nuntius id propter coelo demissus ab alto:</p>
+<p class="c_v">Qui castae divina tulit mandata puellae,</p>
+<p class="c_v">Unde ea concepit, nostros mysteria sensus</p>
+<p class="c_v">Alta dei superant, quare non singula sector,</p>
+<p class="c_v">Sed quasi de pleno quaedam lego lilia campo,</p>
+<p class="c_n">35</p><p class="vv">Et Christum peperit dictu mirabile virgo:</p>
+<p class="c_v">Virgo alias ante omnes foelicissima matres.</p>
+<p class="c_v">Tum vero imperium mundi Romanus habebat,</p>
+<p class="c_v">Tum dirae lites, tunc horrida bella tacebant,</p>
+<p class="c_v">Tum tranquilla quies, tum pax erat alta per orbem.</p>
+<p class="c_n">40</p><p class="vv">Coelestem in terris expertem crimine vitam</p>
+<p class="c_v">Inter mortales deus immortalis agebat.</p>
+<p class="c_v">Qui licet exemplum feret et pietatis imago.</p>
+<p class="c_v">Ac opera efficeret magnas miranda per urbes:</p>
+<p class="c_v">Ut tamen ad iugulum nonnumquam ducitur agnus,</p>
+<p class="c_n">45</p><p class="vv">Et tener innocuo respergit sanguine terram:</p>
+<p class="c_v">Sic quoque vir sanctus morte est affectus acerba</p>
+<p class="c_v">Usque adeo est hominum genus ingratumque nocensque,</p>
+<p class="c_v">Huius ad interitum iniustum, caedemque nefandam</p>
+<p class="c_v">Signa dedit manifesta quaedam atque horrentia mundus</p>
+<p class="c_n">50</p><p class="vv">Maximus extemplo tonitru concussus olimpus,</p>
+<p class="c_v">Inque die medio tenebris nox atra profundis</p>
+<p class="c_v">Horruit, et nullo fulserunt sydera coelo.</p>
+<p class="c_v">Talia ne clarus spectaret crimina titan</p>
+<p class="c_v">Deficit vultusque suos lucemque negavit.</p>
+<p class="c_n">55</p><p class="vv">Cum neque tunc ullae turbarent aera nubes</p>
+<p class="c_v">Aurea nec phoebe prohibiret lumina fratris,</p>
+<p class="c_v">Ipsa quoque immensis subito commota cavernis</p>
+<p class="c_v">Horrendum intremuit sublato murmure tellus,</p>
+<p class="c_v">Quin etiam lapides ingenti mole feruntur</p>
+<p class="c_n">60</p><p class="vv">Sponte sua scissi, sanctorum multa virorum</p>
+<p class="c_v">Rursus in antiquam redierunt corpore vitam,</p>
+<p class="c_v">Interea manes Christus descendit ad imos,</p>
+<p class="c_v">Atque animas insontes multorum inde recepit.</p>
+<p class="c_v">Ferrea non ipsi portarum obsistere claustra</p>
+<p class="c_n">65</p><p class="vv">Evaluere deo non ullum occurrere robur</p>
+<p class="c_v">Ut magno occursum Alcidae qui dicitur olim</p>
+<p class="c_v">Tartareas adiisse domos infernaque regna,</p>
+<p class="c_v">Si sacra cum rebus sunt admiscenda profanis.</p>
+<p class="c_v">Ille sed in vitam rediit post funera victor</p>
+<p class="c_n">70</p><p class="vv">Tertia cum latum lux effulsisset in orbem,</p>
+<p class="c_v">Cumque Palestina sese monstrasset in ora,</p>
+<p class="c_v">Tandem immortali conscendit corpore coelum.</p>
+<p class="c_v">Hic pater aeternum spirans, et natus amorem</p>
+<p class="c_v">Aequalem sibi.</p>
+<p class="c_n">75</p><p class="vv">Hic est ille Dei vigor, hic et spiritus ille est</p>
+<p class="c_v">Purior et flammis volucri et pernicior aura,</p>
+<p class="c_v">Qui solet in sanctas mentes et pectora labi,</p>
+<p class="c_v">Quinque per electos est vates saepe locutus,</p>
+<p class="c_v">Unde sit et numen trinum credamus et unum,</p>
+<p class="c_n">80</p><p class="vv">Sed miseri simulacra deum qui vana colebant</p>
+<p class="c_v">Et quibus obscura et tetra caligine caecis</p>
+<p class="c_v">Contigit auctorem prorsus non noscere rerum</p>
+<p class="c_v">Qui tantum vere est, cum vere caetera non sint</p>
+<p class="c_v">Ex alio vitam quae nanciscuntur et ortum.</p>
+<p class="c_n">85</p><p class="vv">Namque quod est verum semper, quod semper et unum</p>
+<p class="c_v">Idque sua quod sponte manet, propriaque viget vi</p>
+<p class="c_v">Quod simplex, summeque bonum summeque beatum.</p>
+<p class="c_v">Tantopere humanis quaesitum mentibus hic est,</p>
+<p class="c_v">Qui mortale genus terrena mole caducum</p>
+<p class="c_n">90</p><p class="vv">Fecit, et aeternas caelestia semina mentes,</p>
+<p class="c_v">Qui duo nascentum statuit primorda namque</p>
+<p class="c_v">C ipio altricem sylvam rerumque parentem</p>
+<p class="c_v">Quae generum in sese caperet simulacra creavit,</p>
+<p class="c_v">Edidit et speciem quae cum prestantior esset</p>
+<p class="c_n">95</p><p class="vv">Afferret pariter vitam rebusque decorem,</p>
+<p class="c_v">E quibus hoc coelum, et quae nos elementa vocamus</p>
+<p class="c_v">Corpora sub nostros demum venientia sensus</p>
+<p class="c_v">Condidit, ac miro iunxit discordia nexu,</p>
+<p class="c_v">Ipsumque omnigenis redimitum animantibus orbem</p>
+<p class="c_n">100</p><p class="vv">Fecit ad exemplum mundi melioris et instar.</p>
+<p class="c_v">Quem postquam exacta perfectum reddidit arte</p>
+<p class="c_v">Vim dedit ex illo produci caetera possent,</p>
+<p class="c_v">Nam duo magna deus praefecit lumina mundo,</p>
+<p class="c_v">Altera quae noctem curarent, altera lucem.</p>
+<p class="c_n">105</p><p class="vv">Multiplices lunae cursus lampada solis,</p>
+<p class="c_v">Per duodena rotae gradientem limite signa,</p>
+<p class="c_v">Cuius ob accessus varios, variosque recessus</p>
+<p class="c_v">Certe alii menses aliae vertuntur et horae:</p>
+<p class="c_v">Et Cererem tellus atque ipsa animantia gignit:</p>
+<p class="c_n">110</p><p class="vv">Hinc pecudes animal mutum, rationis et expers,</p>
+<p class="c_v">Hinc oriuntur aves, genus hinc atque omne ferarum</p>
+<p class="c_v">Et quamcumque trahunt magno sub gurgite vitam,</p>
+<p class="c_v">Hinc etiam stirpes quarum pars altera campos</p>
+<p class="c_v">Pars iuga praetextu viridi montana coronat.</p>
+<p class="c_n">115</p><p class="vv">Hinc simul argenti fiunt aurique metalla,</p>
+<p class="c_v">Quae genitor rerum magni moderator et orbis</p>
+<p class="c_v">Scilicet ut maneant aeterna luce procurat.</p>
+<p class="c_v">Cuius et iniussu folium non excidit unum.</p>
+<p class="c_v">Non equidem credo nec plane assentior illis</p>
+<p class="c_n">120</p><p class="vv">Qui minime curare Deum mortalia dicunt,</p>
+<p class="c_v">Nam ni cura vigil caelestrum cuncta gubernent,</p>
+<p class="c_v">Mox peritura petant discordia semina litem.</p>
+<p class="c_v">Ergo Dei imperium immensum atque immensa potestas</p>
+<p class="c_v">Qui coeli quotiens specula despectet ab alta</p>
+<p class="c_n">125</p><p class="vv">Et mare quod magnum est, et terras ordinis imas,</p>
+<p class="c_v">Tartaraque a longe solo movet omnia nutu,</p>
+<p class="c_v">Et licet invicto superentur caetera fato,</p>
+<p class="c_v">Solus at ipse tamen pessum tenet omnia fata,</p>
+<p class="c_v">Horribilesque suo compescit numine parcas.</p>
+<p class="c_n">130</p><p class="vv">Nec dubium qui cuncta deus dissolvere possit.</p>
+<p class="c_v">Et coelum et pelagus, simul et quas condidit auras</p>
+<p class="c_v">Si velit ac globum penitus convellere terrae.</p>
+<p class="c_v">Sed pulchrum conservat opus pulcherrimus auctor</p>
+<p class="c_v">Talis hic et tantus totum complectitur, atque</p>
+<p class="c_n">135</p><p class="vv">Cum sit ubique tamen dictu mirabile nusquam est.</p>
+<p class="c_v">Nunc neque mortali fas quemquam cernere visu,</p>
+<p class="c_v">Nec perferre potest acies humana tuendo.</p>
+<p class="c_v">Illud in exhaustrum et non aspirabile lumen</p>
+<p class="c_v">Quo nihil est melius, certe maiusve putandum</p>
+<p class="c_n">140</p><p class="vv">Sed furor est animo si quis comprendere sumit</p>
+<p class="c_v">Posse Dei secreta putat vel promere lingua.</p>
+<p class="blank">&nbsp;</p>
+<p class="blank">&nbsp;</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

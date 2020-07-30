@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Teofilo Folengo libellus epistolarum et epigrammatum</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a9813801b" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Teofilo Folengo</b> <i>libellus epistolarum et epigrammatum</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Teofilo Folengo libellus epistolarum et epigrammatum</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(263, 560)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(404491,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(404491,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Teofilo Folengo</b> <i>libellus epistolarum et epigrammatum</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="404491"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Teofilo Folengo</b> <i>libellus epistolarum et epigrammatum</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/FOLENG_T|libe|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_t">1. epistola colerica ad Polazzum, <br />in quem multas depingit laudes</p>
+<p class="c_v">Si poltronus homo solus cattatur in orbe,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Solus poltronus nonne, Polazze, tues?</p>
+<p class="c_v">Si gaioffus homo solus solusque bosardus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Solus gaioffus nonne, Polazze, tues?</p>
+<p class="c_n">5</p><p class="vv">Si dignus centum forcarum solus habetur,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dignus forcarum nonne, Polazze, tues?</p>
+<p class="c_v">Es poltronus homo, sguataro poltronior omni:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plus te vergognae bosque rasonis habet.</p>
+<p class="c_v">Tras sine respectu turba praesente corezzas</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec pingit guanzas ulla rubedo tuas;</p>
+<p class="c_v">Appares fortem semper mangiasse fenochium,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Semper et aiorum quinque vel octo capos,</p>
+<p class="c_v">Saepe cativeria tamen hac usaris et arte:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cum tussis retro, tussis et ante simul,</p>
+<p class="c_n">15</p><p class="vv">Ne quisquam possit schioppum sentire corezzae</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ac odor alterius pareat esse viae.</p>
+<p class="c_v">Sed tussis vocem bombardae vellet habere,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tanto cum sonitu stricta corezza tonat,</p>
+<p class="c_v">Te nascente dei nasum stopavere, Polazze,</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iuppiter in colera dixerat: "Oybo, quid est?</p>
+<p class="c_v">Quae latrina sapit? Quae fex ammorbat Olympum?</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cur penetrat nostras tanta carogna domos?"</p>
+<p class="c_v">Dixerunt superi: "Ventrem Natura sboravit</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Deque suo putridus stercore factus homo est".</p>
+<p class="c_n">25</p><p class="vv">Crede, Polazze, mihi quod te Natura cagavit</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et qua forbiret pezzia nulla fuit;</p>
+<p class="c_v">Pezzia nulla fuit qua se Natura netaret,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Postquam tam bellus stronzus in orbe nites.</p>
+<p class="c_v">Numquam scivisti quid sit vergogna, gaioffe,</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coprit brutturas mascara nulla tuas.</p>
+<p class="c_v">Quando tuos meditor mores, incago bagassis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vergognam penitus quae butavere viam.</p>
+<p class="c_v">Praeterea numquam nisi de mangiamine pensas:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cum mangias, satiam nescis habere gulam.</p>
+<p class="c_n">35</p><p class="vv">Scis dare praeceptum galantiter omne coquinae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Namque lecatoria semper in arte studes.</p>
+<p class="c_v">"In speto - dicis - debet rostirier oca,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cuius sit speciis plena busecca bonis,</p>
+<p class="c_v">Quae dum rostitur, vel circumcirca rotatur,</p>
+<p class="c_n">40</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non cesset lardi dextra butare brodum".</p>
+<p class="c_v">Vidimus et, provae si fas est credere, provo:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Raucaga non umquam pestibus oca perit.</p>
+<p class="c_v">Noscere vin causam? Non Phoebus apena cavallos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Speronando suos explicat, oca bibit.</p>
+<p class="c_n">45</p><p class="vv">Non igitur stupeo tibi si palearia pendent,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cui numquam trippas vidit Apollo vodas.</p>
+<p class="c_v">Quisquis Olympiacas poterit numerare fasellas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vel maris in fundo sabbia quanta latet,</p>
+<p class="c_v">Aut quisquis foias quantas fert silva Bacani,</p>
+<p class="c_n">50</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aut quantas muscas Puia boienta parit,</p>
+<p class="c_v">Nempe tuas poterit cunctas numerare bosias:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mentiris subito, cum tua labra moves.</p>
+<p class="c_v">Miraclum reputo quando parlare quiescis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui neque de tacita nocte tacere potes.</p>
+<p class="c_n">55</p><p class="vv">Tirenum potius biberet formica profundum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et ferret Zenovae piccola musca ratem,</p>
+<p class="c_v">Quam tua veridicam ferat umquam lingua parolam:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nil nisi, cum parlas, bocca bosia tua est.</p>
+<p class="c_v">Dens tibi si caderet quoties mendacia profers,</p>
+<p class="c_n">60</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iam tua non posset pane ganassa frui.</p>
+<p class="c_v">In solo flatu dicis sex mille bosias,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Post quas sex alias mille spudare paras.</p>
+<p class="c_v">Ast alias in te virtutes dicere nolo.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iste sub extremo carmine sensus erit:</p>
+<p class="c_n">65</p><p class="vv">Quod velut omne bonum fecit sapientia Patris,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omne malum - dubitet nemo -, Polazze, facis.</p>
+<p class="c_v">Vale in malam crucem.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">2. epistola secunda faceta ad Falchettum familiarem suum</p>
+<p class="c_v">Legiadram mea stalla tenet, Falchette, cavallam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quam quicumque videt percupit esse suam.</p>
+<p class="c_v">Stare parangono Bertuzzi nempe cavalli</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Posset, qui tantum pellis et ossa fuit.</p>
+<p class="c_n">5</p><p class="vv">Longior ipsius sex est magra schena cavezzis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Crustas de marzo sanguine semper habet,</p>
+<p class="c_v">Quas polmoncellos vocat ars marscaltica crustas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quas de pellibovo sella vodata facit.</p>
+<p class="c_v">An sit mulla quidem dubitas, an sitve cavalla:</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Orecchias longas tres habet illa pedes.</p>
+<p class="c_v">Zardarum dicunt duplex genus esse, quod omne</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possidet: in pedibus prima venire solet,</p>
+<p class="c_v">Altera, quando cavat sibi brenam, meque pedestrum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Linquens calcagnis pagat eundo viam;</p>
+<p class="c_n">15</p><p class="vv">Cursito post illam, clamo "Sta, bestia! Sta! Sta!",</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fert mea bastonem d extra, sinistra briam,</p>
+<p class="c_v">Sed potius muro tunc possem dicere "Sta! Sta!":</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non audit, pateat grandis orecchia licet;</p>
+<p class="c_v">Dum curro, per mille cavas, per mille zapellos</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Casco, nam laqueat speron uterque pedes.</p>
+<p class="c_v">Quando cavalco illam, mihi paret habere morenas</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et bogas pedibus rozza ribalda gerit;</p>
+<p class="c_v">Cum me scavalcat, morso fugit inde cavato,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Turchescos etenim vincere posset equos.</p>
+<p class="c_n">25</p><p class="vv">Et quamvis oculo nihil uno cernat, et altro</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pochinum, numquam decidit illa tamen;</p>
+<p class="c_v">Decidit illa nihil quando sine pondere scappat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed portans aliquem tota stravacca ruit.</p>
+<p class="c_v">Si quis vult annos vel tempus scire, poledra est:</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sex habet haec annos, sex quoque baila dedit;</p>
+<p class="c_v">Ni credat, videat signalia clara ganassae:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Limasti dentes bis, Magarine, suos.</p>
+<p class="c_v">Incastellata est, non mancant rogna, spinellae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Denique quicquid habet digna cavalla boni,</p>
+<p class="c_n">35</p><p class="vv">Digna cavalla boni quod habet pro pascere, dico,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moscones, dubitet nemo quod ipsa tenet.</p>
+<p class="c_v">Ergo comprandi si cui foret ullula voia,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hanc emat et faciat, sicut usanza, provam.</p>
+<p class="c_v">Est aliud, quod sit iuvenis, signale galantum:</p>
+<p class="c_n">40</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vermibus haec alios semper amorbat equos;</p>
+<p class="c_v">Non patitur vermes senior, sed parvulus infans,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quapropter venas ungueo saepe suas.</p>
+<p class="c_v">Utilitas erit haec compranti: sola valebit</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ledammo campos imboazare suos.</p>
+<p class="c_n">45</p><p class="vv">Vale, omnium cordialissime, Baldum Cingaremque saluta.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">3. epistola tertia de stornellis et gaza ad Baldum</p>
+<p class="c_v">Stornellos partimque speto partimque guazetto</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Suscepi coctos, Balde facete, tuos,</p>
+<p class="c_v">Quos bene copertos satis ampla scudella tenebat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cum tua portavit vecchia masara mihi.</p>
+<p class="c_n">5</p><p class="vv">Sed postquam totos netto remanente cadino</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edimus, heu, qualis tanta per ossa stupor!</p>
+<p class="c_v">Rursus in exhaustum tornavimus illa piattum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Verum tantorum non fuit ille capax.</p>
+<p class="c_v">Quorum gustigolum cogor narrare saporem:</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Est caro calcagnis plus tenerina meis;</p>
+<p class="c_v">Tolle viam gambas, testas alasque striatas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In vaso brognis conca piena manet.</p>
+<p class="c_v">Iuro tibi, videor tantum rosegasse corammum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Post illas mansit stracca ganassa dapes.</p>
+<p class="c_n">15</p><p class="vv">Dens habuit partem maiorem, panza minorem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iugiter in dentes rugo schidone graves.</p>
+<p class="c_v">Pro merito in gabia picam tibi mando galantam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quam, ceu stornellos das mihi, dono tibi.</p>
+<p class="c_v">Dono tibi gazzam de tali sorte, quod ipsam</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pentibis cameris intro tulisse tuis.</p>
+<p class="c_v">Istam non umquam speres audire canentem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ni fuerit suppis imbriagata tuis:</p>
+<p class="c_v">Crede mihi, cantat numquam nisi suppa coercet</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et, quando cantat, nil nisi "che che" facit;</p>
+<p class="c_n">25</p><p class="vv">Interdum tamen illa, licet pochissime, secum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gorghezzat dicens: "Vaccato, pala, puta".</p>
+<p class="c_v">Tu tamen irrides poveri munuscula vatis:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Irrides? Dat quod pauper amicus habet.</p>
+<p class="c_v">Non tamen est hominis, mi Balde, trepanda povertas,</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Namque povertatem philosophia sequit:</p>
+<p class="c_v">Non vult scarlattum, granam finumque velutum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed sua strazzolas undique vesta cagat;</p>
+<p class="c_v">Pauper et ignuda est, sicut Plato firmiter inquit,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Subque repezzatis praticat illa togis.</p>
+<p class="c_n">35</p><p class="vv">Nonne tamen, figos qui mangiat, quaeritat illos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui fractam tunicam tortaque colla gerit?</p>
+<p class="c_v">Ergo ne, quod sim poverettus, Balde, caleffa,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Paupertas savium nam facit, atque ladrum.</p>
+<p class="c_v">Vale, Cipadicalarum decus.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">4. epigrama primum de Cingaris facetia</p>
+<p class="c_v">Squassabat quondam pelagi fortuna maranum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui de salata carne pienus erat:</p>
+<p class="c_v">Frangitur arbor, aquas sorbet sfondrata carina</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et plorans caeli quisque dimandat opem.</p>
+<p class="c_n">5</p><p class="vv">Cingar se misit tantum rosegare mezenos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ac si non esset tunc prigolandus aquis;</p>
+<p class="c_v">Scridatur quare mangiat nec donat aiuttum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Respondet: "Quia sum sat bibiturus, edo".</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">5. epigrama secundum de gobbo Tognazzo</p>
+<p class="c_v">Sturbavit dudum nostras maravilia mentes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cur in te gobbi fallit usanza viri.</p>
+<p class="c_v">Sguerzos et zottos gobbosque cavere monemur,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maxime quod gobbus non bonus esse potest.</p>
+<p class="c_n">5</p><p class="vv">Gobbus es et gobbi servasti semper usanzam;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gobbam pone, potens ponere: drittus eris.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">6. epigrama tertium de "ola" et "che la"</p>
+<p class="c_v">Quare si quemquam clamamus, dicimus: "Ola!",</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et qui respondit consonat ore: "Che la?",</p>
+<p class="c_v">Si quis habet voiam huius rei scire casonem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dicam, dum dicat primiter ille mihi.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">7. epigrama quartum de primavera</p>
+<p class="c_v">Multicoloritam vestit iam terra gonellam</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bellaque iam flores dat prataria novos.</p>
+<p class="c_v">Montagnae rident, boscamina virda fiuntur,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omnis compagnum cercat osella suum.</p>
+<p class="c_n">5</p><p class="vv">Frigida per caldas rampat luserta muraias</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mannaque de florum culmine leccat apis.</p>
+<p class="c_v">Extra graniferas errat formica busettas</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et per fossatos rana sbaiaffa gridat.</p>
+<p class="c_v">Pastorella suum cantat damatina morosum,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lilia purpureis consuit alba rosis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">8. epigrama quintum de calma aestate</p>
+<p class="c_v">Torridus e caelo terrenum schiappat Apollo</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et calida virdos lampade brusat agros;</p>
+<p class="c_v">Guidat abelasium pigros equitando cavallos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stracataque tenet frena retenta manu.</p>
+<p class="c_n">5</p><p class="vv">Rura bianchescunt ustis sic plena biavis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quod male poledris fraina daretur equis.</p>
+<p class="c_v">Cervellum nobis frangunt gridando cicadae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vexat mastinos musca tavana canes.</p>
+<p class="c_v">Ardens villanus suportat apena camisam,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Canefa Merlini semper aperta stiat.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">9. epigrama sextum de cane mastino</p>
+<p class="c_v">Mastinus canis est, vocat hunc Cipada Moroccum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Semper faenili guarda segura mei.</p>
+<p class="c_v">Is numquam baiat, nisi cum baiare bisognat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Armaque zampigeris scarpat aguzza grifis.</p>
+<p class="c_n">5</p><p class="vv">Spaventat solum diris cum sguardibus apros</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et monobudellos squarciat ungue lupos.</p>
+<p class="c_v">Is audit vix me clamantem dicere "To! To!",</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Se levat in quatros prestiter ille pedes.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">10. epigrama septimum ad Cingarem de Benaco</p>
+<p class="c_v">Quam bene disposuit cunctis natura facendis!</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cingar, vin causam? Disce, quod ipse feram.</p>
+<p class="c_v">Est lacus Italiae, Benacum Brixia clamat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Utilior reliquis fertiliorque lacis.</p>
+<p class="c_n">5</p><p class="vv">Avantazzati pisces mangiantur ab illo:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sardenae, anguillae, carpio, tenca, trutae.</p>
+<p class="c_v">Sed quid Palladio piscis valet absque liquore?</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ex oleo pisces nonne padella coquit?</p>
+<p class="c_v">Ergo per intornum ripae densantur olivis</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Insulaque in mediis Sirmio possat aquis.</p>
+<p class="c_v">Nascitur hic oleum, piscis, piscator et ipsas</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Padellas ferro Brixia dives habet.</p>
+<p class="c_v">Vale Falchettumque tuum saluta.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Jacopo Allegretti eglogae 8</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a96dcb8a9" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Jacopo Allegretti</b> <i>eglogae</i> 8";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Jacopo Allegretti eglogae 8</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(39, 66)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(32879,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(32879,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Jacopo Allegretti</b> <i>eglogae</i> 8            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="32879"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Jacopo Allegretti</b> <i>eglogae</i> 8"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/ALLEGRET|eglo|008</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <form name="toServer" method="get" action="/poetiditalia/public/testo/testo"><div class='intera'>
+<div style="float:left;margin-right:10px;margin-top:6px">Altre sezioni</div>
+<div style="float:left;margin-right:5px;margin-top:2px;">
+<select class="form-control" id="cambiaSezione" name="codice" onchange="document.toServer.submit()"><option selected="selected" value="ALLEGRET|eglo|008">&nbsp;&nbsp;8&nbsp;&nbsp;</option>
+<option  value="ALLEGRET|eglo|009">&nbsp;&nbsp;9&nbsp;&nbsp;</option>
+</select>
+</div>
+<div style="float:left;" class="btn-group" role="group" aria-label="...">
+<button type="button" disabled="disabled" name="previous" id="button_previous" title="Previous" onclick="muoviSezione(-1)" class="btn btn-reverse"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+<button type="button"  name="next" id="button_next" title="Next" onclick="muoviSezione(1)" class="btn btn-reverse"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+</div>
+<div style="clear:both"></div>
+</div>
+</form>
+<p></p><br /><p class="c_t">Latona</p>
+<p class="c_v">Venatrix dum forte feras sequere, alma Diana,</p>
+<p class="c_v">Vallibus aut fluviis, tua per iuga nota vagari</p>
+<p class="c_v">Ductorem impubem pecudum, cui nuper alendas</p>
+<p class="c_v">Tradideram solemnis oves, rura ardua divum,</p>
+<p class="c_n">5</p><p class="vv">Vidisti errantem? Silvis ruit inscius et nos</p>
+<p class="c_v">Ludit et Hemoniis armenta in rupibus arcet,</p>
+<p class="c_v">Nec meritos nemorum divis componit honores,</p>
+<p class="c_v">Permissosque greges nec sacra piacula curat.</p>
+<p class="c_v">Immemor hic Niobes orbate, ignorat agrestes</p>
+<p class="c_n">10</p><p class="vv">Summissos Licie et natorum regna meorum.</p>
+<p class="c_t">Diana</p>
+<p class="c_v">Sistas, cara, minas; nec te, Latona, vocantem</p>
+<p class="c_v">Obruat una dies nec fido irascere vati.</p>
+<p class="c_v">Dum, Pholoes venata iugis, et Thessala lustro,</p>
+<p class="c_v">Tageta, Peliacas rupes depasta trahentem</p>
+<p class="c_n">15</p><p class="vv">Armenta huc (dulci Spercheus laverat unda)</p>
+<p class="c_v">Visum oculis pariter, fruticosa in valle sedebat</p>
+<p class="c_v">Cum grege Lathoio et caput omnis cinxerat arbos</p>
+<p class="c_v">Omne tuum, atque olli positos nullo ordine crines</p>
+<p class="c_v">Laurus, et ingentes numerabat virga capellas.</p>
+<p class="c_n">20</p><p class="vv">Interea quid agat cerno. Canit ille Ligurum</p>
+<p class="c_v">Immensum laudes atque aurea regna deorum</p>
+<p class="c_v">Victricemque idram ac fatis immota tuorum</p>
+<p class="c_v">Imperia et nostri veneranda oracula Olimpi.</p>
+<p class="c_v">Te tamen ante omnes antro, dea, natus adorat,</p>
+<p class="c_n">25</p><p class="vv">Sacra parens; cesis vitulis dant sedibus are</p>
+<p class="c_v">Ille dona tuis raptasque ad sidera flammas;</p>
+<p class="c_v">Et sepe hoc ingens numen, Latona, vocabat.</p>
+<p class="c_v">Ad nomen letos dive mugire iuvencos</p>
+<p class="c_v">Audimus, memores repetebant carmina nimphe</p>
+<p class="c_n">30</p><p class="vv">Hemoniique amnes, silve et nemora alta, capelle</p>
+<p class="c_v">Celsaque Peliacis infusa cacumina campis</p>
+<p class="c_v">Centaurique omnes et lustra antiqua Ciclopum.</p>
+<p class="c_v">Vidi ergo hunc hominem, sed que vaga rura sequatur</p>
+<p class="c_v">Nescia; terribiles quid enim concernere silvas</p>
+<p class="c_n">35</p><p class="vv">Incipiam, cum plena feris, ubi lucus opacum</p>
+<p class="c_v">Claudit iter durum et arbustis atra silet nox?</p>
+<p class="c_v">Sed tua depasti querent presepia tauri,</p>
+<p class="c_v">Cum satura armenta noscet solemnia custos.</p>
+<p class="c_t">Latona</p>
+<p class="c_v">Cinthia, iam reducem nigrantem vellera cervum</p>
+<p class="c_n">40</p><p class="vv">Constituam et nato iungam pia nomina celo</p>
+<p class="c_v">Principii lucisque Iovem et signum altius ore</p>
+<p class="c_v">Ipsa tuum, et claram cum inimico sidere lunam</p>
+<p class="c_v">Scorpius ore premet Stigiosque in sacra Penates</p>
+<p class="c_v">Clamabo et Danais geminata pericula silvis</p>
+<p class="c_n">45</p><p class="vv">Immittam: vigeat icto crudelius apro.</p>
+<p class="c_t">Diana</p>
+<p class="c_v">Clara deum genetrix, celum dum montibus altis</p>
+<p class="c_v">Infestum facies, sequar ipsa armenta, tremendas</p>
+<p class="c_v">Infringam, celi rabiem, per Thessala clades</p>
+<p class="c_v">Pascua et ipsa gregi celo cadet hospita tellus.</p>
+<p class="c_t">Latona</p>
+<p class="c_n">50</p><p class="vv">Nigrum animal mediis componam, Cinthia, silvis,</p>
+<p class="c_v">Nubem orrendam ingens et diras ore mephites</p>
+<p class="c_v">Expirans; et humus crudo conspersa veneno</p>
+<p class="c_v">Palleat, exustis trepident sub montibus amnes.</p>
+<p class="c_v">Arescat gramen dum sicco in cespite custos</p>
+<p class="c_n">55</p><p class="vv">Arenti incumbens ramo ferat: "Ite, iuvence,</p>
+<p class="c_v">Ite, mee pecudes; perit ingens Pelion et vos</p>
+<p class="c_v">Nunc maiora manent et vobis grata virentis</p>
+<p class="c_v">Pascua magna paro Italie. Postquam ardua Troie,</p>
+<p class="c_v">Principium generis divum, vetus Albula vidit</p>
+<p class="c_n">60</p><p class="vv">Numina, ceperunt Grai pallescere montes</p>
+<p class="c_v">Ruraque et urbes antique; ruit alta Pelasgum</p>
+<p class="c_v">Gloria et Auxoniis sata sunt rura aurea campis.</p>
+<p class="c_v">Ite, mee pecudes, perit ingens Pelion et vos</p>
+<p class="c_v">Nunc maiora manent; fete procul ite capelle".</p>
+<p class="c_t">Diana</p>
+<p class="c_n">65</p><p class="vv">Multe res pereunt, quibus ars inimica cadentes</p>
+<p class="c_v">Sepe iuvat silvas et triste repellitur omen.</p>
+<p class="c_v">Audio dispersas cogentem voce iuvencas</p>
+<p class="c_v">Affantemque gregi; quantum pia carmina possunt</p>
+<p class="c_v">Ambire, hoc iam dulce sequens movet agmina carmen:</p>
+<p class="c_n">70</p><p class="vv">"Si qua gregi pietas, pastorem audite, iuvenci.</p>
+<p class="c_v">Unum in me numen, sine quo sum, quod neque fatis</p>
+<p class="c_v">Nec celi rabie poterit de corde revelli:</p>
+<p class="c_v">Ille est insignis Galeaz; deus inclitus, ingens,</p>
+<p class="c_v">Ausonie silvas et latum circuet orbem.</p>
+<p class="c_n">75</p><p class="vv">Ille mihi ante oculos cum terris atra silet nox,</p>
+<p class="c_v">Nos rapit in celum et celi dat monstra tueri.</p>
+<p class="c_v">Nempe deus, nostri memores, deus ille, capelle,</p>
+<p class="c_v">Perspicua nos sparget aqua et dabit abdere luci,</p>
+<p class="c_v">Hic nemus et vobis dulcissima pascua condet.</p>
+<p class="c_n">80</p><p class="vv">Vos Latona vocat et mistica pocula Phebe</p>
+<p class="c_v">Sacra parat, sanctus que nunc inspirat Apollo.</p>
+<p class="c_v">Vos Athesis nimphe aspicient, vos maxima mundi</p>
+<p class="c_v">Numina et Hesperii cum notis urbibus amnes</p>
+<p class="c_v">Et mihi grata nimis placidi Modoetia Lambri.</p>
+<p class="c_n">85</p><p class="vv">Felicem divum patriam et felicia regna</p>
+<p class="c_v">Visuri, nunc ite mei nunc ite iuvenci".</p>
+<p class="c_t">Latona</p>
+<p class="c_v">Ecce venit custos meus; hic meus, ite, coloni,</p>
+<p class="c_v">Currite vos silve et solempnia carmina, nimphe,</p>
+<p class="c_v">Dicite et arboree lenissima murmura frondes</p>
+<p class="c_n">90</p><p class="vv">Tollite; vos tenues nostris animalibus unde</p>
+<p class="c_v">Ferte pios latices, vivos deducite fontes.</p>
+<p class="c_v">Ite, dee nemorum et ramo nunc pinguis olive</p>
+<p class="c_v">Annosum vite spatium et pacem addite ovili.</p>
+<p class="c_v">Crescite pascentes patriis in montibus, agne.</p>
+<p class="c_n">95</p><p class="vv">Fusce, decus silve, latebras dum ruris opaci</p>
+<p class="c_v">Et nemorum secreta vides, dare munera templis</p>
+<p class="c_v">Sis memor; atque omni faveant cum numina silve,</p>
+<p class="c_v">Numen adorandum est, sine quo nec rustica cura,</p>
+<p class="c_v">Haud unquam vigiles ducunt sua tempora nimphe.</p>
+<p class="c_n">100</p><p class="vv">Sis felix et cara deum cole rura tuorum.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

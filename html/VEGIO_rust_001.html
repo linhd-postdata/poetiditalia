@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Maffeo Vegio rusticanalia</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a8fa10c3c" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Maffeo Vegio</b> <i>rusticanalia</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Maffeo Vegio rusticanalia</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(137, 233)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(121789,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(121789,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Maffeo Vegio</b> <i>rusticanalia</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="121789"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Maffeo Vegio</b> <i>rusticanalia</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/VEGIO|rust|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_t">1.</p>
+<p class="c_t">CONQUESTUS IN BACCHUM ET CEREREM</p>
+<p class="c_v">Bacche, pater vatum, suavissime, Bacche, deorum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui facis ingenium, qui facis eloquium,</p>
+<p class="c_v">Cur fugis atque tuum, mitis Lenaee, poetam</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Linquis? Io, vatem respice, Bacche, tuum:</p>
+<p class="c_n">5</p><p class="vv">An quia rure negas laribus succedere nostris?</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe etiam magni rus coluere dei.</p>
+<p class="c_v">Quae prius alma Thetis miscebat pocula tecum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nunc, sine te, puras, te sine, miscet aquas.</p>
+<p class="c_v">Parva licet mea sint, dignare revisere tecta</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et, quae nunc sola est, adsociare deam!</p>
+<p class="c_v">Tunc tibi mille canam laudes, tua munera dicam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mille dabo teneros, te mihi dante, modos;</p>
+<p class="c_v">Tunc referam thyrsos, referam viridemque iuventam</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et dona, intonsae si tibi cura comae est.</p>
+<p class="c_n">15</p><p class="vv">Tu quoque, sancta Ceres, quamvis tua numina vates</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cantarint, vates ecce tuus sine te!</p>
+<p class="c_v">At tu etiam deeras, adflicto ut poena poetae</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cresceret, ingrata qui nuce corpus alit.</p>
+<p class="c_v">Parcite ieiunum, mures, damnare poetam:</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rodo, sed invitus, vestra alimenta: nuces.</p>
+<p class="c_v">In me bis genitus coniuravere Ceresque,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Credo: quid, aetherei si fremat ira Iovis?</p>
+<p class="c_v">Aurea prima fuit longeque beatior aetas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qua dura est humili glande soluta fames,</p>
+<p class="c_n">25</p><p class="vv">Qua restincta sitis sub amoeni fluminis unda.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quid queror? En aetas aurea prima mihi est!</p>
+<p class="c_v">Tu potius, Liber, potius, dea candida frugum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Succurre, o tectis tu quoque digna meis!</p>
+<p class="c_v">Hic habitat Phoebus, divarum hic turba sororum</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et, licet agrestis sit, casa cara tamen:</p>
+<p class="c_v">Quos nec Calliope, nec dedignatur Apollo,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Neu pudeat viles vos habitare Lares!</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">2.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Non est, agricolae, quam vestra beatior ulla,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non est ars magnis carior ulla deis.</p>
+<p class="c_v">Ut legimus, primi terram coluere parentes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Presserunt humeros falxque ligoque suos.</p>
+<p class="c_n">5</p><p class="vv">Non puduit cultis vitam exercere sub agris,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non puduit stivae conseruisse manum.</p>
+<p class="c_v">Divitiae fuerant magnae sibi poma nucesque,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Delitiae fuerant dulcia mella suae.</p>
+<p class="c_v">Grex pecudum sibi erat, cari spes nata peculi,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximae opes liquidi copia lactis erat.</p>
+<p class="c_v">Sub placida patulae recubabant arboris umbra,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Alta dabat facilem mollis et herba thorum.</p>
+<p class="c_v">Iuxta ibat labens crepitanti murmure rivus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et saliens mota dulce sonabat aqua.</p>
+<p class="c_n">15</p><p class="vv">Mulcebat teneros ea tunc suavissima somnos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sedabatque gravem purior unda sitim.</p>
+<p class="c_v">Ampla videbantur tuguri sibi tecta pusilli,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quod nunc et minimum quemque habitare pudet.</p>
+<p class="c_v">Tunc nondum evectae superabant moenia turres,</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec fuerant fossis oppida cincta suis.</p>
+<p class="c_v">Nondum sollicitae scindebant aequora naves,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nondum bellator frena terebat equus.</p>
+<p class="c_v">Tunc aes atque aurum preciosaque gemma latebat</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - quae vellem aeternos delituisse dies!</p>
+<p class="c_n">25</p><p class="vv">Nondum discordes congesta pecunia lites</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moverat – illa omnis causaque fonsque mali est.</p>
+<p class="c_v">Tunc furta et nocuae fuerant sine nomine praedae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Res fuerat tectos vana timere dolos.</p>
+<p class="c_v">Nec servi dominos, geniti neque fallere patres,</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Norant vicino nullus obesse suo.</p>
+<p class="c_v">Tunc non sceptra ducum, dominandi nulla cupido:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Par fuerat studium, parque fides hominum.</p>
+<p class="c_v">Non infusa auro reges aconita bibebant:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Praebebat fagus pocula tuta rudis.</p>
+<p class="c_n">35</p><p class="vv">Rixae aberant odiumque et falsae crimina linguae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dulcis pax omnes, dulcis alebat amor.</p>
+<p class="c_v">Cuique dabat vitam proprio quod legerat agro,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cuique suo vitam parta labore dabant.</p>
+<p class="c_v">O fortunatos aetas quos illa recepit,</p>
+<p class="c_n">40</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; O sub felici sidere progenitos!</p>
+<p class="c_v">Tunc non vile fuit, nec agreste ignobile nomen;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tunc magnus fossor, magnus arator erat.</p>
+<p class="c_v">At, vos si sapitis quantum sors vestra beata est,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Agricolae! Certe nulla beata magis!</p>
+<p class="blank">&nbsp;</p>
+<p class="c_n">45</p><p class="vv">Quam simile est prisco vestrum quod degitis aevum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ars est quam similis, vitaque quam similis!</p>
+<p class="c_v">Idem victus, idem studium, spes, cura eademque,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Idem ruris amor, sollicitudo eadem.</p>
+<p class="c_v">Verum negligitis tot opes, quot larga deorum</p>
+<p class="c_n">50</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dextra dedit; verum tot bona negligitis!</p>
+<p class="c_v">Non est copia opum maior, quam vita ubi paucis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Contenta angusto sub Lare tuta agitur.</p>
+<p class="c_v">Aurea quae fuerant agrestum saecula quondam,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; De fece atque luto nunc sibi nomen habent.</p>
+<p class="c_n">55</p><p class="vv">Mutata est antiqua suis cum moribus aetas:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Prisca abiit probitas, prisca abiit pietas.</p>
+<p class="c_v">Quid sit pax et amor, quid lex nescitis, agrestes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qualia sint divum, qualia iura hominum.</p>
+<p class="c_v">Nescitis quid fas et ius, quid sancta fides est,</p>
+<p class="c_n">60</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quid colere est homines, quid colere est superos.</p>
+<p class="c_v">Furta autem et raptus, inhonestaque iurgia nostis;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quid sit furari, quid rapere: hoc sapitis.</p>
+<p class="c_v">Temnere caelicolas, sanctas corrumpere leges</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Scitis, et exempli caetera quaeque mali.</p>
+<p class="c_n">65</p><p class="vv">Heu, doleo vestros (doleam concedite) mores</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A coeptis veterum degenerare patrum!</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">3.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Vos moneo, agrestes: doctos ne laedite vates,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ni divum est vobis gratia cara parum,</p>
+<p class="c_v">Ne facite! A superis sunt gens electa poetae:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quicquid agant, sanctis vatibus astra favent.</p>
+<p class="c_n">5</p><p class="vv">Si libeat tantum perverso insistere mori,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec modus est vestro, nec requies, sceleri,</p>
+<p class="c_v">Ite, alio rapidas potius convertite dextras!</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ite, et sit vatum conciliatus amor!</p>
+<p class="c_v">Quid meruere pii, quid peccavere poetae,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quis nisi amor recti, quis nisi cura boni?</p>
+<p class="c_v">Parcite, quaeso, malis tandemque absistite tantis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec vestri immemores esse putate deos!</p>
+<p class="c_v">Parcite: magnorum sera est vindicta deorum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed gravior, quanto serior illa venit!</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">4.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">In commune bonum nasci, gens rustica, fruges</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fertis: ob id tuto pro studio rapitis.</p>
+<p class="c_v">Pergite, commissum vestra haec sententia solvet:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sic aliqua ad superos spes erit ire polos.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">5.</p>
+<p class="c_t">IN BACCHAM RUSTICAM</p>
+<p class="c_v">Non sat erat fruges rapere, at, tibi ne quid inausum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Furata es saccos, improba Baccha, meos.</p>
+<p class="c_v">Improba sis liceat, dum saltem provida, Baccha, es,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quandoquidem moriens eicies animam.</p>
+<p class="c_n">5</p><p class="vv">Infera praecipitem mittent te numina saccis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Servatam quo sis tutior ipsa meis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">6.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Miror, io, agrestes, meaque admiratio digna est,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quam cupidi in caecam proruitis Venerem!</p>
+<p class="c_v">Continuo duros gemitis sudore labores;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vix restat, quae vos mulceat, ulla quies.</p>
+<p class="c_n">5</p><p class="vv">Quotidie curvas falces rigidosque ligones</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Versatis valida pandaque aratra manu;</p>
+<p class="c_v">Quotidie ardentes detecto vertice soles</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fertis vel gelidae frigora dira hiemis.</p>
+<p class="c_v">Ebibitis puras communi e flumine lymphas,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Atque editis viles insipidasque dapes.</p>
+<p class="c_v">Unde igitur tanta haec vobis innata libido est?</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cur fit quod tantum pectora vestra calent?</p>
+<p class="c_v">Quippe solet lautis inter Venus otia mensis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Astare, et molles delicias sequier.</p>
+<p class="c_n">15</p><p class="vv">Verum praerapidos Venerem mollisse leones</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dicunt, atque ipsos incaluisse lupos;</p>
+<p class="c_v">Ipsum etiam patientem oneris multique laboris</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Visa, licet fessum, femina mollit equum.</p>
+<p class="c_v">Quodcumque est caelo, quicquid terraque marique</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quod spirat, Venerem sentit et igne furit.</p>
+<p class="c_v">At par ille deis animo cui dicere legem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cui licuit placitis ponere fraena suis,</p>
+<p class="c_v">Qui desiderio pellaci opponere sese,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui novit blandis abstinuisse malis.</p>
+<p class="c_n">25</p><p class="vv">Nunc vos, agricolae (vestrum non miror amorem)</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pergite, continuam profluite in Venerem;</p>
+<p class="c_v">In Venerem tantum, quaeso, exspumate, quod ipsi,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quando aliud desit, se nihilent oculi.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">7.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Fama refert asinos Romana per oppida numquam</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ad Venerem, nisi post verbera multa, trahi;</p>
+<p class="c_v">Vos quoque post longos, rurestris turba, labores,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Post inopem victum, dira libido rapit.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">8.</p>
+<p class="c_t">IN GALLAM RUSTICAM</p>
+<p class="c_v">Galla aegrota, diu langues absente marito:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exhalas animam, languida, paene tuam.</p>
+<p class="c_v">Vir tuus ecce redit, viso pro coniuge gaudes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nec mora: te reditu liberat ille suo.</p>
+<p class="c_n">5</p><p class="vv">Ambo rudes, ambo agrestes: miracula sunt haec!</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Unde habet hanc medicam, quae tibi prosit, opem?</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">9.</p>
+<p class="c_t">IN TEXTILEM RUSTICAM</p>
+<p class="c_v">Sunt tibi civiles, quamvis sis rustica, mores,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Textilis, os facile est linguaque tersa tibi.</p>
+<p class="c_v">Cum rides, ridet tecum tua vestis et una</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si mage quid carum veste tegente latet.</p>
+<p class="c_n">5</p><p class="vv">Nunc, age, ab indigni lecto diverte mariti.</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dignior alter erit: delige in urbe virum!</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">10.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Rustica turba, nuces tot vestra immergitis alvo:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cur tot quae non sint digerier faciles?</p>
+<p class="c_v">At nova praeda subit; teneras absumitis uvas:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nondum digestas effugat uva nuces.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">11.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Quaeritis, agricolae, circum dumeta pusillas</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Labruscas, vinum conficitisque novum.</p>
+<p class="c_v">Suave quidem potu est, tenerumque et amabile mustum:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nescio qui dumi talia musta ferant.</p>
+<p class="c_n">5</p><p class="vv">Verum conscia nox raptas testabitur uvas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quas terrae e labris fingitis esse tamen.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">12.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Quotidie multo conquestu fletis, agrestes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quae lupus aut vulpes tristia damna ferant.</p>
+<p class="c_v">Nunc vulpem dictis furem appellatis amaris,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nunc rapidum largo dicitis ore lupum.</p>
+<p class="c_n">5</p><p class="vv">Digna quidem vestrae non est causa ulla querelae:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In fures furum mutua turba ruit.</p>
+<p class="c_v">Vita, nisi ex rapto, constat vobisque sibique:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Par crimen vobis, par studiumque sibi.</p>
+<p class="c_v">Quid melius dici possit, quid sanctius umquam,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quam laedi auctores criminis arte pari?</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">13.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Scitisne, agricolae, cur vestros vita puellos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Inficiat multis perniciosa malis?</p>
+<p class="c_v">Afferte huc mentes: vos unica causa malorum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vos estis tanti principium vitii.</p>
+<p class="c_n">5</p><p class="vv">Vobis nulla fides, nihil est purive piive,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exemplum vestra est vita pudenda suum.</p>
+<p class="c_v">Desinite a vitiis igitur, tandemque fovete</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quos discant mores pignora vestra bonos!</p>
+<p class="c_v">Qualis enim fuerit mos, qualis vita parentum,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Talis erit natis vitaque mosque suis.</p>
+<p class="c_v">Si genitrix caste, caste quoque filia vivet;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si mater meretrix, filia talis erit;</p>
+<p class="c_v">Si pater ingenuae vitae est, et filius idem;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si pater ingenii natus et ipse mali est,</p>
+<p class="c_n">15</p><p class="vv">Ni sit forte boni tanta excellentia nati,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quem pudet insani vivere more patris.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">14.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Dicite, ruricolae: quare tot verbera, quare</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mittitis in vestros tot maledicta boves?</p>
+<p class="c_v">Nunc illos virga premitis, nunc pungitis acri</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quo possint stimulo lumina vestra fodi!</p>
+<p class="c_n">5</p><p class="vv">Post mille indignas mortes, convicia mille</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Additis et nulla est reddita parte salus.</p>
+<p class="c_v">Proh gens caeca hominum! Non vos maledicitis ipsos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vestra bonum quotiens afficit ira pecus?</p>
+<p class="c_v">Illi servitium curvi patiuntur aratri,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et subdunt humili colla terenda iugo;</p>
+<p class="c_v">Illi dant fruges et terrae dona ministrant:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vestra igitur spirat munere vita suo.</p>
+<p class="c_v">Mite piumque animal, et nostra ad commoda natum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quid potuit tanti promeruisse mali?</p>
+<p class="c_n">15</p><p class="vv">Sed vobis dira est et mens imbuta veneno:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cum non possit heros, exigit illa boves.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">15.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Non possum non mirari, gens incola ruris,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cum nihil humani, nil sapitis fidei,</p>
+<p class="c_v">Cur tantum veteres habitarent rura poetae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cur agerent humili postposita urbe solo.</p>
+<p class="c_n">5</p><p class="vv">At non diffitear quin rura accepta mage essent,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quin multo studiis commodiora suis:</p>
+<p class="blank">&nbsp;</p>
+<p class="c_v">Effugiunt Musae turbas atque otia quaerunt,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cara fuit Musis semper amica quies;</p>
+<p class="c_v">Quin pudet in vulgus sese ostentare poetam,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui tantum verae nomina vocis amat.</p>
+<p class="c_v">Non igitur mirum est si rus coluere poetae:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rure etiam malim scribere si qua velim.</p>
+<p class="c_v">Is mihi mos: quamvis media mihi vivitur urbe,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Deserta Musis urbe vacare meis.</p>
+<p class="c_n">15</p><p class="vv">Sed quod perfidiam vestram bene miror, agrestes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pertulerint aequa mente animoque levi,</p>
+<p class="c_v">Cur immortales, cur non scripsere libellos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ut vestra infamis vita legenda foret.</p>
+<p class="c_v">Illa forte boni sub tempestate fuistis:</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nescio quo laevo sidere versa fides.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">16.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Ut quid, aratores, tot vestra in vota vocatis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sperantes faciles promeruisse deos?</p>
+<p class="c_v">Nunc imbres longos, nunc accusatis inertes;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Saepe nocet grando, saepe pruina nocet.</p>
+<p class="c_n">5</p><p class="vv">Ne seges, incertam ne spem vindemia fallat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Caelicolas humili voce rogatis opem.</p>
+<p class="c_v">Praetereo sordes animorum, furta dolosque,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et quae sunt vestrae plurima nequitiae;</p>
+<p class="c_v">Hoc tantum dicam, quod non est cultus amorve,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non cura est vobis religiove deum.</p>
+<p class="c_v">Audetisne igitur divos sperare secundos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si nullus divum est religionis honos?</p>
+<p class="c_v">Pluris haras facitis, quam sancti numinis aras;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cura suum maior, cura deumque minor.</p>
+<p class="c_n">15</p><p class="vv">Si petitis sacram, quamvis raro accidit, aedem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quo petitis cultu, qua prece scire velim;</p>
+<p class="c_v">Extra aditus templi, celebrat cum sacra sacerdos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Statis, uti ipsius puteat ara Iovis.</p>
+<p class="c_v">Quisque suos risus habet et sua inania dicta,</p>
+<p class="c_n">20</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quas referat nugas quisquis habetque suas.</p>
+<p class="c_v">Nunc caput hinc, humeros nunc circumducitis illinc,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Brachia cum manibus, cruraque cum pedibus;</p>
+<p class="c_v">Cum caupone agere et media inter vina putatis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sed tamen epotus venter et uncta gula est.</p>
+<p class="c_n">25</p><p class="vv">Namque deum simulacra deumque revisere templa</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ieiuno stomacho creditis esse nefas!</p>
+<p class="c_v">Ante tua ora pati potes, o sanctissime divum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Haec fieri ante tuos, Iuppiter alme, pedes?</p>
+<p class="c_v">Quid mirum est rapidis si terras solibus uris,</p>
+<p class="c_n">30</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si multo fruges gurgulione rapis,</p>
+<p class="c_v">Si pluviis occas segetes, si fulmina mittis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et si terribili grandine tundis humum?</p>
+<p class="c_v">Qui cupitis largo ut vester fecundet agellus,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vos doceo, hoc monitum mente tenete meum:</p>
+<p class="c_n">35</p><p class="vv">Sumite quod vestrum est, et parto vivite vestro,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et colite aeternos debito honore deos!</p>
+<p class="c_v">Sic bene res cedent vestrae, sic vinea semper,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cultaque, ut optatis, luxuriabit humus.</p>
+<p class="c_v">Cui manus innocua est, cui mens est pura, secundant</p>
+<p class="c_n">40</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hunc superi, laeta hunc numina respiciunt.</p>
+<p class="c_v">Accipite hoc demum, digitoque innectite dictum:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Peccati poenam quisque sui patimur.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">17.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Dum vestrae accuso, rurales, crimina vitae,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Forte rogor ne sit urbs libera criminibus:</p>
+<p class="c_v">Nam luxus, pompaeque leves, et faenus avarum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Et tectae fraudes vivere in urbe solent;</p>
+<p class="c_n">5</p><p class="vv">Illic qui fallant dominos, qui patria vendant</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moenia, sunt qui ius fasque piumque negent.</p>
+<p class="c_v">At vobis quanta est sceleri indulgere facultas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tantum vos rabies in scelera atra rapit.</p>
+<p class="c_v">Si quid inexpertum sinitis, si criminis ulla est</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pars pura, id vestrae non potuere manus.</p>
+<p class="c_v">Facta hominum non res, sed mens diiudicat ipsa;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Peccatum ex animo fit grave, fitque leve.</p>
+<p class="c_v">Culpa ideo in vili quando est extrema voluptas,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maior ab electo creditur esse cibo.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">18.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Quicquid composita fit seditionis in urbe,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rustica sunt omnis foedera causa mali.</p>
+<p class="c_v">Idcirco primos ad bella instruxit agrestes</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui cecinit Rutuli, Trois et arma viri.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">19.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Hi sancti agrestum mores: ubi quaeris amorem</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ipsorum, contra laedere posse student.</p>
+<p class="c_v">Sin fronte implacida aspicias, et damna mineris,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tunc habeas mites, tunc habeas faciles.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">20.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Cum lux festa oritur solis, consumitis omnem,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ruricolae, in potu proluitisque diem.</p>
+<p class="c_v">Cauponam colitis, non sacra oracula divum,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sint quamvis divum hac templa colenda die.</p>
+<p class="c_n">5</p><p class="vv">Sed cur luce sacra celebratis Bacchica tantum</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dona, quibus vilis potus aquae esse solet?</p>
+<p class="c_v">Verum quo quis eget, si demum copia fiat,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Id multo dextra liberiore capit.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">21.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Semper in absentes fertis convicia vestros,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rustici, heros, nec habent turpia dicta modum.</p>
+<p class="c_v">Recte agitis, ne quid praesumpti criminis absit:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nunc rapere ausa manus, nunc male lingua loqui.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">22.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Quando est longa dies, sero cenatis, agrestes;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Contra ubi lux brevior, cena citata venit.</p>
+<p class="c_v">Vivitur urbe aliter: sed quid si discrepat urbi,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cum nihil urbani rustica turba habeat?</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">23.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Rideo saepe, aliquem quando salvere iubetis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quo salvum verbo dicitis, agricolae:</p>
+<p class="c_v">Aut infelices horas, aut redditis annos,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tristia vel dirae nomina mille necis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">24.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Urbe estis faciles, quamvis sub rure minaces:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rure licet, bili concita corda tument.</p>
+<p class="c_v">Vestra est persimilis, rurales, vita catellis,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Qui tantum latrant tectum ubi erile colunt.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">25.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Inter vestra unum scelera hoc detestor, agrestes,</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quando aliquem vestrum caetera turba timet,</p>
+<p class="c_v">Quando aliquis reliquos conculcat more tyranni;</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quid peius tumido paupere? Quid gravius?</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">26.</p>
+<p class="c_t">IN RUSTICOS</p>
+<p class="c_v">Seu metitis spicas, virides seu falcibus herbas</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tondetis, sive est pinguis arandus ager,</p>
+<p class="c_v">Denique quodcumque est operis, declive tenetis</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Corpus, ruricolae, despicitisque in humum.</p>
+<p class="c_n">5</p><p class="vv">Ast hominis proprium sublato est vertice caelos</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Suspicere: hoc signum est quod ratione valet,</p>
+<p class="c_v">Quamvis in terras aliae inclinata figurae</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ora ferant, quae nil cognitionis habent.</p>
+<p class="c_v">Quam facilis vultus secreti est pectoris index,</p>
+<p class="c_n">10</p><p class="vv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nunc scio quod divos pro nihilo facitis!</p>
+<p class="c_v">Vos ergo humano quamprimum abscedite coetu:</p>
+<p class="c_v">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Non hominum species vestra, bovum magis est!</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

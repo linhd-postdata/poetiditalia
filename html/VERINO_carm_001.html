@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Ugolino Verino carmen in laudem beati Antonii</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a8fd82d9f" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Ugolino Verino</b> <i>carmen in laudem beati Antonii</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Ugolino Verino carmen in laudem beati Antonii</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(174, 334)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(225696,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(225696,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Ugolino Verino</b> <i>carmen in laudem beati Antonii</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="225696"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Ugolino Verino</b> <i>carmen in laudem beati Antonii</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/VERINO|carm|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_v">Antonii dum gesta volo pastoris Etrusci</p>
+<p class="c_v">Scribere, consuetae desunt in carmine vires.</p>
+<p class="c_v">Ille ego, qui cecini laudes clarosque triumphos</p>
+<p class="c_v">Armaque Francorum nullis impervia terris,</p>
+<p class="c_n">5</p><p class="vv">Et veros Christi heroas proceresque supernos</p>
+<p class="c_v">Expressi (quibus Antonii coniungere laudes</p>
+<p class="c_v">Festino, dextrum modo sit mihi numen Iesu),</p>
+<p class="c_v">Descripsi silvas sacras sublimis Olympi;</p>
+<p class="c_v">Inter et heroas nunc compatriota canendus</p>
+<p class="c_n">10</p><p class="vv">Antistes sanctus Syllanae Antonius urbis:</p>
+<p class="c_v">Cui fuit Andreas genitor Thomasaque mater,</p>
+<p class="c_v">Antiqui cives (et non de plebe fuere).</p>
+<p class="c_v">Indole praeclara primis apparuit annis</p>
+<p class="c_v">(Grammatices studio primum eudiere parentes);</p>
+<p class="c_n">15</p><p class="vv">Ingenio licet egregio, sed mente tenaci</p>
+<p class="c_v">Clarior ipse tamen, retinens quodcunque legebat.</p>
+<p class="c_v">Lascivos pueros tanquam contagia vitans,</p>
+<p class="c_v">Solus in ecclesia Christi, si quando vacaret</p>
+<p class="c_v">Sedulus a studiis, sacris interfuit horis;</p>
+<p class="c_n">20</p><p class="vv">Utque procellosi novit discrimina saecli,</p>
+<p class="c_v">Decrevit servire Deo sub relligione beati</p>
+<p class="c_v">Dominici, cuius miro inflammatus amore</p>
+<p class="c_v">Saepe frequentabat cetum festisque diebus</p>
+<p class="c_v">Intererat semper. Bis senum ubi venit ad annum,</p>
+<p class="c_n">25</p><p class="vv">Accessit Fesulas, ubi tunc virtute Ioannes</p>
+<p class="c_v">Dominicus clarus posuit coenobia sacra</p>
+<p class="c_v">Erexitque solo templum atque habitacula fratrum.</p>
+<p class="c_v">Cardineo quanquam post est decoratus honore,</p>
+<p class="c_v">Dominici tamen in patriarchae sede remansit:</p>
+<p class="c_n">30</p><p class="vv">Divitias sprevit, quia paupertatis amator</p>
+<p class="c_v">Extitit, ut fiat caeli post funera dives.</p>
+<p class="c_v">Vidit ut hunc puerum devoto corde petentem</p>
+<p class="c_v">In numero asciri fratrum, quia iunior aetas</p>
+<p class="c_v">Visa fuit, dixit: "Studiis quibus ipse vacasti,</p>
+<p class="c_n">35</p><p class="vv">Militiae ut sanctae valeas tolerare labores?"</p>
+<p class="c_v">Respondit: "Sacri disco decreta senatus:</p>
+<p class="c_v">Hoc unum studium est, noctesque diesque revolvo.</p>
+<p class="c_v">Nunc exopto Deo teneris servire sub annis".</p>
+<p class="c_v">"I, redeas ad nos ubi totum in mente repostum".</p>
+<p class="c_n">40</p><p class="vv">Discessit puer, et Christi inflamatus amore</p>
+<p class="c_v">Decretale sacrum bis senis mensibus omne</p>
+<p class="c_v">Edidicit, rediitque alacer promissa reposcens.</p>
+<p class="c_v">"Experiare, pater, Romanum an dogma, Ioannes,</p>
+<p class="c_v">Percepi". Librum diversa in parte petivit;</p>
+<p class="c_n">45</p><p class="vv">Tunc puerum astantem, fratrum presente corona</p>
+<p class="c_v">(Responsa arguti obstupuit generalis ephoebi),</p>
+<p class="c_v">Subscepit laetus; benedicens induit illum</p>
+<p class="c_v">Veste sacra anciditque comas. Custodia solers</p>
+<p class="c_v">Est data, sub cuius tutela dogma salubre</p>
+<p class="c_n">50</p><p class="vv">Impleat. Eluxit ceu matutina refulget</p>
+<p class="c_v">Stella cito, et prompte parens cuicunque monenti</p>
+<p class="c_v">Inque choro primus devota mente manebat;</p>
+<p class="c_v">Discebat velox, retinens quodcunque legebat.</p>
+<p class="c_v">De quo concepit generalis multa Ioannes:</p>
+<p class="c_n">55</p><p class="vv">"Hic erit Ecclesiae splendor, modo longior aetas,</p>
+<p class="c_v">Ordinis et nostri (ni fallor) clara lucerna".</p>
+<p class="c_v">Ostendit signum teneris probitatis in annis:</p>
+<p class="c_v">Astinuit carne ignaro genitore, latenter</p>
+<p class="c_v">Proiciens catulis sub mensa frustula carnis,</p>
+<p class="c_n">60</p><p class="vv">Conformis vite foret ut post ipse futurae,</p>
+<p class="c_v">Assuetusque puer ieiunia ferre tenellus.</p>
+<p class="c_v">Post paucos annos apparuit inclyta virtus</p>
+<p class="c_v">Antonii, probitas morum et doctrina fidelis.</p>
+<p class="c_v">Iure igitur fratres hunc delegere priorem</p>
+<p class="c_n">65</p><p class="vv">Parthenope et Rome et Senis Fesulisque, per omnem</p>
+<p class="c_v">Italiam; tandem generalis ab ordine factus</p>
+<p class="c_v">Noctes atque dies sacrum tuebatur ovile.</p>
+<p class="c_v">Solerti ingenio commissum munus obibat;</p>
+<p class="c_v">Non minus interea studio vigilabat, et omne</p>
+<p class="c_n">70</p><p class="vv">In chartis tempus tribuebat, quando vacabat</p>
+<p class="c_v">A curis, canonas relegens scribensque salubrem</p>
+<p class="c_v">Vivendi normam. Numerosa volumina miror</p>
+<p class="c_v">Scripsisse, urgerent cum tanta negocia sacri</p>
+<p class="c_v">Ordinis. Historiam incipiens ab origine saecli,</p>
+<p class="c_n">75</p><p class="vv">Annales veteres scrutans, miro ordine gesta</p>
+<p class="c_v">Ad sua deduxit priscorum tempora regum,</p>
+<p class="c_v">Gratum opus Ausoniis; sed longe gratius illud</p>
+<p class="c_v">Quod clero indocto utiliter rudibusque popellis</p>
+<p class="c_v">Composuit: summa est et rectae formula vitae.</p>
+<p class="c_n">80</p><p class="vv">Romanae postquam innotuit clarissima virtus</p>
+<p class="c_v">Ecclesiae (probitas morum superabat acumen</p>
+<p class="c_v">Ingenii), Etruscae decessit episcopus urbis.</p>
+<p class="c_v">Hanc licet ex primo cetu procerumque senatu</p>
+<p class="c_v">Appeterent sedem, antistes Syllanus ut esset,</p>
+<p class="c_n">85</p><p class="vv">Eugenius, cleri qui summus in arce sacerdos</p>
+<p class="c_v">Tunc erat, Antonii probitas decrevit ut esset,</p>
+<p class="c_v">Elegitque illum renuentem et multa precantem</p>
+<p class="c_v">Ne foret (et tunc Parthenopae generalis obibat</p>
+<p class="c_v">Offitium). Ut novit quod sic sententia summi</p>
+<p class="c_n">90</p><p class="vv">Pontificis staret firma ut Marpesia cautes,</p>
+<p class="c_v">Sardinias latebras incognitus ire per undas</p>
+<p class="c_v">Instituit, ne quis latitantem aprehendere posset.</p>
+<p class="c_v">Sed minime potuit: solertis cura nepotis</p>
+<p class="c_v">Detinuit; divertit iter Senasque petivit.</p>
+<p class="c_n">95</p><p class="vv">Ad sacra mox Fesulas tendens coenobia mansit.</p>
+<p class="c_v">Haec Florentinae non longe a sedibus urbis</p>
+<p class="c_v">Dominici est aedes. Cives venere precantes</p>
+<p class="c_v">Ut tueatur oves commissas plebis Etruscae.</p>
+<p class="c_v">Littera Pontificis minabunda coercuit illum</p>
+<p class="c_n">100</p><p class="vv">Suscipere iniunctum tandem pastoris honorem;</p>
+<p class="c_v">Bullarum Eugenius sumptus pro paupere solvit.</p>
+<p class="c_v">Ut sibi Pontificis nota est Christique voluntas,</p>
+<p class="c_v">Pastoris suscepit onus, pompisque relictis</p>
+<p class="c_v">Ipse pedes clero solum comitante per urbem,</p>
+<p class="c_n">105</p><p class="vv">Aplaudente tamen populo procerumque senatu,</p>
+<p class="c_v">Bassilicam intravit, celebratisque ordine rebus</p>
+<p class="c_v">Ad pastoralem famulis comitantibus aulam</p>
+<p class="c_v">Accessit paucis. Solers disquirere cepit</p>
+<p class="c_v">Ipse sacerdotum vitas, populosque revisens</p>
+<p class="c_n">110</p><p class="vv">Circuit ecclesias per se archiepiscopus omnes.</p>
+<p class="c_v">Dirigit errores moresque hortatur honestos,</p>
+<p class="c_v">Semper et attente decretis sedulus horis</p>
+<p class="c_v">Disceptatores causarum examine pensans</p>
+<p class="c_v">Iura dabat, nunquam precibus nec munere flexus,</p>
+<p class="c_n">115</p><p class="vv">Nec procerum motus pastor terrore minantum.</p>
+<p class="c_v">Omnibus aequus erat: nullo discrimine tractans</p>
+<p class="c_v">Ius tribuit, civis foret an peregrinus et hospes.</p>
+<p class="c_v">Hinc Antoninis Romana Ecclesia causis</p>
+<p class="c_v">Tunc appellari vetuit, velut arbiter aequus</p>
+<p class="c_n">120</p><p class="vv">Et prudens esset. Cleri non unica cura,</p>
+<p class="c_v">Sed cives etiam laicos curabat ab omni</p>
+<p class="c_v">Labe, magistratus adeundo, saepe redarguens</p>
+<p class="c_v">Iniustum si quid tentaret Curia. Saepe</p>
+<p class="c_v">Accensus zelo paucis scolas cetumque prophanum</p>
+<p class="c_n">125</p><p class="vv">Irrumpebat, humi tabulas talosque refundens.</p>
+<p class="c_v">Ardebat vultus eius, velut ignea flamis</p>
+<p class="c_v">Fulminei Christi facies radiabat Iesu,</p>
+<p class="c_v">Quando de templo mensas subvertit ementum.</p>
+<p class="c_v">Non solum facto, sed verbo obsistere quisquam</p>
+<p class="c_n">130</p><p class="vv">Non ausus fuerat, quamvis sceleratus et audax.</p>
+<p class="c_v">Urgebat tardum Antonii presentia clerum:</p>
+<p class="c_v">Nam matutinis antistes primus in horis</p>
+<p class="c_v">Ecclesiam intrabat sine somno, pervigil, orans,</p>
+<p class="c_v">Nec tardabat iter ventis stridentibus imber.</p>
+<p class="c_n">135</p><p class="vv">Omnibus exemplum fuerat venerabile pastor.</p>
+<p class="c_v">Vestitu et victu modico, quodcunque supersit</p>
+<p class="c_v">Sumptibus exiguae mensae tribuebat egenis.</p>
+<p class="c_v">Unicus in stabulis pusillo corpore mulus</p>
+<p class="c_v">Iumentum fuit: hoc usus senioribus annis.</p>
+<p class="c_n">140</p><p class="vv">Exclamare libet, videas si tempore nostro</p>
+<p class="c_v">Ire sacerdotum proceres, longo ordine mulas</p>
+<p class="c_v">Sericeis stratas sagulis famulosque lacernis</p>
+<p class="c_v">Coccineis: sanguis Christi Ecclesiaeque supellex</p>
+<p class="c_v">His teritur pompis! Formido dicere cuncta:</p>
+<p class="c_n">145</p><p class="vv">Consumunt molles aeraria sacra cynedi</p>
+<p class="c_v">Et scorta; in foedo Petri patrimonia luxu</p>
+<p class="c_v">Labuntur. Christe, Ecclesiae succurre labanti!</p>
+<p class="c_v">Inceptum repetamus opus. Fulgebat ubique</p>
+<p class="c_v">Fama per Ausonias Syllani antistitis oras.</p>
+<p class="c_n">150</p><p class="vv">Accersivit eum pastor Romanus in aulam</p>
+<p class="c_v">Detinuitque ipsum, dum vixit, rebus in altis;</p>
+<p class="c_v">Consilio Antonii est usus, quin aeger in ipso</p>
+<p class="c_v">Articulo Eugenius mortis consistere iuxta</p>
+<p class="c_v">Mandavit, per quem divina viatica sumpsit.</p>
+<p class="c_n">155</p><p class="vv">Mystica Pontifici tribuit sacramenta; nec ipsum</p>
+<p class="c_v">Qui post successit, Nicolaus, honore minore</p>
+<p class="c_v">Dignatus. Voluit retinere, sed ille relictum</p>
+<p class="c_v">Visere per multos annos decrevit ovile;</p>
+<p class="c_v">Maiorique gradu antistes ornasset uterque,</p>
+<p class="c_n">160</p><p class="vv">Si non Pontifices preventi morte fuissent.</p>
+<p class="c_v">Ipse tamen renuit semper, vitabat et urbem</p>
+<p class="c_v">Romanam, ne maius onus sua colla gravaret;</p>
+<p class="c_v">Ne lupus inferni (si pastor abesset) ovile</p>
+<p class="c_v">Incustoditum laceraret, pervigil horis</p>
+<p class="c_n">165</p><p class="vv">Astabat presens. Nicolao papa Calistus</p>
+<p class="c_v">Successit; mos est de nobilitate suprema</p>
+<p class="c_v">Mittere Pontifici legatos, quando creatur.</p>
+<p class="c_v">In quorum numero antistes Antonius unus</p>
+<p class="c_v">Est missus, qui verba novo presente senatu</p>
+<p class="c_n">170</p><p class="vv">Pontifici fecit. Proceres stupuere silentes</p>
+<p class="c_v">Eloquium, et gravitas linguae permista Latinae</p>
+<p class="c_v">Traxerat attonitos (scripta est oratio). Rursus</p>
+<p class="c_v">Orator missus quando Pius ipse creatus</p>
+<p class="c_v">Antistes summus, pariterque oravit ad illum;</p>
+<p class="c_n">175</p><p class="vv">Cum quo legati de nobilitate periti</p>
+<p class="c_v">Sunt simul electi. Sancti facundia Patris</p>
+<p class="c_v">Ornavit Tusci decus immortale Leonis.</p>
+<p class="c_v">Cumque reformare Ecclesiam Pius ipse Latinam,</p>
+<p class="c_v">Corrigere errores clerique superflua vellet,</p>
+<p class="c_n">180</p><p class="vv">Inter censores Romanae Antonius unus</p>
+<p class="c_v">Ecclesiae fuerat. Post res infecta remansit:</p>
+<p class="c_v">Emersere nova et maiora negocia. Casu</p>
+<p class="c_v">Germanus Latias venit Federigus in oras</p>
+<p class="c_v">Aureaque imperii Romani serta recepit,</p>
+<p class="c_n">185</p><p class="vv">Decrevitque Pius Turcarum invadere gentes.</p>
+<p class="c_v">Ausoniae dum cogit opes celeresque triremes,</p>
+<p class="c_v">Cardineo Latium excurrit comitante senatu;</p>
+<p class="c_v">Venit in Etruriam, nostra quoque mansit in urbe.</p>
+<p class="c_v">Mille quater centum tunc quinquagesimus annus</p>
+<p class="c_n">190</p><p class="vv">Et nonus fuerat, postquam admirabile Verbum</p>
+<p class="c_v">Christus homo effectum; Maii lux orta secunda est,</p>
+<p class="c_v">Cum rutilans noctis tenebras Aurora fugasset,</p>
+<p class="c_v">Occidit antistes cum Tuscae Antonius urbis,</p>
+<p class="c_v">Ecclesiae lumen, sanctorum regula morum.</p>
+<p class="c_n">195</p><p class="vv">Extremam vitae tunc clausit episcopus horam,</p>
+<p class="c_v">Confectus senio et morbo longoque labore,</p>
+<p class="c_v">Empyreaeque animam foelicem reddidit aulae.</p>
+<p class="c_v">Moesta sacerdotum paucis tamen ante diebus</p>
+<p class="c_v">Pastorem circum morientem turba gemebat.</p>
+<p class="c_n">200</p><p class="vv">Astabant cives lachrymis et corde dolenti,</p>
+<p class="c_v">Et non immerito: comuni orbata parente,</p>
+<p class="c_v">Anxia pertimuit tristi Florentia luctu.</p>
+<p class="c_v">Quos solabatur: "Mecum gaudete. fideles</p>
+<p class="c_v">Filioli; solvor tenebroso a carcere liber,</p>
+<p class="c_n">205</p><p class="vv">Eternae iam iam visurus gaudia vitae.</p>
+<p class="c_v">Intercessor ero vobis, deponite luctum;</p>
+<p class="c_v">Ecce, pater mecum est vestrae Zenobius urbis.</p>
+<p class="c_v">Haec ex ore suo vobis memoranda relinquo:</p>
+<p class="c_v">In primis clerum divina sorte vocatum</p>
+<p class="c_n">210</p><p class="vv">Admoneo castam sine crimine ducere vitam.</p>
+<p class="c_v">Interdicta Venus clero est rerumque cupido,</p>
+<p class="c_v">Et scelerum radix procul esto superbia clero.</p>
+<p class="c_v">Quippe sacerdotum probitas est regula plebis,</p>
+<p class="c_v">Sal terrae quoniam sacer est quicunque minister.</p>
+<p class="c_n">215</p><p class="vv">' Pasce meos agnos ', Petro ter dixit Iesus,</p>
+<p class="c_v">Quaeque salutiferi Christi fuit actio norma</p>
+<p class="c_v">Vivendi recte. Charitas vos mutua, cives,</p>
+<p class="c_v">Uniat in Christo; nil formidate sinixtri;</p>
+<p class="c_v">Concordes punite malos iustosque fovete;</p>
+<p class="c_n">220</p><p class="vv">Contenti modico, damnosum spernite luxum.</p>
+<p class="c_v">Nil desperandum est, ubi ius dominatur er aequum".</p>
+<p class="c_v">Submisse moriens vix est haec verba locutus.</p>
+<p class="c_v">Ut Pius extinctum pastorem sensit Etruscum,</p>
+<p class="c_v">Illachrymans propere Marci porrexit in aedem,</p>
+<p class="c_n">225</p><p class="vv">Cernat ut Antonii in pheretro venerabile corpus.</p>
+<p class="c_v">Puniceo clero pompas mandavit agendas:</p>
+<p class="c_v">"Hic, quia presentis vitae contempsit honores,</p>
+<p class="c_v">Dignus honorato fungatur funere caeli".</p>
+<p class="c_v">Incola basilicae, primum portatur in aedem,</p>
+<p class="c_n">230</p><p class="vv">Exequiisque illic tandem de more peractis</p>
+<p class="c_v">Defertur corpus Sancti ad coenobia Marci.</p>
+<p class="c_v">Pone sequebantur flentes matresque virique,</p>
+<p class="c_v">Comunis tanquam pullati in funere patris.</p>
+<p class="c_v">Perdiderat latus apoplexi foemina levum,</p>
+<p class="c_n">235</p><p class="vv">Devota Antonii: ut tetigit venerabile corpus,</p>
+<p class="c_v">Extemplo incolumis subrexit corpore sano,</p>
+<p class="c_v">Seque suis pedibus portavit in aedes.</p>
+<p class="c_v">Non potuit triduo turba impediente sepulchro</p>
+<p class="c_v">Includi: cupiebat enim quicunque videre,</p>
+<p class="c_n">240</p><p class="vv">Tangere vel corpus. Suavi redolebat amomo,</p>
+<p class="c_v">Membraque defuncti spirantes dixeris artus,</p>
+<p class="c_v">Absque ullo tabo quoniam incorrupta manebant.</p>
+<p class="c_v">Nimirum hoc vitae sanctae mirabile signum est:</p>
+<p class="c_v">Et Maius tunc mensis erat, iam venerat aestas.</p>
+<p class="c_n">245</p><p class="vv">Prestringam ex multis, lector, miracula patris.</p>
+<p class="c_v">Mortis in extremo mulier paritura dolebat:</p>
+<p class="c_v">Per triduum nullo poterat medicamine foetus</p>
+<p class="c_v">Emitti. Illa pilos barbae Antoniique capillos</p>
+<p class="c_v">Imposuit femori et pastorem in vota rogavit:</p>
+<p class="c_n">250</p><p class="vv">Confestim peperit. Fuit unus in urbe Reati</p>
+<p class="c_v">Cui Leonardus erat nomen: dum tenderet aeger</p>
+<p class="c_v">Cum nato ut calidis Senarum se abluat undis,</p>
+<p class="c_v">Invasit febris et tenues dolor opprimit artus.</p>
+<p class="c_v">Corruit ex alto tectorum culmine natus;</p>
+<p class="c_n">255</p><p class="vv">Obstupuit genitor, lacerum ut conspexit ephoebum:</p>
+<p class="c_v">"Antonine pater, Leonardo occurre precanti</p>
+<p class="c_v">Redde mihi natum, aegroto mihi redde salutem,</p>
+<p class="c_v">Redde, inquam: quodcunque petes, tibi solvet Iesus".</p>
+<p class="c_v">Surrexit subito incolumis natusque paterque;</p>
+<p class="c_n">260</p><p class="vv">Videre hoc multi testes mirabile signum.</p>
+<p class="c_v">Non reticenda mihi mulieris visio castae est.</p>
+<p class="c_v">Qua sacer antistes de saeclo Antonius hora</p>
+<p class="c_v">Presenti in caelum migravit, vidit apertum</p>
+<p class="c_v">Empyreum et Christum cum maiestate sedentem.</p>
+<p class="c_n">265</p><p class="vv">Astabant circum Seraphin Cherubinque Thronique</p>
+<p class="c_v">Sanctorumque omnis cetus splendore corusco;</p>
+<p class="c_v">In quibus angelici Dominicus ordinis autor</p>
+<p class="c_v">In throno residens miro fulgore nitebat.</p>
+<p class="c_v">Angelus hunc iuxta fulgebat ut ignea lampas;</p>
+<p class="c_n">270</p><p class="vv">Post hunc in solio Thommas splendebat Aquinas</p>
+<p class="c_v">Stellifera in veste et redimitus tempora gemmis.</p>
+<p class="c_v">Angelus assistens erat hinc, vacuumque sedile</p>
+<p class="c_v">Ex auro nitido vicinum femina vidit;</p>
+<p class="c_v">Vidit et angelicum iuvenem, qui voce sonora</p>
+<p class="c_n">275</p><p class="vv">Innixus virga clamabat: "Cedite, turbae,</p>
+<p class="c_v">Cedite: concivis caeli functurus honore est,</p>
+<p class="c_v">Carcere terreno antistes Antonius urbis</p>
+<p class="c_v">Syllanae egressus".Surgunt ceduntque benigni,</p>
+<p class="c_v">Continguntque manus, leti dant oscula fronti.</p>
+<p class="c_n">280</p><p class="vv">Et iuxta in solio vacuo consedit Aquinum</p>
+<p class="c_v">Et merito, quia virgo et doctor uterque fidelis,</p>
+<p class="c_v">Gloria par merito sancto debetur utrique,</p>
+<p class="c_v">Exemplo et scripto Ecclesiam ditavit Iesu.</p>
+<p class="c_v">Nec vigilans, somno nec pressa haec somnia vidit,</p>
+<p class="c_n">285</p><p class="vv">Dephrenditque diem posthac morientis et horam.</p>
+<p class="c_v">Inclyta Piceno est urbs Fabrianus in agro,</p>
+<p class="c_v">Incola cuius erat mulier pauperrima rerum.</p>
+<p class="c_v">Deformata etiam morbo, miserabile visu,</p>
+<p class="c_v">Contractis nervis curvarat corporis artus.</p>
+<p class="c_n">290</p><p class="vv">Andreas germanus erat, famulusque fidelis</p>
+<p class="c_v">Manserat Antonii multis antistitis annis,</p>
+<p class="c_v">Consensu cuius matrem pariterque sororem</p>
+<p class="c_v">Mendicas fovit. Vestem portavit ad illas,</p>
+<p class="c_v">Antonine, tuam, ut precio nutriret egenas.</p>
+<p class="c_n">295</p><p class="vv">Servavere tamen, quanvis urgeret egestas,</p>
+<p class="c_v">Relliquias tanquam sanctas. Miracula postquam</p>
+<p class="c_v">Defuncti audivit pastoris, ut ille precantes</p>
+<p class="c_v">Audiat, extemplo matrem accersivit, et orat</p>
+<p class="c_v">Afferat Antonii vestem seque induat illam,</p>
+<p class="c_n">300</p><p class="vv">Ut, postquam morbos sanarunt pharmaca nulla,</p>
+<p class="c_v">Tam sancti incolumen faciat pastoris amictus.</p>
+<p class="c_v">Induta hanc vestem requievit nocte, doloris</p>
+<p class="c_v">Expers, et sano surrexit corpore mane.</p>
+<p class="c_v">Obstupuit genitrix: vicini ad fluminis undam,</p>
+<p class="c_n">305</p><p class="vv">Ut mundet sordes, per se festina cucurrit.</p>
+<p class="c_v">Obstupuere omnes, quae norant; unde repente</p>
+<p class="c_v">Sit facta incolumis, medicinae quis fuit auctor</p>
+<p class="c_v">Exposcunt: mulier cunctis rem ordine narrat.</p>
+<p class="c_v">Belcarus Feus in nostra iustissimus urbe</p>
+<p class="c_n">310</p><p class="vv">Vir fuit; et pauper, numerosa prole premente,</p>
+<p class="c_v">Tradere non poterat nuptui sine dote puellam</p>
+<p class="c_v">Iam grandem natu (viginti excesserat annis,</p>
+<p class="c_v">Coniugio iusto saepe indotata carebat).</p>
+<p class="c_v">Antonii, dum vixit, erat Belcarus amicus;</p>
+<p class="c_n">315</p><p class="vv">Et saepe et multum pastorem in vota precatus</p>
+<p class="c_v">Ut conferret opem, sicut consueverat olim,</p>
+<p class="c_v">"Ne dubites", dicens per noctem apparuit ipsi,</p>
+<p class="c_v">"Inveniet dignum iam iam tua nata maritum,</p>
+<p class="c_v">Coniugio aequali parva cum dote locabis".</p>
+<p class="c_n">320</p><p class="vv">Nobilis ac dives pauco post tempore venit</p>
+<p class="c_v">Sponte ad Belcarum iuvenis natamque poposcit,</p>
+<p class="c_v">Qui renuit pulchram grandi cum dote puellam.</p>
+<p class="c_v">Connubium sancti celebratum antistitis esse</p>
+<p class="c_v">Hoc Feus asseruit nutu; hic post carmine Tusco</p>
+<p class="c_n">325</p><p class="vv">Divinas cecinit laudes odasque sonoras.</p>
+<p class="c_v">Antistes, salve, pastorum regula, salve,</p>
+<p class="c_v">Norma sacerdotum, vivendi formula cunctis!</p>
+<p class="c_v">Tu solamen eras miserorum, portus et aura</p>
+<p class="c_v">Afflictis, populi defensor et auctor egeni;</p>
+<p class="c_n">330</p><p class="vv">Per te Martini sancti pietatis asylum</p>
+<p class="c_v">Exhibuit felix inopi Florentia turbae,</p>
+<p class="c_v">Nec reor inventum terrarum hoc sanctius usquam:</p>
+<p class="c_v">Nobilitas nutritur inops de divite egena,</p>
+<p class="c_v">Ut quibus haud posset paupertas tradere dotes,</p>
+<p class="c_n">335</p><p class="vv">Tenuia nec parvos patrimonia pascere natos,</p>
+<p class="c_v">Impleat hoc munus tantae pietatis utrumque</p>
+<p class="c_v">Electorum hominum charitas et prompta voluntas.</p>
+<p class="c_v">Post mille et centum non alter episcopus annos</p>
+<p class="c_v">Sic legem Excelsi nostra servavit in urbe,</p>
+<p class="c_n">340</p><p class="vv">Ut dici merito possit Zenobius alter.</p>
+<p class="c_v">Immortale decus, pastorum gloria, salve!</p>
+<p class="c_v">Antoni, supplex ad te Florentia poscit</p>
+<p class="c_v">Exores Christum discrimina cuncta repellat,</p>
+<p class="c_v">Ut iusto regat imperio quis iura ministrat,</p>
+<p class="c_n">345</p><p class="vv">Vivant in charitate Dei concordia cives,</p>
+<p class="c_v">Nostra domicilia existant sacraria Christi,</p>
+<p class="c_v">Floreat expulsis maculis Florentia felix,</p>
+<p class="c_v">Exemplumque tuum proponat rebus agendis.</p>
+<p class="c_v">Tu pius et iustus, tu virgo, doctor et aequus,</p>
+<p class="c_n">350</p><p class="vv">Acer in hereticos, mitis cuicunque petenti.</p>
+<p class="c_v">Accepit nullus devota mente repulsam,</p>
+<p class="c_v">Presidium implorans: tua sunt miracula testes.</p>
+<p class="c_v">Verinum exaudi: presertim mortis in hora</p>
+<p class="c_v">Sis praesens, nullus Sathane me terreat horror,</p>
+<p class="c_n">355</p><p class="vv">Sed procul aufugiat; tecum bonus angelus assit,</p>
+<p class="c_v">Inter ut electos fiam novus incola caeli.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

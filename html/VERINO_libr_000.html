@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Ugolino Verino Carlias argumenta librorum</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a8fdb9c47" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Ugolino Verino</b> <i>Carlias</i> argumenta librorum";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Ugolino Verino Carlias argumenta librorum</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(174, 331)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(214820,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(214820,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Ugolino Verino</b> <i>Carlias</i> argumenta librorum            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="214820"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Ugolino Verino</b> <i>Carlias</i> argumenta librorum"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/VERINO|libr|000</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <form name="toServer" method="get" action="/poetiditalia/public/testo/testo"><div class='intera'>
+<div style="float:left;margin-right:10px;margin-top:6px">Altre sezioni</div>
+<div style="float:left;margin-right:5px;margin-top:2px;">
+<select class="form-control" id="cambiaSezione" name="codice" onchange="document.toServer.submit()"><option selected="selected" value="VERINO|libr|000">&nbsp;&nbsp;argum.&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|001">&nbsp;&nbsp;1&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|002">&nbsp;&nbsp;2&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|003">&nbsp;&nbsp;3&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|004">&nbsp;&nbsp;4&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|005">&nbsp;&nbsp;5&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|006">&nbsp;&nbsp;6&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|007">&nbsp;&nbsp;7&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|008">&nbsp;&nbsp;8&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|009">&nbsp;&nbsp;9&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|010">&nbsp;&nbsp;10&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|011">&nbsp;&nbsp;11&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|012">&nbsp;&nbsp;12&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|013">&nbsp;&nbsp;13&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|014">&nbsp;&nbsp;14&nbsp;&nbsp;</option>
+<option  value="VERINO|libr|015">&nbsp;&nbsp;15&nbsp;&nbsp;</option>
+</select>
+</div>
+<div style="float:left;" class="btn-group" role="group" aria-label="...">
+<button type="button" disabled="disabled" name="previous" id="button_previous" title="Previous" onclick="muoviSezione(-1)" class="btn btn-reverse"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+<button type="button"  name="next" id="button_next" title="Next" onclick="muoviSezione(1)" class="btn btn-reverse"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+</div>
+<div style="clear:both"></div>
+</div>
+</form>
+<p></p><br /><p class="c_t">1. argumentum primi libri</p>
+<p class="c_v">Victor ab Aurora remeans Pipinius heros</p>
+<p class="c_v">Sathanis invidia Aegeis vexatus in undis</p>
+<p class="c_v">Appulit Epyrum. Iustini regis in aulam</p>
+<p class="c_v">Ampla et regifico fiunt convivia luxu.</p>
+<p class="c_n">5</p><p class="vv">Naturae secreta canit Milesius Amon.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">2. argumentum secundi libri</p>
+<p class="c_v">A Rhodani solvens ter centum littore puppes</p>
+<p class="c_v">Magnanimus Carlus Syrios Arabasque subegit</p>
+<p class="c_v">Non procul a Synna pulso trans Battra Tibaldo.</p>
+<p class="c_v">Capta Palestini est princeps Hierosolima regni;</p>
+<p class="c_n">5</p><p class="vv">Combustaeque luit patriae gens perfida penas.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">3. argumentum tertii libri</p>
+<p class="c_v">Ut recidiva sacrae posuerunt moenia Sion,</p>
+<p class="c_v">Francorum proceres mollem petiere Canopum.</p>
+<p class="c_v">Devicta Aegypto Carlus Babylona superbum</p>
+<p class="c_v">Nvasit. Cohiere Asiae Libyesque phalanges.</p>
+<p class="c_n">5</p><p class="vv">Persarum rex solus init clam foedera Cyrrhus.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">4. argumentum quarti libri</p>
+<p class="c_v">Ingenti reges pugna superavit Eoos</p>
+<p class="c_v">Carlus et edomita victor Babylone recessit.</p>
+<p class="c_v">Serpente occiso per lustra horrenda ferarum</p>
+<p class="c_v">Incolumis pontum intravit. Pelagoque remenso</p>
+<p class="c_n">5</p><p class="vv">Ac victa Creta siluit Mavortius heros.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">5. argumentum quinti libri</p>
+<p class="c_v">Gallorum proceres, dum saevit bruma procellis,</p>
+<p class="c_v">Quassatam reparant classem, saltusque Pelasgum</p>
+<p class="c_v">Venatu inquirunt. Ludi celebrantur in urbe</p>
+<p class="c_v">Butroti. Carlumque monet Pipinus, ut ante</p>
+<p class="c_n">5</p><p class="vv">Discessum subeat manes Stygiamque paludem.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">6. argumentum sexti libri, Infernus</p>
+<p class="c_v">Astrea manes Carlus duce tendit ad imos.</p>
+<p class="c_v">Aspicit Eumenidas diras animasque nocentes</p>
+<p class="c_v">Torqueri aeternis (visu miserabile!) paenis.</p>
+<p class="c_v">Faeda loci est speties et mors sine morte perennis.</p>
+<p class="c_n">5</p><p class="vv">Plectitur extremo scelerata superbia centro.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">7. argumentum septimi libri, Purgatorium</p>
+<p class="c_v">Debita dimissae Carlus purgamina culpae</p>
+<p class="c_v">Speque animas medio laetas aspexit in igne.</p>
+<p class="c_v">Lnque sinu vatis recubans oracula divum</p>
+<p class="c_v">Vidit et Elysios campos clarosque poetas</p>
+<p class="c_n">5</p><p class="vv">Insignesque viros doctrina, moribus, armis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">8. argumentum octavi libri, Paradisus</p>
+<p class="c_v">Astriferum Carlus Seraphi duce calcat Holympum.</p>
+<p class="c_v">Sydera fixa polo, quae sint errantia, noscit.</p>
+<p class="c_v">Cernit et empyreas sedes, ubi regia Christi est,</p>
+<p class="c_v">Angelicasque videt miro fulgore cohortes</p>
+<p class="c_n">5</p><p class="vv">Divinaeque urbis cives sine fine beatos.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">9. argumentum noni libri</p>
+<p class="c_v">Deserit Epyrum Carlus victrice carina.</p>
+<p class="c_v">Evitat Calabrum portus urbesque superni</p>
+<p class="c_v">Aequoris. Exponit Pisano in littore turmas.</p>
+<p class="c_v">Coniurat Latium Lombardam perdere gentem,</p>
+<p class="c_n">5</p><p class="vv">Francorum regem iuvat auxiliaribus armis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">10. argumentum decimi libri</p>
+<p class="c_v">Gallorum adventu trepidat Lombarda iuventus,</p>
+<p class="c_v">Scandavius princeps neglecto foedere Carli</p>
+<p class="c_v">Arma rapit. Pariter coniurat Hiberia. Classem</p>
+<p class="c_v">Instruit innumeram. Mutinae prope moenia victor</p>
+<p class="c_n">5</p><p class="vv">Irruit ut torrens per castra inimica Rinaldus.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">11. argumentum undecimi libri</p>
+<p class="c_v">Devolat ad Calabros turma comitatus equestri</p>
+<p class="c_v">Orlandus. Mutinae summis certatur utrinque</p>
+<p class="c_v">Viribus. Applausit sero victoria Francis.</p>
+<p class="c_v">Occiso Theia fugit Lombarda caterva.</p>
+<p class="c_n">5</p><p class="vv">Dona suis tribuit Carlus sepelitque iacentes.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">12. argumentum duodecimi libri</p>
+<p class="c_v">Extorquet Francus Calabrum multa oppida Mauris.</p>
+<p class="c_v">Almonem interimit regem Milonius Hector.</p>
+<p class="c_v">Pugna ingens oritur. Despumant sanguine Cannae;</p>
+<p class="c_v">Aufidus exundans Saracenas obluit alas.</p>
+<p class="c_n">5</p><p class="vv">Fit clades Arabum ceso numerosa Tibaldo.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">13. argumentum tresdecimi libri</p>
+<p class="c_v">Pisano Euphranor superavit in aequore classem</p>
+<p class="c_v">Maurorum ingentem captis mersisque carinis</p>
+<p class="c_v">Asdrubalis. Rursus Ticini ad fluminis undam</p>
+<p class="c_v">Lombardae fusae verterunt terga phalanges.</p>
+<p class="c_n">5</p><p class="vv">At Serpentinum confodit Celticus Aiax.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">14. argumentum quattuordecimi libri</p>
+<p class="c_v">Restaurat pugnam princeps Lombardus. Hetruscum</p>
+<p class="c_v">Francorumque agmen paulum tardavit equestre.</p>
+<p class="c_v">Filius Amonis fortem prostravit Alachim.</p>
+<p class="c_v">Orlandi dextra Alceus cognomine Ferrus</p>
+<p class="c_n">5</p><p class="vv">Occubuit. Ducibus sunt castra incensa peremptis.</p>
+<p class="blank">&nbsp;</p>
+<p class="c_t">15. argumentum quindecimi libri</p>
+<p class="c_v">Servatur capta Desiderius urbe triumpho</p>
+<p class="c_v">Francorum. Sociis laetus dat munera Carlus.</p>
+<p class="c_v">Caesareos Romae fasces plaudente senatu</p>
+<p class="c_v">Suscipit. Hetruscis reficit nova moenia. Victor</p>
+<p class="c_n">5</p><p class="vv">Intrat Aquisgranum curru sublimis eburno.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

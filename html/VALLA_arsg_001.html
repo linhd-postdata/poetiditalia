@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Lorenzo Valla ars grammatica</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a8f94759d" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Lorenzo Valla</b> <i>ars grammatica</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Lorenzo Valla ars grammatica</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(136, 227)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(118281,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(118281,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Lorenzo Valla</b> <i>ars grammatica</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="118281"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Lorenzo Valla</b> <i>ars grammatica</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/VALLA|arsg|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_v">Aspicis ut medici pueris absinthia dantes</p>
+<p class="c_v">Tingunt cecropio summum cratera liquore</p>
+<p class="c_v">Quominus offendat dulcedine tectus amaror</p>
+<p class="c_v">- nam sunt austero plerunque salubria gustu -</p>
+<p class="c_n">5</p><p class="vv">Utque lacertosis pelagi dum cerula verrunt</p>
+<p class="c_v">Remigibus levat ille canor quicunque laborem</p>
+<p class="c_v">Et se solatur cantando incurvus arator,</p>
+<p class="c_v">Sic mihi grammatice placuit precepta referre</p>
+<p class="c_v">Carmine, mollicule demulcerentur ut aures</p>
+<p class="c_n">10</p><p class="vv">Pectoraque haurirent sensus sub melle salubres</p>
+<p class="c_v">Nec nihil iccirco simul admiscere nitoris,</p>
+<p class="c_v">Nam nullum fuerit, fuerit nisi carmen amenum.</p>
+<p class="c_v">Imprimis linguam redolens omnino latinam</p>
+<p class="c_v">Fiat ut exemplum preceptor et ipse loquendi:</p>
+<p class="c_n">15</p><p class="vv">Doctor enim malus est in quo sua non radiat lex,</p>
+<p class="c_v">Quales iam seclis aliquot plerique fuere</p>
+<p class="c_v">Quod libros veterum non evolvere disertos.</p>
+<p class="c_v">Quare agite, o pueri, mecum cantate latine,</p>
+<p class="c_v">Assimilem pani doctrinam hanc esse putantes</p>
+<p class="c_n">20</p><p class="vv">Que per se valet et reliquas corroborat escas;</p>
+<p class="c_v">Indiga grammatice queque ars est, nullius illa,</p>
+<p class="c_v">Quam qui non norunt vescuntur pulte profecto.</p>
+<p class="c_v">Hunc, pueri, nostra de voce capessite panem</p>
+<p class="c_v">Qui corpus solidum reddat viresque ministret;</p>
+<p class="c_n">25</p><p class="vv">Namque legetis adhuc in nullis scripta libellis</p>
+<p class="c_v">Multa nisi in nostris quamvis ea Bostar et Aspar</p>
+<p class="c_v">In chartas transferre suas, o dedecus, audent!</p>
+<p class="c_v">Quos mecum ridete, velut cornicula pavi</p>
+<p class="c_v">Si gestet caudam vel se ferat anser olorem.</p>
+<p class="c_n">30</p><p class="vv">Id magis ut libeat vobis edico, magistri:</p>
+<p class="c_v">Cedite discipulos nunquam (nam verbera brutis,</p>
+<p class="c_v">Verba viris adhibentur, utrique ut discere possint</p>
+<p class="c_v">Si qua fides Marco Fabio graioque Platoni);</p>
+<p class="c_v">Quin aliquid potius verbis superaddite mellis.</p>
+<p class="c_n">35</p><p class="vv">Sed prius has epulas, pueri, quam tangere fas sit</p>
+<p class="c_v">Vobis fonte manus sunt pulchro ex more lavande,</p>
+<p class="c_v">Hoc est auxilium precibus celeste petendum:</p>
+<p class="c_v">Christe, Deo de patre Deus, de virgine matre</p>
+<p class="c_v">Vir genitus, mundi lux et sapientia solus,</p>
+<p class="c_n">40</p><p class="vv">Da magis hanc ut te valeamus nosse per artem.</p>
+<p class="c_v">Ut Pater omnipotens hominem cui condidit orbem</p>
+<p class="c_v">Distinxit gemino atque animalia cetera sexu,</p>
+<p class="c_v">Sic duplex genus est quod mas et femina formant</p>
+<p class="c_v">Quisque suum: hic implet gignens, enititur illa,</p>
+<p class="c_n">45</p><p class="vv">Nec genus id dici debet quod gignere nescit</p>
+<p class="c_v">Nullaque propterea norunt idiomata neutrum,</p>
+<p class="c_v">Neutrum grammatice vix tradit in ulla animante</p>
+<p class="c_v">Namque ex his ipsis constat commune duobus:</p>
+<p class="c_v">Hic atque hec canis, et dubium: grus illa vel ille.</p>
+<p class="c_n">50</p><p class="vv">Grai epicena vocant eadem promiscua nostri,</p>
+<p class="c_v">Articulo alterutro quotiens signatur utrunque:</p>
+<p class="c_v">Editus ex aquila fertur, non edere vultur.</p>
+<p class="c_v">Nil epicena tamen dubiis differre memento:</p>
+<p class="c_v">Nam grus hec ambos, grus hic complectitur ambos;</p>
+<p class="c_n">55</p><p class="vv">Hoc genus auctorum prelarga licentia fecit</p>
+<p class="c_v">Dum regale putant nonnunquam rumpere leges.</p>
+<p class="c_v">Sunt substantiva hec quibus adiectiva duorum</p>
+<p class="c_v">Sive trium generum longe differre fatendum:</p>
+<p class="c_v">Quis nam pontificum summorum ita dives itemque</p>
+<p class="c_n">60</p><p class="vv">Largus, ita et sapiens et amabilis extitit ut tu?</p>
+<p class="c_v">Quin in res anima traduximus ista carentes,</p>
+<p class="c_v">Seu male seu quadam rationis imagine blanda,</p>
+<p class="c_v">Mas aer, mas ignis, aqua est et femina tellus,</p>
+<p class="c_v">Hec tanquam patiantur, agant tanquam illa priora.</p>
+<p class="c_n">65</p><p class="vv">Sol tales et luna, sed o locus arduus hic quam!</p>
+<p class="c_v">Immoto citius suspectes lumine Phebum.</p>
+<p class="c_v">Neutra loci propria huius sunt; communia sane</p>
+<p class="c_v">Invenies hic multa trium, vix ulla duorum</p>
+<p class="c_v">Paucula, sed dabis prorsus promiscua nulla:</p>
+<p class="c_n">70</p><p class="vv">Es grave, mensa tripes, primus vel prima dierum.</p>
+<p class="c_v">Hec quia materia est veluti latissima silva</p>
+<p class="c_v">In qua lignorum species dignoscere durum</p>
+<p class="c_v">Deque ipsa dubito satis an &lt;con&gt;ceperit alter,</p>
+<p class="c_v">Danda mihi venia est verbis si pluribus utar;</p>
+<p class="c_n">75</p><p class="vv">Et quoniam verum genus ex animalibus ortum est</p>
+<p class="c_v">Illorumque homo princeps, hinc exordia sumam:</p>
+<p class="c_v">Que sunt ergo viris imposta vocabula fient,</p>
+<p class="c_v">In quo&lt;d&gt;cumque cadunt elementum, mascula tantum.</p>
+<p class="c_v">Prenomen, nomen, cognomen erat tamen unum:</p>
+<p class="c_n">80</p><p class="vv">Prenomen cuiusque suum, ceu Caius et Aulus,</p>
+<p class="c_v">Cetera totius gentis communia, quale</p>
+<p class="c_v">Iulius et Cesar prisco de more Quiritum est.</p>
+<p class="c_v">Femineequoque sunt mulierum nomina voces:</p>
+<p class="c_v">Pythias, Eustochium, Thais, Lucretia, Dido.</p>
+<p class="c_n">85</p><p class="vv">Agnomen rarum sed idem dixere periti</p>
+<p class="c_v">Cognomen: Magnus Pompeius erit tibi testis</p>
+<p class="c_v">Et cui Dotate nomen dos indidit ingens.</p>
+<p class="c_v">Hoc tamen absurde credas aliquando sonare:</p>
+<p class="c_v">Corculum enim hic, hic Delicie, hec Bona Sancta vocantur.</p>
+<p class="c_n">90</p><p class="vv">Nec procul his ea que vocitant patronymica Greci:</p>
+<p class="c_v">Ovo Tyndarides satus est, sacra Tyndaris ovo.</p>
+<p class="c_v">Nec vero differt nostre natura deorum</p>
+<p class="c_v">Veri quos ignara Dei gens impia finxit,</p>
+<p class="c_v">Cum fuerint homines, non di terraque sepulti;</p>
+<p class="c_n">95</p><p class="vv">Scilicet humanos artus habuisse feruntur</p>
+<p class="c_v">- dicere nec quisquam dubitavit, nemo! - deorum</p>
+<p class="c_v">Ut Mars et Bacchus, Venus et dea, diva Minerva.</p>
+<p class="c_v">Sed que causa fuit fluviis ut numina solis</p>
+<p class="c_v">Mascula - nam potius fons est Arethusa - preessent</p>
+<p class="c_n">100</p><p class="vv">Et genere hoc omnes appellarentur ut amnes</p>
+<p class="c_v">Cum tales non sint fontes montesque vel urbes?</p>
+<p class="c_v">Ni vetet hoc dici "Styx atra" et cerula Lethe.</p>
+<p class="c_v">Nec deus interdum, nec mas erit -umque tenebit</p>
+<p class="c_v">Finalem apposito duntaxat nomine flumen</p>
+<p class="c_n">105</p><p class="vv">Ut "flumen Rhenum aut pluvius describitur arcus".</p>
+<p class="c_v">Cum nymphis satyros &lt;quis&gt; silvanosque vetustos</p>
+<p class="c_v">Fecit semideos, tamen hos quandoque repertos</p>
+<p class="c_v">Quidam aiunt sed semiviros mage semiferosque.</p>
+<p class="c_v">Numina non igitur sunt hec dicenda sed illa</p>
+<p class="c_n">110</p><p class="vv">Mascula que apparent quod vultu et veste virili</p>
+<p class="c_v">Et quod inest sexu plus maiestatis in ipso.</p>
+<p class="c_v">Dicitur unde etiam Deus hic, quasi masculus esset,</p>
+<p class="c_v">Ut Michael, Gabriel: nam sunt &lt;hec&gt; propria; Cherub</p>
+<p class="c_v">Atque Seraph sed qualia sunt centurio, miles.</p>
+<p class="c_n">115</p><p class="vv">Cur tamen -in capiunt plurali neutraque fiunt?</p>
+<p class="c_v">Quod nec ebreus ait nec grecus, Dalmata novit</p>
+<p class="c_v">Ille ipsos inter Cherubim rite locandos</p>
+<p class="c_v">Demones, angelice cum sint virtutis, et illos</p>
+<p class="c_v">Esse mares dicas Sathan velut et Leviathan.</p>
+<p class="c_n">120</p><p class="vv">Tales et ventos avidos, quibus ore receptis</p>
+<p class="c_v">Implete memorantur eque partumque tulisse</p>
+<p class="c_v">- fabula formosas addit rapuisse puellas -</p>
+<p class="c_v">Atque &lt;a&gt;usos celum manibus laniare gigantes,</p>
+<p class="c_v">Credere si nobis libet unoculosque cyclopas</p>
+<p class="c_n">125</p><p class="vv">Centaurosque feros inter quos femina siqua</p>
+<p class="c_v">Extitit Antiphate coniunx velut Hylonomeque.</p>
+<p class="c_v">Centaurus commune genus cyclopsque gigasque</p>
+<p class="c_v">Haud erit immerito, prohibet sed Grecia et usus.</p>
+<p class="c_v">Fert Sphingem et geminas sirenas Fama loquaces</p>
+<p class="c_n">130</p><p class="vv">Atque has Parthenopen Caralimque fuisse vocatas,</p>
+<p class="c_v">Gorgonas, Harpyas, et cetera transeo monstra.</p>
+<p class="c_v">Propria sunt etiam brutorum nomina, qualis</p>
+<p class="c_v">Xanthus, Achillis &lt;equus&gt;, natus genitrice Podarga</p>
+<p class="c_v">"Et pedibus Pterelas et naribus utilis Agre"</p>
+<p class="c_n">135</p><p class="vv">Ora cruentarunt in ero latrantia cervo.</p>
+<p class="c_v">Quedam comperies transferri cum genere ipso,</p>
+<p class="c_v">Namque "suam Eunuchum" pro libro Comicus inquit</p>
+<p class="c_v">Et Maro "Centauro magna" de nave loquutus.</p>
+<p class="c_v">Nunc de non propriis que sexu arctantur agendum:</p>
+<p class="c_n">140</p><p class="vv">Prima vir et mulier sint nomina, femina masque,</p>
+<p class="c_v">Hic pater et mater (modo namque puerpera facta est),</p>
+<p class="c_v">Cur ea non uxor cui tu vir sive maritus?</p>
+<p class="c_v">Tu mihi filius es, tu filia, tu mihi frater</p>
+<p class="c_v">Germanus, germana soror neptisque neposque,</p>
+<p class="c_n">145</p><p class="vv">Hic avus, hec avia, hic patruus sed avunculus ille.</p>
+<p class="c_v">Sunt amite mihi sex, cum sit matertera nulla;</p>
+<p class="c_v">Cum socru male convenit nurus at socero pax</p>
+<p class="c_v">Cum genero esse solet, glos hec, ego sum tibi levir,</p>
+<p class="c_v">Vitricus unde venit privignusque unde noverca.</p>
+<p class="c_n">150</p><p class="vv">Ast ea sunt etatis: anus iam curva senexque</p>
+<p class="c_v">Et puer et iuvenis, respondet utrique puella;</p>
+<p class="c_v">Nam iuvenis tantum mas &lt;est&gt;, iunior seniorque,</p>
+<p class="c_v">Ergo bis erravit quicunque iuvencula dixit.</p>
+<p class="c_v">Ast adolescentem magis infantemque fatebor</p>
+<p class="c_n">155</p><p class="vv">Communis generis, quod et ipsa minutio pandit.</p>
+<p class="c_v">Ingui&lt;ni&gt;s hec pubes est velatura pilorum</p>
+<p class="c_v">- hinc pubertatem descendere nemo negarit</p>
+<p class="c_v">Quod, cum iam prodit facies, pubescere fertur -;</p>
+<p class="c_v">Dicitur hinc pubes armata, armata iuventus</p>
+<p class="c_n">160</p><p class="vv">Et quondam uxores pubes romana rogavit.</p>
+<p class="c_v">Hinc etiam a barba, quam non fert femina, pubes</p>
+<p class="c_v">Seu puber qualis dicatur siqua rubori est</p>
+<p class="c_v">Nullaque, puberibus cesis, occisa notatur.</p>
+<p class="c_v">Sed substantivum nequeas sic dicere semper,</p>
+<p class="c_n">165</p><p class="vv">Puberem ut etatem † sive † civilia iura</p>
+<p class="c_v">(Discutiant habitu pubertas constet an annis!).</p>
+<p class="c_v">Sunt communis homo &lt;generis&gt; coniunxque parensque,</p>
+<p class="c_v">Nec desunt qui primum horum commune negarint</p>
+<p class="c_v">Quod dicant hominem nigram non scribier usquam;</p>
+<p class="c_n">170</p><p class="vv">Et patruelis ut Egypti Danaique propago</p>
+<p class="c_v">Quod si non credis consultum consule Gaium.</p>
+<p class="c_v">Nomina dant mores et sors in parte pudenda</p>
+<p class="c_v">Ut meretrix, pelex, ut adulter, adultera, virgo</p>
+<p class="c_v">(Virginitas quamvis sit nuncquoque facta virilis,</p>
+<p class="c_n">175</p><p class="vv">Ut mulier proprie, nam sic non virgo vocatur</p>
+<p class="c_v">Qui caret uxore; est ergo non femina celebs.</p>
+<p class="c_v">Non substantivum "melius nil celebe vita"</p>
+<p class="c_v">Nempe maris, nec enim celebs tua, femina, vita est!)</p>
+<p class="c_v">Eiusdemque loci sunt &lt;et&gt; matrona, virago</p>
+<p class="c_n">180</p><p class="vv">Et spado vel qualis memoratur Sylla, monorchis.</p>
+<p class="c_v">De celo quoniam non lapsa est norma loquendi</p>
+<p class="c_v">Iccirco mulieris opus non omne virique</p>
+<p class="c_v">Constat voce sua, ne&lt;c&gt; idest discernere promptum:</p>
+<p class="c_v">Dux, comes et princeps - quos nesciit illa vetustas -</p>
+<p class="c_n">185</p><p class="vv">Imperii quoniam sunt nomina, mascula fiunt</p>
+<p class="c_v">(Nam regem regina marem iam reddidit olim</p>
+<p class="c_v">Debenturque sue voces uxoribus horum);</p>
+<p class="c_v">Mas erit et miles, si sit dignatio quedam,</p>
+<p class="c_v">Quin eques atque pedes: Rome nam non eques est sed</p>
+<p class="c_n">190</p><p class="vv">Equestri Paulina loco &lt;veI&gt; nata pedestri.</p>
+<p class="c_v">Numen apud verum mas extitit usque sacerdos</p>
+<p class="c_v">- hoc sed apud divos et femina munus obibat -</p>
+<p class="c_v">Huic simile antistes, qui sacris prest faciundis.</p>
+<p class="c_v">Gestabant Salii clipeos, ancilia Martis,</p>
+<p class="c_n">195</p><p class="vv">Quo quasi presultor saltavit in agmine primus:</p>
+<p class="c_v">Non mage quam flamen, quam consul, femina presul;</p>
+<p class="c_v">At vates etiam permulte sepe fuerunt:</p>
+<p class="c_v">Nam datur humane menti divinitus hec vis.</p>
+<p class="c_v">Preses eras olim Tarpeie, Iuppiter, arcis</p>
+<p class="c_n">200</p><p class="vv">Gaudebantque tue, te preside, Pallas, Athene,</p>
+<p class="c_v">Quod licet in nostros transferre deosque deasque.</p>
+<p class="c_v">Preses Otho fuit et Drusus, sed Iulia nulla</p>
+<p class="c_v">Nullaque in auguribus posita est matrona Quiritum</p>
+<p class="c_v">Sed nec in auspicibus reperitur aruspicibusque.</p>
+<p class="c_n">205</p><p class="vv">Cur caupo caupona facit si cerdo vetatur</p>
+<p class="c_v">Id facere et lanio? Cur leno lenaque dicis?</p>
+<p class="c_v">Non manga at mango, species lenonica mango,</p>
+<p class="c_v">Preterea straba et strabo, nam non opera hec sunt.</p>
+<p class="c_v">Mimus habet mimam, cui permanet histrio solus;</p>
+<p class="c_n">210</p><p class="vv">Celse, magister eras et eras, Galbina, magistra,</p>
+<p class="c_v">Celse sequester eris, necnon Galbina sequestra,</p>
+<p class="c_v">Presbyter est Agathon, cur non &lt;est&gt; presbytera uxor</p>
+<p class="c_v">Ut Greci - nam sunt hec nomina greca - loquuntur?</p>
+<p class="c_v">Iam cur magna latro non predo magna vocetur?</p>
+<p class="c_n">215</p><p class="vv">Quare plus probo qui solos dixere latrones</p>
+<p class="c_v">Sicut piratas et qui solosquoque fures.</p>
+<p class="c_v">Nec secus est Chloe fur quam &lt;fit&gt; Cornelia pastor,</p>
+<p class="c_v">Quam Glycera &lt;est&gt; fullo quam † corrida † textilis auceps,</p>
+<p class="c_v">Quam pres Dertrudes quam flava Helianor manceps;</p>
+<p class="c_n">220</p><p class="vv">Atque vadem liquet esse marem probat hoc tibi Damon.</p>
+<p class="c_v">Cur obses commune? an Clelia quod fuit obses?</p>
+<p class="c_v">At quotiens languet Simon fit mulio Galla;</p>
+<p class="c_v">Navita vel remex non rarior Ursula patre</p>
+<p class="c_v">Et que † quotidie non passim † est femina iudex</p>
+<p class="c_n">225</p><p class="vv">Quin ovium opilio est obstetrix sepe suarum</p>
+<p class="c_v">Tuque cubiclorum pelex, o Crispe, fuisti!</p>
+<p class="c_v">Non igitur quicquid sumus et generis sumus eius.</p>
+<p class="c_v">Esse aiunt pugilem que corpore prevalet amplo,</p>
+<p class="c_v">Non dicas pugilem, ut quidam voluere, pudicam</p>
+<p class="c_n">230</p><p class="vv">- quam grandis pateat tali ratione fenestra!</p>
+<p class="c_v">Ergo sic debes tales exponere voces:</p>
+<p class="c_v">Iudicem agit pugilem ve hec, obstetricem agit ille;</p>
+<p class="c_v">Scriba quidem mulier, si scriptitet, esse videtur</p>
+<p class="c_v">Lixaque, si comportet aquam nobisque ministret</p>
+<p class="c_n">235</p><p class="vv">Atque auriga, manu si frena gubernet equorum</p>
+<p class="c_v">Stans curru - quid enim interdum non femina tentet!</p>
+<p class="c_v">Namque Camilla fuit, si verum est, miles amazon,</p>
+<p class="c_v">Utraque eques pedes, utraque quin athleta lacena;</p>
+<p class="c_v">Sunt tamen hi tituli nature lege viriles.</p>
+<p class="c_n">240</p><p class="vv">Tiro ut germanum proba sit commilito nomen;</p>
+<p class="c_v">Sicubi forte forent opera hec muliebria - nam sic</p>
+<p class="c_v">Naso inquit "nova miles eram" - communia dicas.</p>
+<p class="c_v">Par erit his si sit verbum pincerna probatum,</p>
+<p class="c_v">Emptitat ut doceat servos pugnare lanista</p>
+<p class="c_n">245</p><p class="vv">Quos gladiatores seve divendat harene.</p>
+<p class="c_v">Ipsa ministerium non hoc exerceat uxor,</p>
+<p class="c_v">Scurrarique potest et pangere femina versus</p>
+<p class="c_v">Sed scurram esse viri vitium est, laus esse poetam.</p>
+<p class="c_v">Non opus est vernam esse - hoc est quem serva creavit -</p>
+<p class="c_n">250</p><p class="vv">Forsitan et scevam leve cui prevalet actus:</p>
+<p class="c_v">Raro verna proba est, proba raro sceva reperta est.</p>
+<p class="c_v">Talia sunt igitur pensanda vocabula nobis</p>
+<p class="c_v">Acriter, articulos in quot descendere possint</p>
+<p class="c_v">Inque quot ascendant doctissimus imperet usus!</p>
+<p class="c_n">255</p><p class="vv">Asseclam noli aut collegam dicere parvam,</p>
+<p class="c_v">Parvam convivam vix dicere sed tamen ausim.</p>
+<p class="c_v">Multa huiuscemodi velut a fugio venioque</p>
+<p class="c_v">- perfuga dic utrum gravius ne an transfuga peccet</p>
+<p class="c_v">Promptius expedies quid convena et advena distent -</p>
+<p class="c_n">260</p><p class="vv">Et velut a colo cedoque, ut agricola atque homicida</p>
+<p class="c_v">- hec opera haud dubie fuerint plerunque virorum -.</p>
+<p class="c_v">Non opus a gigno sunt nomina, ut omnigene di,</p>
+<p class="c_v">Verbigenam Christum veluti genitum &lt;e&gt; patre verbo</p>
+<p class="c_v">Appellare nefas, cum verbum si&lt;t&gt; patris ipse.</p>
+<p class="c_n">265</p><p class="vv">Cornicen et tubicen - cornu est tuba tortilis eris -</p>
+<p class="c_v">Tibicen et liticen, fidicen - nam quinque feruntur -</p>
+<p class="c_v">Mascula sunt ideo quod in -a muliebria mittunt.</p>
+<p class="c_v">A plico composita et facio paria esse magistris</p>
+<p class="c_v">Demiror placuisse: duplex, triplex, quadruplex sunt</p>
+<p class="c_n">270</p><p class="vv">Adiectiva quidem, quoniam subsistere per se</p>
+<p class="c_v">Non possunt, dici neque substantiva merentur.</p>
+<p class="c_v">At opifex per se substat, nam dicimus omnes:</p>
+<p class="c_v">Carnificis tetrum est opus, aurificis sed amenum,</p>
+<p class="c_v">Preclarum artificis. Tamen adiectiva licebit</p>
+<p class="c_n">275</p><p class="vv">Hec vocites, velut "artifici cura ingenioque"</p>
+<p class="c_v">Sed vix aurificem patiar te dicere doctam.</p>
+<p class="c_v">Nec mirum numero voces superare viriles,</p>
+<p class="c_v">Officia atque opera ipsorum sunt plura virorum</p>
+<p class="c_v">Qualia sunt etiam edilis, centurio, censor,</p>
+<p class="c_n">280</p><p class="vv">Cetera in -o sive -or finita: decurio, calo</p>
+<p class="c_v">(Pseudo compositum est, rectus stulte esse putatur;</p>
+<p class="c_v">Pseudes enim simplex, esto mihi Grecia testis),</p>
+<p class="c_v">Erro, vispillo, mirmillo, quatern&lt;i&gt;o, preco,</p>
+<p class="c_v">Institor, emansor, desertor, sartor, arator.</p>
+<p class="c_n">285</p><p class="vv">Rursus qualia sunt in -trix muliebria quin et</p>
+<p class="c_v">Feminea, ut tonstrix, "nutrix et sedula", natrix.</p>
+<p class="c_v">Auctorem commune volunt dum signat id ipsum</p>
+<p class="c_v">Quod grece αὐθέντης et vix aliunde veniret!</p>
+<p class="c_v">Certe quicquid agat faciat ve quis illius auctor</p>
+<p class="c_n">290</p><p class="vv">Ut sceleris † samni † gladii non dicitur actor.</p>
+<p class="c_v">Qui pro adiectivo ponunt commune scholarem</p>
+<p class="c_v">Idem qui guerram et treguam dixere fuerunt;</p>
+<p class="c_v">Non tam erraturi si pro mare, quale sodalis</p>
+<p class="c_v">Rivalisque: hic vir collegi est, sive, quod aiunt,</p>
+<p class="c_n">295</p><p class="vv">Corporis eiusdem; hic cultor non solus amice</p>
+<p class="c_v">(Et procus hic aliquam iusta pro coniuge poscit).</p>
+<p class="c_v">Illa magis communia erunt ut civis, et hostis,</p>
+<p class="c_v">Custos et testis - quem dicunt martyra Grai -</p>
+<p class="c_v">Heres atque comes, princeps, dux, exul et hospes,</p>
+<p class="c_n">300</p><p class="vv">Que sunt haud dubie, si ponas nuda, suapte</p>
+<p class="c_v">Mascula natura, verum muliebria fiunt</p>
+<p class="c_v">Femineis adiuncta sonis, ut penula cultus</p>
+<p class="c_v">Palliaque illa quidem sunt vestimenta virilis</p>
+<p class="c_v">Sed quibus et mulier, cum vult, permittitur uti.</p>
+<p class="c_n">305</p><p class="vv">At duplicis generis sunt certius ista: superstes</p>
+<p class="c_v">Et sospes, locuples, dis et cum paupere dives,</p>
+<p class="c_v">Deses, inops, et iners, hebes et reses, inquies, insons,</p>
+<p class="c_v">Que neutris etiam invenias sociata licebit.</p>
+<p class="c_v">Hactenus humana attigimus nunc bruta sequemur:</p>
+<p class="c_n">310</p><p class="vv">Ut Deus in binas species animalia, non sic</p>
+<p class="c_v">Separat in binas hominum sollertia voces,</p>
+<p class="c_v">Exceptis paucis, certa ratione, quod aut sint</p>
+<p class="c_v">Quottidiana domi aut oculis insignia nostris:</p>
+<p class="c_v">Quottidiana caper sunt et capra sive capella,</p>
+<p class="c_n">315</p><p class="vv">Porcus init porcas, verres et scrofa parentes;</p>
+<p class="c_v">At sus articulo, quia grecum, aut duplice voce est.</p>
+<p class="c_v">Taure magis vaccas sectere, iuvence iuvencas</p>
+<p class="c_v">Quam vitulus vitulas, agnusquoque corniger agnam.</p>
+<p class="c_v">Bos grece communis, ovis nunc arietis uxor,</p>
+<p class="c_n">320</p><p class="vv">Nunc pro utroque epicenum; asina letatur asellus,</p>
+<p class="c_v">Gaudet equabus equus, non mulo mula creatur;</p>
+<p class="c_v">Ast aper, ast onager sunt, ast epicena caballus;</p>
+<p class="c_v">Hinnus, equo patre progenitus genitrice rudente,</p>
+<p class="c_v">Tanquam nobiliter plus matre vilis habetur.</p>
+<p class="c_n">325</p><p class="vv">Cur autem vervex, maialis, cantherius, bos</p>
+<p class="c_v">Mascula sint? constat nomen speciale nec esse!</p>
+<p class="c_v">Aut pecus hec, quadrupes mitis pastore tuente,</p>
+<p class="c_v">Aut pecus hoc, quo grex etiam quandoque notatur.</p>
+<p class="c_v">Sola columba fuit quondam pro coniuge utroque</p>
+<p class="c_n">330</p><p class="vv">Et pro silvestri, ut "gemine venere columbe"</p>
+<p class="c_v">Fecit, adhuc priscum genus observante palumbo,</p>
+<p class="c_v">Quamvis iure suo Maro, prestantissimus auctor,</p>
+<p class="c_v">Dixerit "aeree quo congessere palumbes",</p>
+<p class="c_v">"Solaque culminibus ferali carmine bubo"</p>
+<p class="c_n">335</p><p class="vv">Atque iterum "timidi venient ad pocula dame"</p>
+<p class="c_v">Atque "oculis capti talpe" post cetera dicam.</p>
+<p class="c_v">Simia erat tantum, non ullus simius olim</p>
+<p class="c_v">Expertique lupus nostro sunt et lupa damno:</p>
+<p class="c_v">A multis quondam lupus est et femina dictus.</p>
+<p class="c_n">340</p><p class="vv">Peioresque lupis coluber sunt atque colubra</p>
+<p class="c_v">Cornua cervus habet, caret hoc sed cerva decore</p>
+<p class="c_v">Insignisque leo magis &lt;est&gt; cervice leena;</p>
+<p class="c_v">Est vox greca draco, quidam fecere dracenam.</p>
+<p class="c_v">Rex agis uxores atque intra, galle, sorores,</p>
+<p class="c_n">345</p><p class="vv">Non capus amisit nomen quamvis maris usum,</p>
+<p class="c_v">Nec minus excellit pavo sed scilicet eius</p>
+<p class="c_v">Quod fera natura est in eadem voce remansit:</p>
+<p class="c_v">Cur primi generis? certe quod amenior est mas.</p>
+<p class="c_v">Forsitan et reliquis, quod fas &lt;est&gt; credere, beluis</p>
+<p class="c_n">350</p><p class="vv">Causa subest aliqua ut genus hoc aut illud haberent,</p>
+<p class="c_v">Quis tamen hanc novit, nisi forte resurgeret Adam!</p>
+<p class="c_v">Hinc quidam variant, ratio quasi nulla subesset:</p>
+<p class="c_v">Persius hec turdus vult hic alii atque ita turtur.</p>
+<p class="c_v">Formula de reliquis que sunt promiscua detur:</p>
+<p class="c_n">355</p><p class="vv">Que vel in -a vel in -e grece, velut ardea, campe,</p>
+<p class="c_v">Queque vel in -do vel in -go, sicut hirundo, erugo</p>
+<p class="c_v">Exibunt, vel in -as vel in -es, vulpes ut anasque</p>
+<p class="c_v">Et volucres duntaxat in -ix, ut crassa coturnix,</p>
+<p class="c_v">Articulare sibi deposcunt cuncta secundum,</p>
+<p class="c_n">360</p><p class="vv">Cetera sed primum, ut vespertilio et mugil atque</p>
+<p class="c_v">Pecten et "argutus magis anser" "olorque canorus"</p>
+<p class="c_v">Et glis atque lepus; nihil ad nos tigris et aspis.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

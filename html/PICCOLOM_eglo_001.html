@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Enea Silvio Piccolomini egloga</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a8cfb9e58" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Enea Silvio Piccolomini</b> <i>egloga</i>";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Enea Silvio Piccolomini egloga</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(135, 224)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(115931,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(115931,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Enea Silvio Piccolomini</b> <i>egloga</i>            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="115931"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Enea Silvio Piccolomini</b> <i>egloga</i>"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/PICCOLOM|eglo|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <br /><p class="c_t">Silvius</p>
+<p class="c_v">Rupibus in nostris que te fortuna coegit</p>
+<p class="c_v">Solus ut ignotis ualeas te credere siluis?</p>
+<p class="c_v">Te ne, Vegi, agnosco? Ni me tua fallit imago,</p>
+<p class="c_v">Ipsum te uidi dumosa in rupe canentem</p>
+<p class="c_n">5</p><p class="vv">Tum, potum pastos agerem dum ad flumina tauros;</p>
+<p class="c_v">Nanque et oues iuxta memini pinusque secutas,</p>
+<p class="c_v">Cum me forte tuos iussisti ediscere uersus.</p>
+<p class="c_t">Vegius</p>
+<p class="c_v">O Silui, hac etiam gratum quod te alloquor hora</p>
+<p class="c_v">Et quod me nosti; ueniet nec gratior usquam</p>
+<p class="c_n">10</p><p class="vv">Alter in occursum; nam me tua fistula mestum</p>
+<p class="c_v">Solari et poterit longos abolere dolores.</p>
+<p class="c_v">Nanque ego per siluas et per deserta ferarum</p>
+<p class="c_v">Errabundus agor, nostri si forsitan ulla</p>
+<p class="c_v">Cesaris occurrant uestigia, quando secutum</p>
+<p class="c_n">15</p><p class="vv">His illum accepi rigidas in montibus ursas.</p>
+<p class="c_t">Silvius</p>
+<p class="c_v">Falleris. Hac ipsa nunquam regione moratur</p>
+<p class="c_v">Cesar, et, ignaro si qucquam credis amico,</p>
+<p class="c_v">Collibus his frustra nemorum sub nocte iacebis.</p>
+<p class="c_v">Sed que tanta sui tenuit te causa uidendi?</p>
+<p class="c_t">Vegius</p>
+<p class="c_n">20</p><p class="vv">Si nescis: semper pastoribus ille faudendum</p>
+<p class="c_v">Duxit, et agrestes prospexit honore poetas.</p>
+<p class="c_v">Ipse meam forsan (quamuis sit rustica) musam</p>
+<p class="c_v">Audiet atque, meis dederit si pascua capris,</p>
+<p class="c_v">Mille suas referam prestanti carmine laudes.</p>
+<p class="c_n">25</p><p class="vv">Sed nunc in uiridis que scripsi carmina fagi</p>
+<p class="c_v">Corticibus noster cupiebam cesar haberet.</p>
+<p class="c_v">Uerum incerta sequor uestigia; montibus illum</p>
+<p class="c_v">Omnibus exquiro siluasque reuertor ad omnes,</p>
+<p class="c_v">Si mihi uel tellus daret hunc ex omnibus una.</p>
+<p class="c_n">30</p><p class="vv">Sed qud agam? Tu me pastorem dirige, de te</p>
+<p class="c_v">Si bene quid merui: uituli dum sepe rogares</p>
+<p class="c_v">Ostendi furem, qui sub spineta latebat.</p>
+<p class="c_t">Silvius</p>
+<p class="c_v">Quid facias, mecum noctem ni duxeris unam?</p>
+<p class="c_v">Quo ducas pecudes, cupidas quoque graminis agnas,</p>
+<p class="c_n">35</p><p class="vv">Quas uia saxosis confecit uallibus? Et nox</p>
+<p class="c_v">Iam ruit etherei de uertice missa balini;</p>
+<p class="c_v">Omnia uillarum superat iam culmin fumus;</p>
+<p class="c_v">Uxores fessis reparant alimenta bubulcis.</p>
+<p class="c_v">Fronde sub hac igitur somnum captabis opaca</p>
+<p class="c_n">40</p><p class="vv">Propter aque riuum. Sed nos dum somnus habebit</p>
+<p class="c_v">Picula seruabit teneros cum matribus edos.</p>
+<p class="c_v">At prius ex orto sumetur cenula nostro</p>
+<p class="c_v">Et que iam longo pendere sub arbore poma</p>
+<p class="c_v">Tempore sum passus, nunc ipsa legemus ouantes</p>
+<p class="c_n">45</p><p class="vv">Hospitibus seruata diu. Nec copia desit</p>
+<p class="c_v">Lactis. Adhuc plene pressabimus ubera capre.</p>
+<p class="c_v">Crastina cumque dies hortalisque ipse rubebit</p>
+<p class="c_v">Hic sublimis apex, somno surgemus et ere</p>
+<p class="c_v">Proxima conducta superabimus equora cimba</p>
+<p class="c_n">50</p><p class="vv">Illuc, e medio tumulus quo surgit aquarum.</p>
+<p class="c_v">Ad dominum uenies domino gratissimus hospes,</p>
+<p class="c_v">Si cantare uenis et respondere paratus.</p>
+<p class="c_v">Nanque ego carminibus quid possit uterque canoris</p>
+<p class="c_v">Experiar, uersu quamuis superandus amici.</p>
+<p class="c_n">55</p><p class="vv">Tunc, ut amare tuam dignabitur ille cicutam,</p>
+<p class="c_v">Protinus incipies pastorum primus haberi.</p>
+<p class="c_v">Fortunate puer! Tum cesaris ora uidebis.</p>
+<p class="c_v">Huius enim maior (quem nosti) Pollio frater</p>
+<p class="c_v">Principis assidua sequitur uestigia cura</p>
+<p class="c_n">60</p><p class="vv">Siue domi fuerit ciuilia iura daturus</p>
+<p class="c_v">Bellorumque modos ducibus dicturus habendos</p>
+<p class="c_v">Siue acres uenetur apros seu rura pererret</p>
+<p class="c_v">Cesar: adest semper qui Pollio consulat auri.</p>
+<p class="c_v">Hec ego, lacte domum plenam dum ferre solebam</p>
+<p class="c_n">65</p><p class="vv">Mulctram, inter pueros memini dixisse Menalcam.</p>
+<p class="c_v">Quanto igitur poterit dominus te tollere honore!</p>
+<p class="c_v">Inuidus Italia uictus concedet Amintas.</p>
+<p class="c_t">Vegius</p>
+<p class="c_v">Muse, noster amor, quarum me lacte fouendum</p>
+<p class="c_v">Prima dies habuit, surgentem ornate poetam.</p>
+<p class="c_n">70</p><p class="vv">Ecce feror; magnis me uectat honoribus etas</p>
+<p class="c_v">Proxima, Coruino rumpantur ut ilia Tusco.</p>
+<p class="c_v">Spargite nunc ederas, summittite fontibus umbras,</p>
+<p class="c_v">Siluius ut nostras possit contingere baccas.</p>
+<p class="c_v">Hic decus omne meum, uestri solamen alumni.</p>
+<p class="c_n">75</p><p class="vv">Cui modo que meritis reddemus premia tantis?</p>
+<p class="c_v">Bina tibi, Silui, (quod possum) pocula dono.</p>
+<p class="c_v">Accipe, quis torno facilem superaddidit Eglen</p>
+<p class="c_v">Alchimedon magno nectentem uincla Sileno.</p>
+<p class="c_v">At domino quicunque meis ab ouilibus edi</p>
+<p class="c_n">80</p><p class="vv">Prouenient magno mittentur honore quotannis,</p>
+<p class="c_v">Et pinguis uitulus, quem non pudet ubera mtris</p>
+<p class="c_v">Ducere, qui nullo uexabit robora cornu,</p>
+<p class="c_v">Cesar ut ille sui cognoscat carmina uatis.</p>
+<p class="c_v">Sed ueniam quocunque mones, quocunque iubebis.</p>
+<p class="c_n">85</p><p class="vv">Interea medio que surgit gurgite moles?</p>
+<p class="c_v">Dic age quo prono descendant remige lembi,</p>
+<p class="c_v">Siquid habes dignum dictu dignumque relatu</p>
+<p class="c_v">Quodque domi possim solita cantare cicuta.</p>
+<p class="c_t">Silvius</p>
+<p class="c_v">Non inuisa petis. Ueteri si credimus euo,</p>
+<p class="c_n">90</p><p class="vv">Hec loca letifero quondam serpente teneri</p>
+<p class="c_v">Collibus affirmant, qui plurimus heserat istis,</p>
+<p class="c_v">Principio rerum, multis labentibus annis.</p>
+<p class="c_v">Tunc et oues nulle circum nulleque capelle</p>
+<p class="c_v">Pinguia nec magni tondebant pasqua tauri.</p>
+<p class="c_n">95</p><p class="vv">Nulla domus fuerat, nullus quoque pastor et agri</p>
+<p class="c_v">Nullus arator erat, nullum uineta ligonem</p>
+<p class="c_v">Passa fuere: malum compleuerat omnia uirus.</p>
+<p class="c_v">Tunc, ut erat uita sanctissimus, aduenit hospes</p>
+<p class="c_v">Iulius, ingenio uiuax, qui fluctibus unus</p>
+<p class="c_n">100</p><p class="vv">Preciperet, magnis qui tempestatibus, et qui</p>
+<p class="c_v">Cogeret imperio cunctos hominesque ferasque.</p>
+<p class="c_v">Greculus hic primum ualli cum proximus esset,</p>
+<p class="c_v">Huc illuc uoluens oculos plena omnia uidit</p>
+<p class="c_v">Anguibus atque lacu multas capita alta ferentes</p>
+<p class="c_n">105</p><p class="vv">Bestiolas. Paruo stetit et post tempore dixit</p>
+<p class="c_v">Extenditque manum: "immedicatis morsibus ite,</p>
+<p class="c_v">Ite procul celeres nostris e finibus, angues."</p>
+<p class="c_v">Nec mora sublatis abierunt passibus illi,</p>
+<p class="c_v">Ac uelut admonitus iussu monituque deorum</p>
+<p class="c_n">110</p><p class="vv">Siquis adest, nulli nocuit nullumque momordit.</p>
+<p class="c_v">Ille deo fidens et captus amore locorum</p>
+<p class="c_v">Credit se magnis his fluctibus et pede sicco</p>
+<p class="c_v">Ingreditur nulla corpus subeunte biremi;</p>
+<p class="c_v">Sub pedibus tunica ceu uectus nauibus ibat</p>
+<p class="c_n">115</p><p class="vv">Atque locum tenuit, quo cernitur insula, saxum</p>
+<p class="c_v">Hoc fuit et nudum pulso sepente relictum.</p>
+<p class="c_v">Ille senex fessus multisque laboribus actus</p>
+<p class="c_v">"Hic moriemur" ait "sedemque hanc ossibus unam</p>
+<p class="c_v">Eligimus nostris; hic ultima conditur edes."</p>
+<p class="c_n">120</p><p class="vv">Inde domum struxit diuini numinis, in qua</p>
+<p class="c_v">Plurimus accensa consurgit lampade fumus</p>
+<p class="c_v">Et sua perpetuo celebrat diuina sacerdos.</p>
+<p class="c_v">Mille deo uatem, que nunc altaria fumant,</p>
+<p class="c_v">Erexisse ferunt fugientem grecula regna</p>
+<p class="c_n">125</p><p class="vv">Urbibus Italie in nostris centumque sacrasse</p>
+<p class="c_v">Templa Ioui magno; sed cum se transtulit ad nos</p>
+<p class="c_v">(Res est nota) senex populis comitantibus ibat,</p>
+<p class="c_v">Has quorum eternum terras tenuere minores.</p>
+<p class="c_v">Illic ergo diem clausit, quando omnia uidit</p>
+<p class="c_n">130</p><p class="vv">Structa locis, animamque deo, sed corpora templo</p>
+<p class="c_v">Commisit, quo quisque malis uexatus ab umbris</p>
+<p class="c_v">Pastorum refugit et mentem liberat egram.</p>
+<p class="c_v">Nanque bibit patera uinum, cum qua ille bibebat,</p>
+<p class="c_v">Que lapide ingenuo splendet, dextramque bacillo</p>
+<p class="c_n">135</p><p class="vv">Porrigit, ille senex quo se firmare solebat.</p>
+<p class="c_v">Edificata suis tunc est cultoribus Orta,</p>
+<p class="c_v">Piscibus ac pomis et pulchra diues oliua.</p>
+<p class="c_v">Que contra medio uallis respondet Apella est,</p>
+<p class="c_v">Mella fauo et dulces que sumit uitibus uuas.</p>
+<p class="c_n">140</p><p class="vv">Triginta ueteri pulchras regit ordine uillas</p>
+<p class="c_v">Insula cui seruit, cui munera lactis et edos</p>
+<p class="c_v">Mittimus et ruris dominum pecorisque uocamus.</p>
+<p class="c_v">Ad quem cum uenies, diuum uidisse putabis.</p>
+<p class="c_v">Hec satis ut stipule committere possis acute</p>
+<p class="c_n">145</p><p class="vv">Et tua que possit cantare sub arbore Clio.</p>
+<p class="c_t">Vegius</p>
+<p class="c_v">O ego nocturna uidear tibi tetrior umbra,</p>
+<p class="c_v">Horridiorque urso, calcata uilior herba,</p>
+<p class="c_v">Si non ista dies toto mihi longior anno est.</p>
+<p class="c_v">Excrucior iam nosse uirum templumque uidere</p>
+<p class="c_n">150</p><p class="vv">Sacratumque senis corpus pateramque bacillumque</p>
+<p class="c_v">Et domino seruire tuo tecumque uicissim</p>
+<p class="c_v">Has inter siluas uersus dictare canoros.</p>
+<p class="c_v">Quales tum laudes et qualia nomina nostro</p>
+<p class="c_v">Attribuam domino! Quanta mihi Pollio cera</p>
+<p class="c_n">155</p><p class="vv">Impressus, quanta resonabit cortice fagi!</p>
+<p class="c_v">Uictor ut in turma gladio donatur et auro</p>
+<p class="c_v">Eacide similis duris assuetus in armis</p>
+<p class="c_v">Sole sub ardenti media cantabitur umbra.</p>
+<p class="c_v">Sed uos, o lauri, uos antiquissima quercus</p>
+<p class="c_n">160</p><p class="vv">Robora, que nostri referetis cesaris acta,</p>
+<p class="c_v">Unde sit acceptus nostris maioribus anguis</p>
+<p class="c_v">Uictrices semper ducturus in arma cohortes,</p>
+<p class="c_v">Regibus accepta dicetis lilia Gallis,</p>
+<p class="c_v">Qua uirtute Iouis nostro se inxerit ales</p>
+<p class="c_n">165</p><p class="vv">Serpenti, et quanta confecit prelia laude:</p>
+<p class="c_v">Omnia dicetis ueterum uestigia, lauri.</p>
+<p class="c_v">Parte alia pulchro resonabit carmine pinus</p>
+<p class="c_v">Queque triumpharint uictricia signa Philippi,</p>
+<p class="c_v">Pugnatum quotiens fuerit terraque marique</p>
+<p class="c_n">170</p><p class="vv">Fortiter, et capte scribentur classis honores.</p>
+<p class="c_v">Denique qua uenetos affecit clade marinos</p>
+<p class="c_v">Et florentinas acies et signa subacta</p>
+<p class="c_v">Dicetis, corili, dicetis carmine nobis.</p>
+<p class="c_v">Omnia uenturi cantabit fata cupressus</p>
+<p class="c_n">175</p><p class="vv">Temporis, et magna tuerit que uoce quieto</p>
+<p class="c_v">Musa mihi et somnis uecto super auia Cyrre,</p>
+<p class="c_v">Adstarent dum nimphe omnes, audiret Apollo,</p>
+<p class="c_v">Populus expediet; nam que mihi dicta futura</p>
+<p class="c_v">Secula? Que nobis surget uiuentibus etas?</p>
+<p class="c_n">180</p><p class="vv">Regnabit diuus confectis ordine bellis</p>
+<p class="c_v">Cesar et aurato reuirebunt omnia seclo;</p>
+<p class="c_v">Nanque redit mundo Saturni certior heres.</p>
+<p class="c_v">O nobis liceat tunc omnia scribere facta</p>
+<p class="c_v">Cesaris et magnis implere theatra coturnis.</p>
+<p class="c_n">185</p><p class="vv">Carmina diuini faciemus proxima Phebi</p>
+<p class="c_v">Uersibus atque Linum superantia et Orphea magnum.</p>
+<p class="c_v">Sed quid nunc agimus? In me mora non erit et si</p>
+<p class="c_v">Nocte uelis media dominum properemus ad ipsum,</p>
+<p class="c_v">Dum clause seruantur oues et ouilibus agni,</p>
+<p class="c_n">190</p><p class="vv">Clausa nec ipsa lupum trepidant armenta malignum.</p>
+<p class="c_t">Silvius</p>
+<p class="c_v">Hoc erat extremum, quod de te exculpere uellem,</p>
+<p class="c_v">Diue poeta; alios tamen expectabimus ortus</p>
+<p class="c_v">Luciferi; tota prius hec te nocte tenebo.</p>
+<p class="c_v">Hunc tumulum supera, placido succedimus antro.</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" ><!--<![endif]-->
+<head>
+    
+
+    <title>Basinio da  Parma astronomicon libri 1</title>    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fogli di stile -->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/default_BS.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/default.css" />
+    <!--link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css?random=5f22a8df988af" /-->
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/public/css/default.css" />
+    <link href="/poetiditalia/js/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/poetiditalia/shared/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <!-- Modernizr -->
+    <script src="/poetiditalia/public/js/modernizr.custom.js"></script>
+    <!-- respond.js per IE8 -->
+    <!--[if lt IE 9]>
+    <script src="/poetiditalia/public/js/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/css/panelTip.css" />
+
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/js/language_BS.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/js/default.js" ></script>
+    <script type="text/javascript" src="/poetiditalia/shared/himeros/opera/js/default.js"></script>
+
+    <link rel="icon" href="/poetiditalia/public/img/favicon.ico" type="image/ico" />
+
+    <style>
+        body {
+            background-color: #efefef
+        }
+
+        /* sposta a 1000px il breakpoint per il collasso del menù */
+        @media (max-width: 1000px) {
+          .navbar-header {
+              float: none;
+          }
+          .navbar-left,.navbar-right {
+              float: none !important;
+          }
+          .navbar-toggle {
+              display: block;
+          }
+          .navbar-collapse {
+              border-top: 1px solid transparent;
+              box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+          }
+          .navbar-fixed-top {
+              top: 0;
+              border-width: 0 0 1px;
+          }
+          .navbar-collapse.collapse {
+              display: none!important;
+          }
+          .navbar-nav {
+              float: none!important;
+              margin-top: 7.5px;
+          }
+          .navbar-nav>li {
+              float: none;
+          }
+          .navbar-nav>li>a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+          }
+          .collapse.in{
+              display:block !important;
+          }
+        }
+        /* impedisce lo slittamento a destra del menù quando si apre una finestra modale*/
+        .modal-open .navbar-fixed-top{
+            padding-right: 16px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="wait0"></div>
+    <script src="/poetiditalia/shared/js/wait0.js"></script>
+
+    <!--div class="panelTip" id="wait" style="background-image:none;width:200px;height: 35px;padding-right:10px;background-color: #ffffff;opacity:0.8">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td align="center" valign="middle">
+                <img src="/poetiditalia/public/img/_loading.gif" hspace="10px" alt="" />
+            </td>
+
+            <td style="padding-left:10px;" align="center"><strong></strong></td>
+
+            </tr>
+        </table>
+    </div>
+    <script src="/js/wait.js"></script-->
+
+
+    <link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/testo_BS.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/apparato.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/infoAutore.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/metro.css" />
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/cometri.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/MQDQ/css/scansioni.css"/>
+<link rel="stylesheet" type="text/css" href="/poetiditalia/shared/himeros/css/evidenzia.css" />
+<script type="text/javascript" src="/poetiditalia/shared/himeros/js/testo.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<script>
+    function getMetro(id, livello){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getMetro',
+                id: id,
+                livello: livello
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Metri";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function getInfoAutore(idAutori, idOpere){
+        waitOn();
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'getInfoAutore',
+                idAutori: idAutori,
+                idOpere: idOpere
+            },
+            success : function (data, stato) {
+                waitOff();
+                document.getElementById("modalMQDQ-title").innerHTML = "Informazioni sull'autore e sulle opere";
+                document.getElementById("modalMQDQ-body").innerHTML = data;
+                $('#modalMQDQ').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+
+
+
+    function eseguiScansione(id, livello){
+        waitOn();
+        var titolo = "<b>Basinio da  Parma</b> <i>astronomicon libri</i> 1";
+        $.ajax({
+            url : '/poetiditalia/public/testo/ajax',
+            data: {azione: 'scansione',
+                id: id,
+                livello: livello
+            },
+            success : function (response, stato) {
+                waitOff();
+                var tmp = response.split("@");
+                document.getElementById("modalScansione-title").innerHTML = titolo;
+                document.getElementById("pedecerto").innerHTML = "<div align=\"left\">"
+                    + "Scansione eseguita da <span style=\"color:#cc0000;font-variant: small-caps;font-size: 14px;font-weight: bold\">Pedecerto</span> © 2011"
+                    + "&#151; <a  target=\"_blank\" style=\"font-size: 12px;font-weight: bold\" href=\"http://www.pedecerto.eu\">www.pedecerto.eu</a>"
+                    + "&nbsp;&nbsp;<button type=\"button\" onclick=\"eseguiStampa()\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-print\" aria-hidden=\"true\"></span>&nbsp;&nbsp;Esporta</button>"
+                    + "&nbsp;<a tabindex=\"0\" role=\"button\" class=\"btn btn-primary\" data-container=\"body\" data-toggle=\"popover\" title=\"Pedecerto\""
+                    + " data-html=\"true\" data-placement=\"bottom\" data-content=\"" + tmp[3] + "\">?</a>";
+                    + "</div>";
+                document.getElementById("headScansione").innerHTML = tmp[1];
+
+                document.getElementById("scansione").innerHTML = tmp[2];
+
+                $('[data-toggle="popover"]').popover();
+                $('#modalScansione').modal();
+            },
+            error : function (richiesta,stato,errori) {
+                alert("E' evvenuto un errore. Stato della chiamata: " + stato);
+            }
+        });
+    }
+    function eseguiStampa(){
+        document.toPrint.submit();
+    }
+
+
+</script>
+
+<style>
+    td.diagnosi {
+        font-size: 12px !important
+    }
+
+    td.super {
+        font-size: 12px !important;
+    }
+    td.risolto {
+        display: none
+    }
+    #modalScansione-body{
+        padding-left: 0 !important;
+    }
+    #modalScansione{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #pedecerto {
+        padding-top:20px;
+        padding-bottom:10px;
+        font-family: 'lucida grande',arial;
+        font-size: 13px;
+        line-height: 30px;
+        margin-left: 5%;
+        margin-right: 2%
+
+    }
+    p.noScansione {
+        padding-left: 0 !important;
+        margin-left: 0 !important
+    }
+    #headScansione {
+        margin-left: 5%;
+        margin-right: 2%
+    }
+
+    p.c_t {
+        margin-top: 0 !important
+    }
+
+@media screen and (min-width: 760px) {
+    td.super {
+        font-size: 16px !important;
+    }
+    td.risolto {
+        display: block
+    }
+}
+
+    #left-col{
+        min-height: 700px;
+        border-right: none !important
+    }
+    .popover{
+        max-width: 100%;  
+    }
+</style>
+
+
+<title>Basinio da  Parma astronomicon libri 1</title>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="container" style="height:50px">
+            <div class="navbar-header" style="float:left;">
+                <a class="navbar-brand" style="height: 30px;margin-top:12px;padding:0;padding-left:15%" href="/poetiditalia/public">
+                    <!--img style="height:55px" alt="Poeti d'Italia" src="/img/logo-poeti_.png" / -->
+                    <span class="logoMQDQ_1">M</span><span class="logoMQDQ_2">Q</span><span class="logoMQDQ_1">D</span><span class="logoMQDQ_2">Q</span>
+
+                </a>
+            </div>
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:7px">
+                <ul class="nav navbar-nav" >
+                    <li>
+                        <button class="btn btn-primary" type="button" value="" title="Informazioni sull'autore e sulle opere"
+                       onclick="getInfoAutore(155, 270)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Informazioni</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" type="button" title="Informazioni sul metro" onclick="getMetro(141018,2)">
+                            Metri                        </button>
+                    </li>
+                                            <li>
+                            <button class="btn btn-primary" type="button" title=""
+                           onclick="eseguiScansione(141018,2)">
+                                Scansione metrica                            </button>
+                        </li>
+                                                        </ul>
+            </div><!-- /.nav-collapse -->
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-left:0 !important;padding-right:0 !important;">
+        <div class="container">
+            <div class="titoloDaniela" id="titoloDaniela">
+                <b>Basinio da  Parma</b> <i>astronomicon libri</i> 1            </div>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
+
+
+    <div class="container" style="margin-top:52px">
+        <div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+<form name="toPrint" style="display:none" target="_blank" id="toPrint" method="post" action="/poetiditalia/public/testo/stampascansioni">
+    <input name="idScansione" type="hidden" value="141018"/>
+    <input name="livello" type="hidden" value="2"/>
+    <input name="titolo" type="hidden" value="<b>Basinio da  Parma</b> <i>astronomicon libri</i> 1"/>
+</form>
+
+
+<div class="container">
+    <div id="left-col">
+        <div id="divTesto" style="padding-top:0px;padding-bottom: 50px;">
+            <div style="margin-left:60px;margin-bottom: 30px">
+                <div class="permalink" style="margin-top:3px;margin-right:5px">Permalink: <label id="permaLink">http://www.poetiditalia.it/texts/BASINIO|astr|001</label></div>
+<div class="permalink"><button type="button" onclick="copyText('permaLink')" class="btn btn-primary" style="padding:2px;font-size:13.5px">Copia</button></div>
+<div style="clear:both"></div>
+            </div>
+            
+
+
+            <form name="toServer" method="get" action="/poetiditalia/public/testo/testo"><div class='intera'>
+<div style="float:left;margin-right:10px;margin-top:6px">Altre sezioni</div>
+<div style="float:left;margin-right:5px;margin-top:2px;">
+<select class="form-control" id="cambiaSezione" name="codice" onchange="document.toServer.submit()"><option selected="selected" value="BASINIO|astr|001">&nbsp;&nbsp;1&nbsp;&nbsp;</option>
+<option  value="BASINIO|astr|002">&nbsp;&nbsp;2&nbsp;&nbsp;</option>
+</select>
+</div>
+<div style="float:left;" class="btn-group" role="group" aria-label="...">
+<button type="button" disabled="disabled" name="previous" id="button_previous" title="Previous" onclick="muoviSezione(-1)" class="btn btn-reverse"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+<button type="button"  name="next" id="button_next" title="Next" onclick="muoviSezione(1)" class="btn btn-reverse"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+</div>
+<div style="clear:both"></div>
+</div>
+</form>
+<p></p><br /><p class="c_v">Aetherios Orbes, subiectaque templa Deorum,</p>
+<p class="c_v">Musa, cane, atque vias semper volventis Olympi;</p>
+<p class="c_v">Curribus auratis quae Signa secutus iniquos</p>
+<p class="c_v">Sol vehat ipse dies; quae tempora noctibus addat;</p>
+<p class="c_n">5</p><p class="vv">Quae rapiat rursum tardis adiuncta diebus.</p>
+<p class="c_v">Hic age, magne, tuo, Malatesta, canende Poetae,</p>
+<p class="c_v">Castalias amplexe Deas, partire laborem</p>
+<p class="c_v">Hunc mecum: neque enim sine te Parnassia nobis</p>
+<p class="c_v">Antra patent, Musasque sinit Romanus Apollo.</p>
+<p class="c_n">10</p><p class="vv">Tu decus Aoniae, tu spes certissima Vatum;</p>
+<p class="c_v">Nec cuiquam potui, tibi quam felicius Astra</p>
+<p class="c_v">Dicere, qui rerum causas, qui Sidera primus</p>
+<p class="c_v">Cunctorum, et vasti scrutaris semina Mundi.</p>
+<p class="c_v">Nec levius fuerit quam condere bella, referre</p>
+<p class="c_n">15</p><p class="vv">Tellurisque, Undaeque locos, Animaeque, liquentisque</p>
+<p class="c_v">Ignis, et immensos Caeli describere tractus,</p>
+<p class="c_v">Bella virum quamvis iam dudum, et praelia lusi;</p>
+<p class="c_v">Nuper ut invicti magnum meditatus honorem</p>
+<p class="c_v">Sismundi, et pulsos Thusco bis littore Iberos</p>
+<p class="c_n">20</p><p class="vv">Qui cecini, ac veras iuvenili carmine laudes;</p>
+<p class="c_v">Mox quoque Troianas cupiam qui dicere clades,</p>
+<p class="c_v">Magnanimosque duces Graiorum, actamque sub arma</p>
+<p class="c_v">Europam, atque Asiae Sigaeo in littore gentem.</p>
+<p class="c_v">Interea, tardus quamvis, ad Sidera Caeli</p>
+<p class="c_n">25</p><p class="vv">Accedes, quondam serisque vocabere votis;</p>
+<p class="c_v">Cum tamen in numerum Divorum veneris, opta</p>
+<p class="c_v">Qua tibi parte Poli, qua sit regione manendum;</p>
+<p class="c_v">Et mecum Caeli iam nunc discurre per oras</p>
+<p class="c_v">Aetherias, ventisque favens da vela secundis.</p>
+<p class="c_n">30</p><p class="vv">Ex Caelo, et Terra moles pulcherrima Mundi</p>
+<p class="c_v">Constat, et haec inter Naturis ordine clausis.</p>
+<p class="c_v">Nam Pater omnipotens cum iam creat unus Olympum,</p>
+<p class="c_v">Terrarumque situs, tremulique liquentia Ponti</p>
+<p class="c_v">Aequora, sylvai disclusit corpore Mundum,</p>
+<p class="c_n">35</p><p class="vv">Imposuitque novum Stellis ardentibus Orbem;</p>
+<p class="c_v">Quem super haud ulla est nec Terra, nec aequoris Unda,</p>
+<p class="c_v">Non Ignis fervens, non humidus intepet Aer;</p>
+<p class="c_v">Nec supra, aut infra volvuntur corpora rerum;</p>
+<p class="c_v">Non dextra rebus fas est, non ire sinistra;</p>
+<p class="c_n">40</p><p class="vv">Non medio e spatio motus, non ante feruntur,</p>
+<p class="c_v">Non post succedunt; nec quicquam est corpore nullo;</p>
+<p class="c_v">Nec Locus ullus ibi est, nec terminus ullus Inani.</p>
+<p class="c_v">Ergo cuncta tenet magnum cum corpore Caelum.</p>
+<p class="c_v">Quod Pater ut vidit forma constare rotunda,</p>
+<p class="c_n">45</p><p class="vv">Iussit ut aeterno traherentur Sidera motu,</p>
+<p class="c_v">Cum nec stare queat revoluti machina Mundi;</p>
+<p class="c_v">Nam neque vis Animae, qua pellitur ipsa, quiescit.</p>
+<p class="c_v">Hinc intra se se Caeli se mobilis Orbis</p>
+<p class="c_v">Torquet, et aeternum sua post vestigia fertur;</p>
+<p class="c_n">50</p><p class="vv">Quod locus extra ipsum nullus, non ulla meandi</p>
+<p class="c_v">Copia, perpetuum fugiat se se, atque sequatur;</p>
+<p class="c_v">Tempore nec quoquam maneant agitata necesse est.</p>
+<p class="c_v">Vertit in Occasus Eois magnus ab oris</p>
+<p class="c_v">Mundus, et ingenti contorquet Sidera tractu.</p>
+<p class="c_n">55</p><p class="vv">Quem subter septem contra Pater impulit Ignes,</p>
+<p class="c_v">Quinque Vagis addens duo Lumina magna, secarent</p>
+<p class="c_v">Quae Caelum adversum, atque Annos, Mensesque referrent.</p>
+<p class="c_v">Orbe quidem summo fallax Saturnius ignis</p>
+<p class="c_v">Fulsit, et ingenti signavit frigore Caelum.</p>
+<p class="c_n">60</p><p class="vv">Hunc infra placidi Iovis aurea stella cucurrit;</p>
+<p class="c_v">Ignea sanguinei sub quam Mavortis anhelat</p>
+<p class="c_v">Fulgorem fax crine trahens, bellumque, metumque.</p>
+<p class="c_v">Parte fere media Sol aureus omnia cernit;</p>
+<p class="c_v">Quem Venus, et proles Cyllenia pene secuti.</p>
+<p class="c_n">65</p><p class="vv">Hos infra aethereae micuerunt cornua Lunae,</p>
+<p class="c_v">Tum siccum invasit calor igneus Aethera primum,</p>
+<p class="c_v">Aera tum calidum non humor ab Aethere longe</p>
+<p class="c_v">Dispulit, et frigus sicca tellure potitum est,</p>
+<p class="c_v">Quam circum gelidae mediam liquor ambiit Undae.</p>
+<p class="c_n">70</p><p class="vv">Utque movet Caelum Divina Potentia certo</p>
+<p class="c_v">Ordine, quae media est Tellus immota resedit,</p>
+<p class="c_v">Quam circum ipse Polis Caelum dedit ire rotatis.</p>
+<p class="c_v">Nam Pater in tractus omnes Caelique, Marisque,</p>
+<p class="c_v">Tellurisque, Animaeque vias, Ignisque liquentis</p>
+<p class="c_n">75</p><p class="vv">Funditur, et toto se miscet corpore rerum.</p>
+<p class="c_v">Terga dedit Mundo Genitor quae verteret Orbi</p>
+<p class="c_v">Eoo, occiduas frontem torqueret in oras;</p>
+<p class="c_v">At dextrae partes tardum tenuere Booten,</p>
+<p class="c_v">Arcturique domos, magnamque Lycaonis Ursam,</p>
+<p class="c_n">80</p><p class="vv">Austrinosque situs laevum devolvit in Orbem;</p>
+<p class="c_v">Hinc alius Vertex aliusque hinc fixus utrinque,</p>
+<p class="c_v">Quos dixere Polos, Austro, Boreaeque minantur.</p>
+<p class="c_v">His ita monstratis, superest Regione sub una</p>
+<p class="c_v">Dicere quaque meant quae Signa, plagasque retentant.</p>
+<p class="c_n">85</p><p class="vv">Lacteus ingenti candore decorus, et auro,</p>
+<p class="c_v">Nescit utrumque latus medii qui limite Caeli,</p>
+<p class="c_v">Fertur in obliquum, clarum Phaetonta relinquens,</p>
+<p class="c_v">Temperat et totum flammis errantibus Orbem.</p>
+<p class="c_v">Inde Orbes alii varias tenduntur in oras;</p>
+<p class="c_n">90</p><p class="vv">Signifer est alios quorum pulcherrimus ante,</p>
+<p class="c_v">Temnia ducta triplex quem fecit utrinque refuso</p>
+<p class="c_v">Margine Signorum; media est via Solis iniqui,</p>
+<p class="c_v">Defectus in qua Solis, Lunaeque patescunt,</p>
+<p class="c_v">Vel cum tota Soror fraterno opponitur orbi,</p>
+<p class="c_n">95</p><p class="vv">Vel cum Terra iacens inter fratremque sororemque,</p>
+<p class="c_v">Ipsa negat caecae Titania lumina Lunae</p>
+<p class="c_v">Cum cadit oceano nitidi fax lucida Phoebi,</p>
+<p class="c_v">Et Luna opposita iam fertur in aethera Terra.</p>
+<p class="c_v">Inde Paralleli, Graio quos nomine dicunt,</p>
+<p class="c_n">100</p><p class="vv">Quinque recensendi; quoroum qui maximus unus</p>
+<p class="c_v">Et medius fuerit, noctes aequare diebus</p>
+<p class="c_v">Dicitur: unde illi nomen posuere profectum.</p>
+<p class="c_v">Sunt duo, non longis qui frontibus imminuuntur;</p>
+<p class="c_v">Alter in Austrinos infert sua terga recessus.</p>
+<p class="c_n">105</p><p class="vv">Hos inter mediumque sedent duo Signa reposta,</p>
+<p class="c_v">Quae Tropicos vero dixerunt nomine Grai,</p>
+<p class="c_v">Maiores longe extremis, medioque minores.</p>
+<p class="c_v">Parte ab utraque Plagae finem posuere perustae.</p>
+<p class="c_v">Inde alii duo sunt, qui verticis ardua summi</p>
+<p class="c_n">110</p><p class="vv">Amplexi capita, sparsi in diversa secantur</p>
+<p class="c_v">Inter se extremo in spatio, summosque recidant</p>
+<p class="c_v">Quinque Parallelos dirimentes partibus aequis</p>
+<p class="c_v">Quatuor, atque secant animalia magna gerentem</p>
+<p class="c_v">Signiferum tali ratione, ut permeat alter</p>
+<p class="c_n">115</p><p class="vv">Phryxaeam pecudem, iustaeque examina Librae;</p>
+<p class="c_v">Alter et Aegoceron, et magni brachia Cancri.</p>
+<p class="c_v">Sunt duo praeterea, quos nos aequaliter omni</p>
+<p class="c_v">Parte licet nobis terra comprendere iniqua,</p>
+<p class="c_v">Quique secat mediumque diem, Caelumque profundum</p>
+<p class="c_n">120</p><p class="vv">Dividit, alter is est qui terminat omnia visus.</p>
+<p class="c_v">Quinque Plagas Caelo posuit Natura creatrix,</p>
+<p class="c_v">Quarum quae media est aeterno incanduit igni;</p>
+<p class="c_v">At magno extremae riguerunt frigore Zonae.</p>
+<p class="c_v">Temperiem mediae duplici regione benignam</p>
+<p class="c_n">125</p><p class="vv">Excepere duae; mediam quas inter et ambas</p>
+<p class="c_v">Dicimus extremas Caeli devexa profundi</p>
+<p class="c_v">Cingula bina hominum generi concessa Deorum</p>
+<p class="c_v">Munere; de medio quae cum traxere calorem,</p>
+<p class="c_v">Frigus ab extremis, gemina de parte profunda</p>
+<p class="c_n">130</p><p class="vv">Temperies geminis infertur ab Aethere Terris.</p>
+<p class="c_v">Atque haec culta quidem latera, et Telluris utroque</p>
+<p class="c_v">Margine clausa, virum spatiis gens exsulat aequis.</p>
+<p class="c_v">Nam media, ut perhibent, Plaga vasta sine urbibus ullis</p>
+<p class="c_v">Magna procul magni patiens incendia Solis,</p>
+<p class="c_n">135</p><p class="vv">Non volucrum nidos, magnarum aut lustra ferarum</p>
+<p class="c_v">Substinet, aut hominum genus improba pascit; at illas</p>
+<p class="c_v">Nix aeterna premit, foedusque amplectitur horror;</p>
+<p class="c_v">Hinc Boreas, illinc gelida Notus effluit aura;</p>
+<p class="c_v">Hic tepet Auster, at hic Aquilo non frigidus efflat;</p>
+<p class="c_n">140</p><p class="vv">Hoc vitio Caeli; densum sed frigus utroque</p>
+<p class="c_v">Vertice devexi semper spirabile Mundi.</p>
+<p class="c_v">At nobis Arctos sublime propinqua furentes</p>
+<p class="c_v">Frigore demittit ventos, insana rigore</p>
+<p class="c_v">Flamina perpetuo nobis; quae torrida dum se</p>
+<p class="c_n">145</p><p class="vv">Trans spatia evolvunt calidis contraria pennis,</p>
+<p class="c_v">Nubila dant populis adversa tenentibus arva.</p>
+<p class="c_v">At nobis longe Mundus consurgit in arces</p>
+<p class="c_v">Scythonias, gelidumque Polus se tollit ad axem.</p>
+<p class="c_v">Obliquus late Signorum flectitur Orbis</p>
+<p class="c_n">150</p><p class="vv">Trasversum, et longo circumspicit ordine Zonas</p>
+<p class="c_v">Quatuor, atque secat mediam, quae semper ab aestu</p>
+<p class="c_v">Fervet, et ardenti collustrat lumine Caelum.</p>
+<p class="c_v">Ergo inter medias quoniam latissimus Orbis</p>
+<p class="c_v">Signiferum decuit, quod clara, et maxima Signa</p>
+<p class="c_n">155</p><p class="vv">Verteret, incubuit magno per Sidera tractu,</p>
+<p class="c_v">Quae duodena sedent incurvo lucida Circo.</p>
+<p class="c_v">Primum Aries signum; sequitur quem Taurus acutis</p>
+<p class="c_v">Cornibus; hinc gemini Laedeia sidera fratres;</p>
+<p class="c_v">At Cancrum Herculei sequitur quoque forma Leonis;</p>
+<p class="c_n">160</p><p class="vv">Hunc Virgo; hanc iustae pendentia pondera Librae.</p>
+<p class="c_v">Scorpius hanc sequitur; post quem sua spicula Chiron</p>
+<p class="c_v">Tendit; at Aegoceros premit hunc quoque cornibus alte</p>
+<p class="c_v">Auratis, curva cui surgit Aquarius urna;</p>
+<p class="c_v">Ultima quem Pisces, caelestia signa, secuti.</p>
+<p class="c_n">165</p><p class="vv">Tempora Signorum numeramus ab Orbe supremo</p>
+<p class="c_v">Hybernum ad cyclum vertenti Sole; reverso</p>
+<p class="c_v">Inde etiam ad summas imis de partibus oras,</p>
+<p class="c_v">Cum semel a Cancro Capricornum Phoebus ad imum,</p>
+<p class="c_v">Et semel ad Cancrum Capricorno venit ab imo,</p>
+<p class="c_n">170</p><p class="vv">Aut etiam medios legit cum passibus Orbes,</p>
+<p class="c_v">Aequat ubi noctes Aries, aut Libra diebus,</p>
+<p class="c_v">Vel sursum Phaethon fugit, vel fronte deorsum.</p>
+<p class="c_v">Hinc atque inde sedent vasti miracula Mundi,</p>
+<p class="c_v">Quae Pater ex hominum specie caelestia fecit</p>
+<p class="c_n">175</p><p class="vv">Sidera, tum mutis etiam sua forma remansit;</p>
+<p class="c_v">Ut Corvo, et Lepori, Cygno, fulvoque Leoni.</p>
+<p class="c_v">Orbe prius fixas summo dicemus, et ortus</p>
+<p class="c_v">Atque obitus, magno faciunt quos Sidera Mundo.</p>
+<p class="c_v">Ac nobis qua nam vertex spectatur et Arctos,</p>
+<p class="c_n">180</p><p class="vv">Ordiri melius dextra de parte licebit:</p>
+<p class="c_v">Namque duae spatio spectantur verticis Ursae;</p>
+<p class="c_v">Fluminis instar enim circum interlabitur Anguis.</p>
+<p class="c_v">Magna supina caput parvae tegit ipsius Ursae;</p>
+<p class="c_v">Nam medium pedibus calcat fera parva Draconem,</p>
+<p class="c_n">185</p><p class="vv">Cuius in extrema latitat quoque maxima cauda,</p>
+<p class="c_v">Quo caput usque suum simul ipse retorserit Anguis.</p>
+<p class="c_v">Vertice magna tenet septem, sed in auribus ambas,</p>
+<p class="c_v">Unam humero stellam; duo sunt pede sidera in uno</p>
+<p class="c_v">Postremo; atque alio sub crure est una, cavoque</p>
+<p class="c_n">190</p><p class="vv">Una humero; geminae parva sunt denique cauda.</p>
+<p class="c_v">Parva pedum stellis paribus vestigia fixit;</p>
+<p class="c_v">Tres caudam supra; quarum quae proxima summo est,</p>
+<p class="c_v">Ipsa Polus, quoniam est immobilis ipsa, vocatur.</p>
+<p class="c_v">Anguis utroque sedent duo tempore sidera, bina</p>
+<p class="c_n">195</p><p class="vv">Sidera sunt oculis; mento stat sidus in imo:</p>
+<p class="c_v">Namque decem stellae reliquo sunt corpore toto.</p>
+<p class="c_v">Nec minus Arctophylax, carae custodia matris,</p>
+<p class="c_v">Ipse pedem dextrum aestivo super addidit Orbi.</p>
+<p class="c_v">Huic humeros, pectusque secat quoque Circus ab imo</p>
+<p class="c_n">200</p><p class="vv">Aegocero, summi tangit qui brachia Cancri.</p>
+<p class="c_v">Non cadit oceano citius quam Cancer, et ambo</p>
+<p class="c_v">Tyndaridae, ac magni pateat quam forma Leonis.</p>
+<p class="c_v">Quatuor hic laeva stellas gestare videtur;</p>
+<p class="c_v">Pectore tres dextro; laevo sed pectore solam;</p>
+<p class="c_n">205</p><p class="vv">Supra humerumque duae spectantur utrumque repostae;</p>
+<p class="c_v">Una caput supra est, cubitum subit altera dextrum.</p>
+<p class="c_v">Sidera quin etiam pedibus sunt bina duobus;</p>
+<p class="c_v">Nascendo curvas solet hic praecedere Chelas.</p>
+<p class="c_v">Inde novem numero Cressam fecere Coronam,</p>
+<p class="c_n">210</p><p class="vv">Arctophylax humero tangit quam forte sinistro.</p>
+<p class="c_v">Occidit haec Cancro, magnoque oriente Leone,</p>
+<p class="c_v">Nascitur, extulerit cum brachia Scorpius orta.</p>
+<p class="c_v">Inde tenet laeva pellem quae forte Leonis,</p>
+<p class="c_v">Quae genibus flexis magnam se extendit ad Arcton;</p>
+<p class="c_n">215</p><p class="vv">Herculis effigies, nati Iove, magna videtur,</p>
+<p class="c_v">Colla Draconis habens pedibus subiecta, Leonis</p>
+<p class="c_v">Exuvias laevaque tenet, dextraque gravatum</p>
+<p class="c_v">Robur, et infestae minitantia pondera clavae.</p>
+<p class="c_v">Hunc quidam credunt Cetea Lycaone cretum,</p>
+<p class="c_n">220</p><p class="vv">Qui dicunt illum natam spectare Megista.</p>
+<p class="c_v">Hic humero aestivum contingit denique cyclum;</p>
+<p class="c_v">Ipse pedum digitis Arcton prioribus arva</p>
+<p class="c_v">Terminat, atque alio calcat pede colla Draconis</p>
+<p class="c_v">Hesperidum sacros servantis ab Hercule ramos,</p>
+<p class="c_n">225</p><p class="vv">Dextra sub Aestiferum manus est extenta, sinistra</p>
+<p class="c_v">Erigonem tangit, stat vertice stella sed una,</p>
+<p class="c_v">Altera stat laevi media pro parte Leonis;</p>
+<p class="c_v">Sub cubito dextro micat altera; utraque papilla</p>
+<p class="c_v">Singula; sunt femori geminae, sunt poplite binae;</p>
+<p class="c_n">230</p><p class="vv">Altera crure micat, pede et altera maxima. Post hunc</p>
+<p class="c_v">Est Lyra, quae pulchra testudine spectat ad Arcton,</p>
+<p class="c_v">Inque Notum tendens vertit diversa cacumen.</p>
+<p class="c_v">Occidit haec, oritur cum iam pulcherrima Virgo.</p>
+<p class="c_v">Eripit haemonia Chiron cum tela pharetra</p>
+<p class="c_n">235</p><p class="vv">Inflexum ostendens terris mirantibus arcum;</p>
+<p class="c_v">Nascitur aethereas Caeli manifesta sub oras.</p>
+<p class="c_v">Terga super stellae fulgent cui grandia binae,</p>
+<p class="c_v">Atque utrumque latus geminas habet; exstat utroque</p>
+<p class="c_v">Stella humero; partes imas habet una; sub ipso</p>
+<p class="c_n">240</p><p class="vv">Vertice et una later. Superos quis crederet unquam</p>
+<p class="c_v">Mutorum varias aliquando habuisse figuras?</p>
+<p class="c_v">Flumineaque Iovem Cygni vestire figura</p>
+<p class="c_v">Quis dubitet, cupidi norit qui furta Tonantis?</p>
+<p class="c_v">Qualis olorisoni viridantia ad arva Caystri</p>
+<p class="c_n">245</p><p class="vv">Accolit herbosas piscoso flumine ripas;</p>
+<p class="c_v">Talis in aethereis Olor est pulcherrimus oris;</p>
+<p class="c_v">Ala tenet cuius magnam sublimiter Arcton,</p>
+<p class="c_v">Tenditur aestiferum sed et altera pene sub Orbem;</p>
+<p class="c_v">Flexigeni tangit pede sed vestigia summo;</p>
+<p class="c_n">250</p><p class="vv">Aestifer ipse secat reliquo de corpore rostrum;</p>
+<p class="c_v">Cauda caput Regis contingit denique Cephei.</p>
+<p class="c_v">Virgine cum pulsa, chelisque cadentibus, ipse</p>
+<p class="c_v">Labitur, atque caput terris immergit opacis;</p>
+<p class="c_v">Exoritur magni surgunt cum brachia Cancri.</p>
+<p class="c_n">255</p><p class="vv">Colla tenent unam, longae unam temnia caudae;</p>
+<p class="c_v">Quinque sinistra tenet spatiis ingentibus ala,</p>
+<p class="c_v">Altera quinque; caput solam tenet. Inde videtur</p>
+<p class="c_v">Cepheos effigies soceri tibi, maxime Perseu,</p>
+<p class="c_v">Arctoo inclusi summo cum vertice Circo,</p>
+<p class="c_n">260</p><p class="vv">Et pedibus; verum caput extulit orbe relicto.</p>
+<p class="c_v">Huic, humeros praeter cum vertice, protinus alto</p>
+<p class="c_v">Non cadit oceano pars ulla, sed Angue sub ipso,</p>
+<p class="c_v">Quem facit ipse caput vacuas cum tollit ad oras,</p>
+<p class="c_v">Brachia proiectis tenet in diversa lacertis;</p>
+<p class="c_n">265</p><p class="vv">A pede quin Ursae tantum distare minoris</p>
+<p class="c_v">Ipse videtur enim, quantum inter utrumque duorum</p>
+<p class="c_v">Ipsius esse pedum, terras caput omne subintrat,</p>
+<p class="c_v">Nascitur aethereas cum Scorpius acer ad oras;</p>
+<p class="c_v">Cum Chirone caput claro quoque reddit Olympo,</p>
+<p class="c_n">270</p><p class="vv">Sidera cui sacra monstrantur bina thiara,</p>
+<p class="c_v">In manibus duo sunt; duo sunt sub pectore dextro;</p>
+<p class="c_v">Cingula terna tenent; fulgent duo poplite laevo;</p>
+<p class="c_v">Bina pedes servant. Supra hunc stat regia coniunx</p>
+<p class="c_v">Cassiope inverso longe subnixa sedili.</p>
+<p class="c_n">275</p><p class="vv">Huic latus ut ternum est, designant sidera terna;</p>
+<p class="c_v">Huic regit Arctoi demum vestigia Circi</p>
+<p class="c_v">Summa pedum tardus, circum quem ducitur, Orbis;</p>
+<p class="c_v">Ventus at effigies aestivas tendit in oras.</p>
+<p class="c_v">Lacteus hanc mediam Circus secat; oceano se</p>
+<p class="c_n">280</p><p class="vv">Abluit, oceano cum Scorpius exit ab alto;</p>
+<p class="c_v">Nec minus Haemonias semper videt orta Sagittas.</p>
+<p class="c_v">Vertice stella micat; dextra stat clara papilla</p>
+<p class="c_v">Una, humerisque duae; lumbis est scilicet una;</p>
+<p class="c_v">In femine una etiam laevo; duo poplite summo</p>
+<p class="c_n">285</p><p class="vv">Sidera; stella pedis tenuit vestigia dextri.</p>
+<p class="c_v">Propter eam posita est miris quoque filia Signis</p>
+<p class="c_v">Andromede, alati supra caput alta mariti,</p>
+<p class="c_v">Iuncta caput nigrum ventri, quem praepes ad auras</p>
+<p class="c_v">Pegasus extendit Persaeis notus habenis.</p>
+<p class="c_n">290</p><p class="vv">Huic medium pectus secat Aestifer, atque sinistram</p>
+<p class="c_v">Forte manum; Pisci simul occidit; extulit autem</p>
+<p class="c_v">Piscibus os natis, et aperti vellere Phryxi.</p>
+<p class="c_v">Lucentem capiti stellam tenet; utraque bino</p>
+<p class="c_v">Stella humero; laeva protensa ostenditur una;</p>
+<p class="c_n">295</p><p class="vv">Sub cubito laevo micat altera; quatuor amplo</p>
+<p class="c_v">Pectore subter enim; cubito sedet altera dextro,</p>
+<p class="c_v">Inque manu femori coniuncta est una, genuque</p>
+<p class="c_v">Una; duaeque pedi dextro; pede sola sinistro;</p>
+<p class="c_v">Crure duae, summo sedet haec, sedet altera talo.</p>
+<p class="c_n">300</p><p class="vv">Nec te transierim, Graium fortissime Perseu,</p>
+<p class="c_v">Magne virum victor, cuius secat Aestifer Orbis</p>
+<p class="c_v">Crus laevum, atque humerum magna cum parte sinistrum.</p>
+<p class="c_v">Ipse manu dextra Arctoum contingere Cyclum</p>
+<p class="c_v">Visus es, Aurigaeque caput pede supprimis uno</p>
+<p class="c_n">305</p><p class="vv">Tu dextro, atque cadis tollit cum spicula Chiron,</p>
+<p class="c_v">Et Caper auratam signavit cornibus Aethram.</p>
+<p class="c_v">Nasceris hic Aries cum surgit, et aurea tollit</p>
+<p class="c_v">Cornua Taurus; habes humero sed sidus utroque;</p>
+<p class="c_v">Sidus habes dextra, curvam quae substinet Harpen.</p>
+<p class="c_n">310</p><p class="vv">Sidus habes laeva, quae Gorgonis ora Medusae</p>
+<p class="c_v">Suggerit, at stellis circumdata quatuor ora;</p>
+<p class="c_v">Altera ventre micat; lumbo altera, et altera dextro</p>
+<p class="c_v">Pro femore; una genu, sura altera; stat pede sola;</p>
+<p class="c_v">Altera sura duas tenuit; tenet una sinistrum</p>
+<p class="c_n">315</p><p class="vv">Stella femur. Tali Danacius ordine Perseus</p>
+<p class="c_v">Cernitur, Heniochus verso quem nomine dicunt.</p>
+<p class="c_v">Aurigam Olenium pecus alto in vertice gestat,</p>
+<p class="c_v">Fortis Erichthonius celeri qui iungere curru</p>
+<p class="c_v">Quatuor ausus equos primus, qui torquet habenas</p>
+<p class="c_n">320</p><p class="vv">Nunc etiam, victorque rotis certamina iactat.</p>
+<p class="c_v">Vertice stella micat, sub qua caput omne Capellae</p>
+<p class="c_v">Dicitur, atque humero stella est aequalis utroque.</p>
+<p class="c_v">Ipse tenet laeva geminos sublimiter Haedos;</p>
+<p class="c_v">Aetherias tardi qui dum venere sub auras,</p>
+<p class="c_n">325</p><p class="vv">Tum cadit ad terras magnai flumen aquai.</p>
+<p class="c_v">Stella tenet laevam; summo micat una lacerto;</p>
+<p class="c_v">Singula sub cubito stella est dextroque sinistroque;</p>
+<p class="c_v">Aestivum ipse suo contingit poplite Circum.</p>
+<p class="c_v">Pes dexter Tauri cornu coniungitur uno</p>
+<p class="c_n">330</p><p class="vv">Sidere; sed totus Persaeis denique plantis</p>
+<p class="c_v">Subditus, ad magnam quoniam caput exerit Arcton.</p>
+<p class="c_v">Occidit haemonias caelo ducente Sagittas,</p>
+<p class="c_v">Cum semel hiberni redierunt cornua Capri.</p>
+<p class="c_v">Nec procul Anguitenens cinctus Serpente retorto;</p>
+<p class="c_n">335</p><p class="vv">Amphitryoniaden alii dixere retortum</p>
+<p class="c_v">Serpentem ad ripas mactantem fortiter amnis</p>
+<p class="c_v">Lydorum Sagaris; quin Carbonanta Getarum</p>
+<p class="c_v">Qui memorent etiam multi regem esse fuerunt.</p>
+<p class="c_v">Illum flava Ceres claro suffixit Olympo,</p>
+<p class="c_n">340</p><p class="vv">Quod male Triptolemum dulcem statuisset alumnum</p>
+<p class="c_v">Perdere, ut anguineum conetur stringere guttur,</p>
+<p class="c_v">Colla tenens dextra pressa cervice, videres</p>
+<p class="c_v">Ut caudam, laeva, dextra surgente, cadenti.</p>
+<p class="c_v">Vertice sidus inest, humero sed utroque duarum</p>
+<p class="c_n">345</p><p class="vv">Lumina stellarum; laevo sed terna lacerto;</p>
+<p class="c_v">Ilibus at geminae; genibus sat bina duobus;</p>
+<p class="c_v">At dextra una micat; media pulcherrima sura;</p>
+<p class="c_v">Una pede in dextro micat hinc, micat altera laevo.</p>
+<p class="c_v">Aestifer huic humeros toto de corpore vellit,</p>
+<p class="c_n">350</p><p class="vv">Cumque genu, noctes aequat qui forte diebus,</p>
+<p class="c_v">Limite composito finitur ab Orbe; sinistro</p>
+<p class="c_v">Proiecto pede curvus; et est testudinis Orbi</p>
+<p class="c_v">Innixus, dextra tangit quam Scorpius una</p>
+<p class="c_v">Subiectus planta; Cressae stant ora Coronae</p>
+<p class="c_n">355</p><p class="vv">Proxima squamosi Serpentis; at ima repellit</p>
+<p class="c_v">Cauda Aquilae caudam; terris se condit opacis,</p>
+<p class="c_v">Cum superas veniunt Ledeia sidera ad oras;</p>
+<p class="c_v">Cum procul oceani, cum cerula Tethyos unda</p>
+<p class="c_v">Abluit Herculeum media plus parte Leonem.</p>
+<p class="c_n">360</p><p class="vv">Exoritur, surgit cum Scorpius, atque sagittis</p>
+<p class="c_v">Ipse refert plenam Chiron cum forte pharetram.</p>
+<p class="c_v">Quatuor in cauda Serpentis sidera dicunt;</p>
+<p class="c_v">Sunt duo pro medio, sunt sex prope sidera terga,</p>
+<p class="c_v">Sunt sex in media fulgent quae lucida spira.</p>
+<p class="c_n">365</p><p class="vv">Gutture terna subest; stella est in vertice bina.</p>
+<p class="c_v">Inter et Aequantem noctes hinc forte diebus,</p>
+<p class="c_v">Aestivumque Orbem positam dixere Sagittam.</p>
+<p class="c_v">Herculis e numero fuit haec, quae plurima tergo</p>
+<p class="c_v">Tela ferebat Hylas, magnos dura magna labores</p>
+<p class="c_n">370</p><p class="vv">Monstra feraeque dabant olli, dum pectora Nesi,</p>
+<p class="c_v">Dum sequitur magni fugientia terga Leonis.</p>
+<p class="c_v">Hanc sub signo Aquilae positam voluere, sed Orbis</p>
+<p class="c_v">Hanc secat ille, Polis qui stans admotus utrisque</p>
+<p class="c_v">Aegocerum, oppositique petit cava brachia Cancri.</p>
+<p class="c_n">375</p><p class="vv">Cuspis ad Aequipedum regionem versa, sed una</p>
+<p class="c_v">Anguitenente subest pars prima; haec quatuor astra</p>
+<p class="c_v">Continet, ut primum prima sit parte locatum;</p>
+<p class="c_v">Unum cuspis habet; media duo fixa sub hasta.</p>
+<p class="c_v">Occidit ut caelum flammis Astrea petivit;</p>
+<p class="c_n">380</p><p class="vv">Nascitur, oceano cum Scorpius exit ab alto.</p>
+<p class="c_v">Ast Aquila Aequantem noctes non funditus alam</p>
+<p class="c_v">Extra Orbem dextram, non longe a vertice laevam</p>
+<p class="c_v">Anguitenentis habet; reliquo de corpore rostrum</p>
+<p class="c_v">Ille secat, Cancrum Capro qui tangit ab hirto.</p>
+<p class="c_n">385</p><p class="vv">Lacteus hanc mediam simul ipse excidit et Orbis.</p>
+<p class="c_v">Occidit illa novo iam tum nascente Leone;</p>
+<p class="c_v">Exoritur claras Capro veniente sub oras.</p>
+<p class="c_v">Hanc ego crediderim trepido portasse Tonanti</p>
+<p class="c_v">Fulmina, Phlegraeae fremerent cum praelia pugnae.</p>
+<p class="c_n">390</p><p class="vv">Vertice stella micat; mediis sunt bina sub alis</p>
+<p class="c_v">Sidera; stella super mediae stat margine caudae.</p>
+<p class="c_v">Nec procul incurvum fas est Delphina videre</p>
+<p class="c_v">Scilicet, adverso longae qui verbere caudae</p>
+<p class="c_v">Aequantem noctes contingit forte diebus,</p>
+<p class="c_n">395</p><p class="vv">Pegaseoque iacet capiti vicinus ut ortus</p>
+<p class="c_v">Extremo liquidas viso Chirone sub oras.</p>
+<p class="c_v">Occidit, exorta est toto cum vertice Virgo.</p>
+<p class="c_v">Vertice bina micant; supra caput altera bina;</p>
+<p class="c_v">Bina tenent caudam; duo sunt in pectore; tergo</p>
+<p class="c_n">400</p><p class="vv">Sidus inest summo. Sed Equus quum spectat ad Arcton</p>
+<p class="c_v">Aestifero pedibus Circo connixus, et imo</p>
+<p class="c_v">Ore caput magni tangit Delphinis; at Urnam</p>
+<p class="c_v">Qui tenet, huius habet dextram cervice volutam.</p>
+<p class="c_v">Naribus huic duo sunt; duo sunt in vertice, ut unum</p>
+<p class="c_n">405</p><p class="vv">Fronte sit in media; sit aure sed altera stella;</p>
+<p class="c_v">Unam mala tenet dextra, et cervice comanti</p>
+<p class="c_v">Quinque superque alia est; genibus stat singula utrisque;</p>
+<p class="c_v">Ante genu sola est; inter micat altera crura;</p>
+<p class="c_v">Ventre sub, Andromedes una est quae stella vocatur</p>
+<p class="c_n">410</p><p class="vv">Occidit ille uno cum Pisce, super iacet illi</p>
+<p class="c_v">Qui primus; pluvia cum surgit Aquarius urna</p>
+<p class="c_v">Nascitur, atque nives Caelo defundit aperto.</p>
+<p class="c_v">Protinus hinc laevos cursum flectamus in Orbes.</p>
+<p class="c_v">Pistris Delphinum caudas commissa ferino</p>
+<p class="c_n">415</p><p class="vv">Pectore, celsa caput rabido levat ore lupino;</p>
+<p class="c_v">Hiberno secta est caudae cui denique Circo</p>
+<p class="c_v">Pars media, Eoas rostrum quae vertit ad oras,</p>
+<p class="c_v">Extremumque pedem Phryxei velleris urget.</p>
+<p class="c_v">Ipse caput monstro refluenti proluit unda</p>
+<p class="c_n">420</p><p class="vv">Eridanus; natoque cadit fera bellua Cancro,</p>
+<p class="c_v">Nec minus oceano se se condente Leone.</p>
+<p class="c_v">Cum Tauro et Geminis surgentibus orta videtur.</p>
+<p class="c_v">Ventre micant numero sex sidera; tum duo summa</p>
+<p class="c_v">Sunt cauda; longae sunt quinque volumine caudae</p>
+<p class="c_n">425</p><p class="vv">Usque sub incurvum ventrem deducta. Fluentum</p>
+<p class="c_v">Eridani undosum latis diffunditur oris,</p>
+<p class="c_v">A pede qui laevo veniens Orionis ipsam</p>
+<p class="c_v">Pistrin adit, Leporisque pedes amplectitur, Austrum</p>
+<p class="c_v">Pressus ad emotum, Circus quem dividit illo</p>
+<p class="c_n">430</p><p class="vv">E spatio, grandi quo iungitur ordine Ceto.</p>
+<p class="c_v">Occidit, exoritur cum Scorpius atque Sagittas</p>
+<p class="c_v">Qui gerit haemonias; oritur, cum brachia Cancer</p>
+<p class="c_v">Extulit, et Gemini venere sub aethera fratres.</p>
+<p class="c_v">Tres stellas primoque volumine, tresque secundo,</p>
+<p class="c_n">435</p><p class="vv">Septem habet extremo longae qui flectitur undae</p>
+<p class="c_v">Fluxus, et ingenti designat flumine Caelum.</p>
+<p class="c_v">At Lepus ipse pedem sub laevum Orionis Orbem</p>
+<p class="c_v">Per gelidum fugiens, ab eo divisus, in ima</p>
+<p class="c_v">Parte sui multa stans corporis, occidit orto</p>
+<p class="c_n">440</p><p class="vv">Iam Chirone; venit caelo veniente Leone;</p>
+<p class="c_v">Auritumque caput stellis insigne duabus</p>
+<p class="c_v">Gestat, et in vario geminas quoque corpore stellas;</p>
+<p class="c_v">Singula sunt pedibus fulgentia sidera primis.</p>
+<p class="c_v">Oriona secat noctes aequare diebus</p>
+<p class="c_n">445</p><p class="vv">Qui solet, a zona, reliquoque a corpore toto.</p>
+<p class="c_v">Dextra tenet clavam cui Tauro dura minantem.</p>
+<p class="c_v">Vertice terna micant huic sidera clara, sub ipsis</p>
+<p class="c_v">Auribus et totidem; cubito sed languida dextro</p>
+<p class="c_v">Una, manuque alia est; tres sunt in margine zonae;</p>
+<p class="c_n">450</p><p class="vv">Poplitibus geminis duo sunt et sidera clara.</p>
+<p class="c_v">In pedibus duo sunt, sed languida; sunt tria clava.</p>
+<p class="c_v">At Canis occasus spectat quum vertice Mundi,</p>
+<p class="c_v">Dum Leporem sequitur fugientem, clauditur Orbe</p>
+<p class="c_v">Hiberno, atque pedem dextrum sub Orionis urget</p>
+<p class="c_n">455</p><p class="vv">Vertice; ad Aequantem noctes caput extulit orbem.</p>
+<p class="c_v">Occidit exorto Chirone, exsurgit et idem</p>
+<p class="c_v">Cum Cancro; emissae protendit imagine linguae</p>
+<p class="c_v">Stellam unam, ipsa Canis quae dicitur; altera summo</p>
+<p class="c_v">Stat capiti, Graio dicunt quam Sirion acrem</p>
+<p class="c_n">460</p><p class="vv">Nomine, quae morbos molitur; utraque sub aure</p>
+<p class="c_v">Una parum lucens; pede stat sed terna priori;</p>
+<p class="c_v">Pectore sunt geminae, atque humero tres denique laevo.</p>
+<p class="c_v">Ilibus una sedet, cauda sunt quatuor ipsa;</p>
+<p class="c_v">Postremis pedibus duo sunt. Sed Lacteus Orbis</p>
+<p class="c_n">465</p><p class="vv">Te, Procyon, pedibus fixis tenet; arripis autem</p>
+<p class="c_v">Aequantem noctes Mundi conversus ad oras,</p>
+<p class="c_v">Occasum spectas, Geminos Cancrumque quod inter</p>
+<p class="c_v">Diceris; ante Canem magnum quod nasceris, inde</p>
+<p class="c_v">Nomen habes Procyon; Capricorno oriente fugaris;</p>
+<p class="c_n">470</p><p class="vv">Exoreris magno caelum scandente Leone,</p>
+<p class="c_v">Tresque tuae faciunt stellae nova signa figurae.</p>
+<p class="c_v">Thessala nec procul hinc hibernum Puppis ad Orbem,</p>
+<p class="c_v">Ipsa Canis caudam tangens maioris iniquam,</p>
+<p class="c_v">Ima Polum cuius nostra tellure sepultum</p>
+<p class="c_n">475</p><p class="vv">Pars habet; occiderit, nascetur ubi ille Sagittas</p>
+<p class="c_v">Qui gerit haemonias, Capricornus et ipse renasci</p>
+<p class="c_v">Ceperit; at virgo primum cum candida caelo</p>
+<p class="c_v">Venerit, haec notas spectabit proxima Chelas</p>
+<p class="c_v">Quinque gubernacio lucent huic sidera primo;</p>
+<p class="c_n">480</p><p class="vv">Quatuor astra Ratis clavum tenuere secundum;</p>
+<p class="c_v">Quinque sub incurvae numero iacuere Carinae;</p>
+<p class="c_v">Quinque sub haec vitreo ceciderunt lucida ponto;</p>
+<p class="c_v">Quatuor ad malum; latitat pars una, nec Argo</p>
+<p class="c_v">Tota patet nobis, nimium quod vergit in Austrum</p>
+<p class="c_n">485</p><p class="vv">Canobos e medio se aplustre refundit, ut aiunt</p>
+<p class="c_v">Qui Rhodon, et madidi penetrarunt alva Canopi.</p>
+<p class="c_v">Nititur austrino pedibus Centaurus et Orbi,</p>
+<p class="c_v">Hibernumque humeris adtollit in aethera Circum,</p>
+<p class="c_v">Et caput Herculeae iungit sublimiter Hydrae.</p>
+<p class="c_n">490</p><p class="vv">Ipse tenens dextra Leporem decurrit; hic ore</p>
+<p class="c_v">Et pedibus primis pendet porrectus ad Orbem</p>
+<p class="c_v">Hibernum, inter eum, atque Austrinum postus; et ipsi</p>
+<p class="c_v">Semifero demit de corpore cura relicto</p>
+<p class="c_v">Lacteus, aethereum caeli qui amplectitur orbem.</p>
+<p class="c_n">495</p><p class="vv">Conditur oceano nata cum Piscibus Urna;</p>
+<p class="c_v">Scorpius haemonias urget cum forte Sagittas</p>
+<p class="c_v">Nascitur; hic summo tria vertice sidera gestat,</p>
+<p class="c_v">Non obscura quidem; sed nec clarissima signa;</p>
+<p class="c_v">Singula cuique humero stat clara, atque una sinistro</p>
+<p class="c_n">500</p><p class="vv">Fixa humero; illa manu; sub pectore lucet equino</p>
+<p class="c_v">Illa; sub ingenti sunt pectore quatuor ipsi</p>
+<p class="c_v">Lucida; ventre duo formae spectantur equinae;</p>
+<p class="c_v">Tres cauda, lumboque alia est, genibusque supremis</p>
+<p class="c_v">Singula, poplitibusque duae; sub pectore sola est.</p>
+<p class="c_n">505</p><p class="vv">At Lepus ut captus magnis cadit hostia Divis,</p>
+<p class="c_v">Parte pedum extrema stellam tenet; at duo cauda</p>
+<p class="c_v">Sidera sunt summa, capiti tria, pectore stella est;</p>
+<p class="c_v">At pedibus primis una est quoque clara, sub ipso</p>
+<p class="c_v">Pectore et una latet; sic Hostia. At illius inter</p>
+<p class="c_n">510</p><p class="vv">Et caput et Scorpi caudam iacet Ara prope Orbem</p>
+<p class="c_v">Austrinum; ipsa cadit, Aries cum cornua tollit</p>
+<p class="c_v">Aurea; nascenti Capricorno nascitur Ara.</p>
+<p class="c_v">Huic duo pro summo stant astra cacumine celsa;</p>
+<p class="c_v">Huic duo praeterea spatio dicuntur in imo.</p>
+<p class="c_n">515</p><p class="vv">Hydra trium spatium signorum intercipit, alti</p>
+<p class="c_v">Summa locum Cancri, post Virginis, ante Leonis;</p>
+<p class="c_v">Inter et Aequantem noctes est ipsa diebus,</p>
+<p class="c_v">Hibernumque simul longo cum corpore Circum,</p>
+<p class="c_v">Ad Procyna usque caput tendens; sed quarta sub ipsum</p>
+<p class="c_n">520</p><p class="vv">Aestivum, Aequantemque dies pars ducta suprema.</p>
+<p class="c_v">Cauda caput magni Centauri protegit, atrum</p>
+<p class="c_v">Substineat tergo ut Corvum Cratera moventem.</p>
+<p class="c_v">Virginis ille inter ferventiaque ora Leonis</p>
+<p class="c_v">Exstat, et Hydrai capiti se inclinat; at illa</p>
+<p class="c_n">525</p><p class="vv">Occidit obliqua cum surgit Aquarius urna,</p>
+<p class="c_v">Et nitidi Pisces primum tenuistis Olympum.</p>
+<p class="c_v">Tres capiti stellae, primoque volumine ab ipso</p>
+<p class="c_v">Vertice quinque micant; tres curvatura secunda,</p>
+<p class="c_v">Quatuor at terna, atque duas pars quarta; sed ipsa</p>
+<p class="c_n">530</p><p class="vv">Cauda tenet quasdam minimo fulgore micantes.</p>
+<p class="c_v">Gutture Corvus habet stellam, pennasque duabus</p>
+<p class="c_v">Insignitus, habet caudam prope bina remissam.</p>
+<p class="c_v">Ipse caput Crater magni qui prospicit Anguis</p>
+<p class="c_v">Bina gerit labris; geminas obtusa sub ansas</p>
+<p class="c_n">535</p><p class="vv">Sunt duo; ventre duo; duo sunt pulcherrima fundo.</p>
+<p class="c_v">At Notium graio dicunt quem nomine Piscem,</p>
+<p class="c_v">Dicimus Austrinum patrio sermone loquentes.</p>
+<p class="c_v">Hibernum, Austrinumque orbes spectare sub oras</p>
+<p class="c_v">Eoas media regione, interque videtur</p>
+<p class="c_n">540</p><p class="vv">Aegoceron, curvamque tenet qui fortiter Urnam.</p>
+<p class="c_v">Effusas hic potat aquas, quibus Urna cadenti</p>
+<p class="c_v">Ora ferit fluxu Pisci; cadit ipse, renasci</p>
+<p class="c_v">Incipit ut Cancer; sed Piscibus eminet ortis.</p>
+<p class="c_v">A capite ad caudam bis sex sunt sidera Pisci.</p>
+<p class="c_n">545</p><p class="vv">Protinus aethereum ducunt quae sidera Solem</p>
+<p class="c_v">Exsequar, Aequanti noctes namque orbe diebus</p>
+<p class="c_v">Primum Aries signum est eoas versus in oras,</p>
+<p class="c_v">Ora caputque novum magni quod magna Trigoni</p>
+<p class="c_v">Forma tegit; pedibus Pistrin contingit; at olli</p>
+<p class="c_n">550</p><p class="vv">Vertice stella micat; tres cornibus; efficit autem</p>
+<p class="c_v">Terna locos, magni causa est quae stella Trigoni,</p>
+<p class="c_v">Trinacriae in morem, magnae vel imagine Terrae;</p>
+<p class="c_v">Tres cervice micant; pede stella priore, sed una</p>
+<p class="c_v">Cum tribus ac totidem lumbis sunt sidera clara;</p>
+<p class="c_n">555</p><p class="vv">Ventre sub una iacet, pede stat quoque sola supremo.</p>
+<p class="c_v">Taurus at Europae vector dehinc candidus ortum</p>
+<p class="c_v">Signorum spectans, media qui parte locatur,</p>
+<p class="c_v">Cernuus ad terras flectit caput; huic secat Orbis</p>
+<p class="c_v">Ille genu, noctes aequat qui forte diebus;</p>
+<p class="c_n">560</p><p class="vv">Quippe pedem Aurigae cornu petit ipse sinistro.</p>
+<p class="c_v">Inter et ora huius, caudam vectoris et Helles</p>
+<p class="c_v">Et Phryxi, septem sunt sidera; Pleiadas aiunt</p>
+<p class="c_v">Graiugenae; et summis duo sunt in cornibus, unum</p>
+<p class="c_v">Clarius inde laevo; duo sunt pro lumine bina;</p>
+<p class="c_n">565</p><p class="vv">Fronte tenet solum; duo sunt ubi cornua nasci</p>
+<p class="c_v">Incipiunt; Hyadas Graii dixere, quod, ortis</p>
+<p class="c_v">His, cadit ad terras magnai flumen aquai.</p>
+<p class="c_v">Inde genu laevo stellam tenet, altera dextro</p>
+<p class="c_v">Subsidet, atque pedis gerit ungula dura bisulci</p>
+<p class="c_n">570</p><p class="vv">Unam etiam; atque imo tres pectore; pectore in alto</p>
+<p class="c_v">Una aliis longe fulgentior. Inde Gemelli</p>
+<p class="c_v">Tyndaridae Aurigae dextra de parte locati</p>
+<p class="c_v">Oriona super, quum sit tamen altus Orion</p>
+<p class="c_v">Hos inter Taurumque, secat capita orbis eorum</p>
+<p class="c_n">575</p><p class="vv">Perficit Aestatem qui cum Phaetonte recepto;</p>
+<p class="c_v">A pedibus superas redeunt hi namque sub oras.</p>
+<p class="c_v">Proximus est Cancro qui frater, habere videtur</p>
+<p class="c_v">Vertice sidus enim geminis duo sidera in armis;</p>
+<p class="c_v">Sub dextro sola est cubito, geminaeque duobus</p>
+<p class="c_n">580</p><p class="vv">Poplitibus stellae; pedibus sunt bina duobus.</p>
+<p class="c_v">Alter item capiti stellam tenet; exstat utroque</p>
+<p class="c_v">Singula stella humero; stella est in poplite dextro;</p>
+<p class="c_v">Singula utraque manu; stella est in poplite laevo;</p>
+<p class="c_v">Singula cuique pedi, atque pedem sub stella sinistrum.</p>
+<p class="c_n">585</p><p class="vv">Aestivus Cancrum medium secat ipse Leonis</p>
+<p class="c_v">Adspectans ortus, paulum capiti imminet Anguis,</p>
+<p class="c_v">Convexaque tenet testudine sidera bina,</p>
+<p class="c_v">Quae tardos, Vates Graii, dixistis onagros.</p>
+<p class="c_v">In pedibus dextris non lucida singula multum;</p>
+<p class="c_n">590</p><p class="vv">At laevo duo sunt primo pede luce minora;</p>
+<p class="c_v">Sunt pede nec multum fulgentia bina secundo;</p>
+<p class="c_v">Tertius ast unam pes suggerit; ultima quarto</p>
+<p class="c_v">Stella pede est; unam primo tenet ore cadentem,</p>
+<p class="c_v">Chela sinistra duas, tres dextera chela minores.</p>
+<p class="c_n">595</p><p class="vv">Spectat ad occasum violenti forma Leonis,</p>
+<p class="c_v">Et super herculeae corpus protenditur Hydrae.</p>
+<p class="c_v">Aestifer hunc medium Circus secat, ordine ducto</p>
+<p class="c_v">A capite ad medium, Cancer qua tenditur, orbi</p>
+<p class="c_v">Ipse pedes primos submittens; occidit idem</p>
+<p class="c_n">600</p><p class="vv">A capite atque oritur; ternae stant vertice stellae,</p>
+<p class="c_v">At cervice duae; sola est in pectore; cauda</p>
+<p class="c_v">Una ima; mediaque alia est; in ventre sed una est.</p>
+<p class="c_v">Ventre sub una iacet; geminae sub pectore stellae;</p>
+<p class="c_v">Una priore pede est laevo; stat poplite laevo</p>
+<p class="c_n">605</p><p class="vv">Una, duaeque humero; nate stella infigitur una.</p>
+<p class="c_v">Una pede extremo in dextro, stat et una sinistro,</p>
+<p class="c_v">Una genu extremo: magnique haec forma Leonis.</p>
+<p class="c_v">Protinus Erigone sequitur pulcherrima Virgo.</p>
+<p class="c_v">Ipsa pedes infra magni portenta Bootae</p>
+<p class="c_n">610</p><p class="vv">Vertice postremam partem ferit alta Leonis;</p>
+<p class="c_v">Aestiferum dextra contingit denique Circum.</p>
+<p class="c_v">Corporis inferior pars imae desuper Hydrae</p>
+<p class="c_v">Imminet, atque caput terris immergit opacis,</p>
+<p class="c_v">Caetera membra cadant quam funditus; huic caput ingens</p>
+<p class="c_n">615</p><p class="vv">Stella tegit parva, atque humero super altera laevo;</p>
+<p class="c_v">Una alio; geminis binae stant Virginis alis;</p>
+<p class="c_v">Singula utraque manu; sex veste micantia; plantis</p>
+<p class="c_v">Sidera bina cavis: tali est Astraea figura.</p>
+<p class="c_v">Hanc Canis ad patrium perduxit fida cadaver,</p>
+<p class="c_n">620</p><p class="vv">Quod Rhyphaea manus terra occultarat opaca.</p>
+<p class="c_v">Unde Canem Icarium quidam dixere putantes</p>
+<p class="c_v">Hunc ipsum caelo patrem statuisse Lyaeum.</p>
+<p class="c_v">Quae simul ac dira conspexit caede Parentem</p>
+<p class="c_v">Confectum, fuerat quae desuper arbore ab alta</p>
+<p class="c_n">625</p><p class="vv">Multa precata Deos, curas testatur inanes</p>
+<p class="c_v">Illorum, ac turpi defregit guttura nodo.</p>
+<p class="c_v">Virginibus magni dehinc Cecropis urbe creatus</p>
+<p class="c_v">Mos erat aetherias corpus librare sub auras,</p>
+<p class="c_v">Virginis ut magnum tenuarent sacra dolorem,</p>
+<p class="c_n">630</p><p class="vv">Annuaque aestivi portarent frigora venti.</p>
+<p class="c_v">Scorpius Aequanti noctes super Orbe diebus</p>
+<p class="c_v">Protendit geminas, dicunt quae brachia, chelas,</p>
+<p class="c_v">Subditus Anguiferi pedibus, postremaque tangit</p>
+<p class="c_v">Hibernum cauda e longo nova corpore Circum.</p>
+<p class="c_n">635</p><p class="vv">Hostia nec procul hinc quam fert Centaurus; obitque</p>
+<p class="c_v">In caput; exoritur chelis erectus ab ipsis.</p>
+<p class="c_v">Bina tenent chelae duplicata sidera stella;</p>
+<p class="c_v">Fronte ter et ternas; sunt quoque in ventre; sed ipsa</p>
+<p class="c_v">Sunt totidem cauda; cauda duo sidera summa.</p>
+<p class="c_n">640</p><p class="vv">Excipit hic chelis mediam aequo examine Libram.</p>
+<p class="c_v">At Chiron certo contendit spicula cornu</p>
+<p class="c_v">Versus in occasum, veluti qui mittere tela</p>
+<p class="c_v">Incipit; hibernoque tenet sua corpora Circo,</p>
+<p class="c_v">A pedibus humeros proiectus ad usque latentes</p>
+<p class="c_n">645</p><p class="vv">Intra Orbem hybernum, caput extra hunc extulit Orbem.</p>
+<p class="c_v">Lacteus huic arcum medium secat Orbis; at illi est</p>
+<p class="c_v">Ante pedes magnae Gortynia forma Coronae.</p>
+<p class="c_v">Occidit hic praeceps; duo sunt in vertice summo</p>
+<p class="c_v">Sidera; bina micant curvis in flexibus arcus;</p>
+<p class="c_n">650</p><p class="vv">Stella micat, summa fixa est quae forte Sagitta;</p>
+<p class="c_v">Una manet cubito in dextro, laevoque priori</p>
+<p class="c_v">Una, duaeque humeris; una est in pectore; at una</p>
+<p class="c_v">Fixa pede est, alia atque alia est in poplite; at illa</p>
+<p class="c_v">Fixa genu, haec cauda. Capricornus ad ora voluti</p>
+<p class="c_n">655</p><p class="vv">Aeternum Mundi spectans, ac fixus in ipso</p>
+<p class="c_v">Signifero; hybernus caudaque et corpore toto</p>
+<p class="c_v">Hunc secat Orbis; et est suppostus, Aquarie, laevae</p>
+<p class="c_v">Forte tuae, ac stellam simis fert naribus unam.</p>
+<p class="c_v">Sub cervice una est, duo sunt in pectore clara</p>
+<p class="c_n">660</p><p class="vv">Sidera; stella pedi est primo; micat aurea primo</p>
+<p class="c_v">Una alio; inque humeris sunt quinque; in ventre duobus</p>
+<p class="c_v">Addita quinque; duo sunt ipsa lucida cauda.</p>
+<p class="c_v">Talis et Aegoceros. Sequitur sed Aquarius urnam</p>
+<p class="c_v">Qui tenet invertam, phrygia Iovis ales ab Ida</p>
+<p class="c_n">665</p><p class="vv">Quem tulit; ipse pedes hiberno innititur Orbi.</p>
+<p class="c_v">Porrigit hic laevam, Capricorno quae tenet unum</p>
+<p class="c_v">Sidus, Equi tergum contingit dextra Persei</p>
+<p class="c_v">Atque iubam; hic ortus spectans resupinus inani</p>
+<p class="c_v">Corpore; fluxus aquae Piscis ferit unius ora.</p>
+<p class="c_n">670</p><p class="vv">Occidit a capite, atque oritur quum caetera surgant</p>
+<p class="c_v">Membra quidem citius; duo sunt obtusa comanti</p>
+<p class="c_v">Vertice; magna humeris duo sunt, unumque sinistro</p>
+<p class="c_v">Sidus inest cubito; duo sunt in utraque papilla,</p>
+<p class="c_v">Unum lumbus habet; genibus spectantur utrisque</p>
+<p class="c_n">675</p><p class="vv">Singula, sed dextro solum sub crure videtur,</p>
+<p class="c_v">In pedibusque duo longe spectantur utrisque;</p>
+<p class="c_v">Sex Urnam atque decem cingunt a parte sinistra</p>
+<p class="c_v">Et fundo. Hinc Pisces spectantur ut ultima Mundi</p>
+<p class="c_v">Sidera; quorum uni nomen regione propinqua</p>
+<p class="c_n">680</p><p class="vv">Austrino est; alter Boreae de parte Boraeus</p>
+<p class="c_v">Dicitur; Aequantem noctes, Aestivaque signa</p>
+<p class="c_v">Inter, et Andromedes sub magnum forte lacertum</p>
+<p class="c_v">Tenditur, et longo perspectat corpore Mundum,</p>
+<p class="c_v">Parrhasiasque iacet longum porrectus ad Ursas.</p>
+<p class="c_n">685</p><p class="vv">Alter in extremo qui fert animalia Circo</p>
+<p class="c_v">Signifero duodena iacet, sub equina volutus</p>
+<p class="c_v">Terga humerosque manens, nec longe Aequante diebus</p>
+<p class="c_v">A Circo est noctes; occasum spectat ad ipsum.</p>
+<p class="c_v">A pede Phryxeae pecudis sunt sidera multa</p>
+<p class="c_n">690</p><p class="vv">Quae veniunt ad eos, et circum terga volutant</p>
+<p class="c_v">Squamea, et auratis innectunt corpora signis.</p>
+<p class="c_v">Coniunctura iugat Pisces quae forte, sub Arcton</p>
+<p class="c_v">Spectat, et haec ternas stellas habet; altera pars tres;</p>
+<p class="c_v">Tres ortum versus; iunctura tres quoque in ipsa;</p>
+<p class="c_n">695</p><p class="vv">Caelestem veteres Nodum dixere Poetae,</p>
+<p class="c_v">Ariete de summo quae venit ducta; nec ipsis</p>
+<p class="c_v">Piscibus haec sola est. Mesembrinos ille vocatur</p>
+<p class="c_v">Qui locus est stellis, numero quas dicere non est.</p>
+<p class="c_v">Hic locus Orbis is est, tangit quem Circulus, aequat</p>
+<p class="c_n">700</p><p class="vv">Qui noctes, iunctu cyclorum Nodus, et idem</p>
+<p class="c_v">Caelestum nexus. Satis haec dixisse rotanti</p>
+<p class="c_v">Orbe super magno, miris qui sidera signis</p>
+<p class="c_v">Nexa tenet cursu semper volventis Olympi.</p>
+<p class="blank">&nbsp;</p>
+<p class="blank">&nbsp;</p>
+<br /> 
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+
+
+
+<div align="center" id="footer">
+<div style="max-width:1142px;" align="left">
+<div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unive.it" target="_blank"><img src="/poetiditalia/public/img/unive.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br/>Ca&rsquo; Foscari <br/>Venezia</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.unipd.it" target="_blank"><img src="/poetiditalia/public/img/unipd.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Padova</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.units.it" target="_blank"><img src="/poetiditalia/public/img/units.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Trieste</p>
+</td></tr></table></div><div class="footer footerUno" style="width:220px;margin-bottom:30px;padding-top:0px">
+<table class="pedice"><tr><td><a href="http://www.univr.it" target="_blank"><img src="/poetiditalia/public/img/univr.png" width="80px" alt=""/></a></td>
+<td><p class="pedice universita" style="margin-top:10px;margin-left:10px">Università <br> degli Studi <br> di Verona</p>
+</td></tr></table></div><div style="clear:both"></div>
+<div style="clear:both;padding-top:20px;margin-left:20px;margin-right:20px;"><p class="pedice"> PRIN 1999 - PRIN 2001</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">Ultimo aggiornamento: 4.2.2020</p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><img src="/poetiditalia/public/img/mail.gif" align="top" alt="" />&nbsp;<b>contatti</b>:&nbsp;<img src="/poetiditalia/public/img/lutessa.png" width='100px';align="top" alt="" /></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice"><a target="_blank" href="/poetiditalia/public/index/cookiepolicy">Cookie policy</a></p>
+</div>
+<div style="clear:both;padding-top:10px;margin-left:20px;margin-right:20px;"><p class="pedice">I glifi dei pulsanti sono realizzati con <a href="http://glyphicons.com" target="_blank">Glyphicons</a></p>
+</div>
+<div style="clear:both;padding-bottom:50px;"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modalMQDQ" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMQDQ-title"></h4>
+      </div>
+      <div class="modal-body" id="modalMQDQ-body">        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- si fa apposito perché c'è un css dedicato-->
+<div class="modal fade" id="modalScansione" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalScansione-title"></h4>
+      </div>
+      <div class="modal-body" id="modalScansione-body" align="left">
+            <div id="pedecerto" align="left"></div>
+            <div id="headScansione" align="left" style="margin-top:20px;margin-bottom: 20px"></div>
+            <div id="scansione" align="left"></div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+    
+
+            <script type="text/javascript" id="cookiebanner"
+            data-message="Questo sito si avvale di cookie tecnici necessari al suo funzionamento. Chiudendo questo banner, cliccando su un link o proseguendo la navigazione in altro modo, acconsenti all’uso dei cookie."
+            data-linkmsg="<span style='font-size:13.5px;color:#24aa64'>Maggiori informazioni</span>"
+            data-moreinfo="/poetiditalia/public/index/cookiepolicy"
+            data-accept-on-click="true"
+            data-mask="true"
+            data-mask-background="#ffffff"
+            data-mask-opacity="0.3"
+            src="http://cookiebanner.eu/js/cookiebanner.min.js">
+        </script>
+        <!-- jQuery e plugin JavaScript  -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/poetiditalia/js/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>
